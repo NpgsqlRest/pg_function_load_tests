@@ -8,18 +8,59 @@ const records = Number(__ENV.RECORDS.trim() || "10")
 const duration = __ENV.DURATION.trim() || "60s";
 const target = Number(__ENV.TARGET.trim() || "100");
 const port = __ENV.PORT.trim();
-const path = __ENV.REQ_PATH ? __ENV.REQ_PATH.trim() : (tag.indexOf('postgrest') != -1 ? '/rpc/test_func_v1' : '/api/test-data');
 
-const url = 'http://' +  tag + ':' + port + path + "?" + 
-    Object.entries({
-        _records: records,
-        _text_param: 'ABCDEFGHIJKLMNOPRSTUVWXYZ',
-        _int_param: 1234567890,
-        _ts_param: new Date('2014-12-31').toISOString(),
-        _bool_param: true
-    })
+// Determine the path based on the service type
+function getPath(tag) {
+    if (tag.indexOf('postgrest') !== -1) {
+        return '/rpc/perf_test';
+    }
+    return '/api/perf-test';
+}
+
+// Check if this service uses repeated query params for arrays (like ?a=1&a=2&a=3)
+// .NET minimal API and NpgsqlRest bind arrays this way
+function usesRepeatedQueryParams(tag) {
+    return tag.indexOf('npgsqlrest') !== -1 ||
+           tag.indexOf('net9-minapi') !== -1 ||
+           tag.indexOf('net10-minapi') !== -1;
+}
+
+const path = __ENV.REQ_PATH ? __ENV.REQ_PATH.trim() : getPath(tag);
+
+// Base parameters (non-array)
+const baseParams = {
+    _records: records,
+    _text: 'ABCDEFGHIJKLMNOPRSTUVWXYZ',
+    _int: 1234567890,
+    _bigint: '9223372036854770000',
+    _numeric: '12345.6789',
+    _real: '123.45',
+    _double: '123456.789012',
+    _bool: true,
+    _date: '2024-01-15',
+    _timestamp: '2024-01-15T10:30:00',
+    _timestamptz: '2024-01-15T10:30:00Z',
+    _uuid: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+    _json: '{"key":"value"}',
+    _jsonb: '{"key":"value"}'
+};
+
+// Build URL with all test parameters
+// NpgsqlRest uses repeated query params for arrays: _int_array=1&_int_array=2&_int_array=3
+// Other services use PostgreSQL array literal: _int_array={1,2,3}
+let baseUrl = 'http://' + tag + ':' + port + path + '?' +
+    Object.entries(baseParams)
     .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
     .join('&');
+
+let url;
+if (usesRepeatedQueryParams(tag)) {
+    // .NET services and NpgsqlRest: use repeated query params for arrays
+    url = baseUrl + '&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c';
+} else {
+    // Other services: use PostgreSQL array literal format
+    url = baseUrl + '&_int_array=' + encodeURIComponent('{1,2,3}') + '&_text_array=' + encodeURIComponent('{a,b,c}');
+}
 
 export const options = {
     thresholds: {
@@ -42,9 +83,16 @@ export default function () {
         [`${tag} status is 200`]: (r) => r.status === 200,
         [`${tag} response is JSON`]: (r) => r.headers['Content-Type'] && r.headers['Content-Type'].includes('application/json'),
         [`${tag} response has all data records`]: (r) => r.body && JSON.parse(r.body).length == records,
-        [`${tag} response first item has all fields`]: (r) => {
+        [`${tag} response first item has expected fields`]: (r) => {
             let d = JSON.parse(r.body)[0];
-            return d.id1 && d.foo1 && d.bar1 && d.datetime1 && d.id2 && d.foo2 && d.bar2 && d.datetime2 && d.long_foo_bar && d.is_foobar;
+            return d.row_num !== undefined &&
+                   d.text_val !== undefined &&
+                   d.varchar_val !== undefined &&
+                   d.int_val !== undefined &&
+                   d.bigint_val !== undefined &&
+                   d.bool_val !== undefined &&
+                   d.date_val !== undefined &&
+                   d.uuid_val !== undefined;
         }
     });
 }
@@ -57,7 +105,6 @@ export function handleSummary(data) {
     const failedReqs = data.metrics.http_req_failed.values.passes;
     return {
         [`/results/${stamp}/${fileTag}_summary.txt`]: textSummary(data, { indent: ' ', enableColors: false }),
-        //[`/results/${stamp}/${fileTag}_summary.json`]: JSON.stringify(data, null, 2),
         [`/results/${stamp}/${fileTag}.md`]: `|${tag}|${target}|${duration}|${records}|${reqs}|${reqsPerSec}|${reqsDuration}|${failedReqs}|[summary](/${stamp}/${fileTag}_summary.txt)|`,
     }
 }

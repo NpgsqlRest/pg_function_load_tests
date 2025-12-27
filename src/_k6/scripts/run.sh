@@ -9,42 +9,27 @@ echo "*** Starting k6 tests, output will be saved in /results/$STAMP"
 
 for records in 1 10 100 500; do # records retrieved
 for target in 1 50 100; do # target number of virtual users VUs
-for duration in 60s; do # 10s 60s 120s; do # for duration in 5s 60s 120s; do # duration of the test
+for duration in 60s; do # duration of the test
 while read -r tag port; do
     echo "*** Running $tag:$port with $records records, $target VUs, and $duration duration"
     k6 run /scripts/script.js -e STAMP=$STAMP -e TAG=$tag -e PORT=$port -e RECORDS=$records -e DURATION=$duration -e TARGET=$target
     sleep 10 # sleep for 10 seconds between tests
 done << EOF
-django-app-v5.0.9 8000
-express-app-v4.18.2 3100
-postgrest-v12.2.3 3000
-fastapi-app-v0.103.2 8001
-fastify-app-v4.26.1 3101
-deno-app-v1.40.2 3102
-swoole-php-app-8.3.13 3103
-npgsqlrest-aot-v2.2.1 5000
-net8-npgsqlrest-jit-v2.12.1 5001
-net8-minapi-ef-jit-v8.0.10 5002
-net8-minapi-dapper-jit-v2.1.35 5003
-net8-minapi-norm-jit-v5.4.0 5004
-net8-minapi-ado-jit-v8.0.5 5005
-go-app-v1.22.9 5200
-rust-app-v1.75.0 5300
-java21-spring-boot-v3.2.2 5400
-perl-net-server-prefork-v5.34 8088
-npgsqlrest-aot-v2.4.0 5500
-npgsqlrest-aot-v2.5.0 5506
-npgsqlrest-aot-v2.6.0 5508
-npgsqlrest-aot-v2.7.0 5510
-net9-npgsqlrest-jit-v2.13.1 5501
-net9-npgsqlrest-jit-v2.14.0 5507
-net9-npgsqlrest-jit-v2.15.0 5509
-net9-npgsqlrest-jit-v2.16.0 5511
-net9-minapi-ef-jit-v9.0.1 5502
-net9-minapi-dapper-jit-v2.1.35 5503
-net9-minapi-norm-jit-v5.4.0 5504
-net9-minapi-ado-jit-v8.0.5 5505
-omnigres-master 8080
+django-app-v5.1.4 8000
+fastapi-app-v0.115.6 8001
+fastify-app-v5.2.1 3101
+bun-app-v1.1.42 3104
+go-app-v1.23.4 5200
+java24-spring-boot-v3.4.1 5400
+rust-app-v1.83.0 5300
+swoole-php-app-v8.4.0 3103
+postgrest-v12.2.8 3000
+net9-minapi-ef-jit 5002
+net10-minapi-ef-jit 5003
+net10-minapi-dapper-jit 5004
+npgsqlrest-aot-v2.36.2 5006
+npgsqlrest-aot-v3.2.2 5001
+npgsqlrest-jit-v3.2.2 5005
 EOF
 done # duration of the test
 done # target number of virtual users VUs

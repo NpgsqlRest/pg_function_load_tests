@@ -433,3 +433,6 @@ build/
 
 *.sln
 pg_function_load_tests.sln
+
+.DS_Store
+Thumbs.db

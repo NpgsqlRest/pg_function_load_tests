@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:17-alpine
+    image: postgres:17.2-alpine
     command: postgres -c 'max_connections=5000'
     environment:
       POSTGRES_USER: testuser
@@ -18,9 +18,9 @@ services:
     networks:
       - test_network
 
-  django-app-v5.0.9:
-    build: 
-      context: ./django-app-v5.0.9
+  django-app-v5.1.4:
+    build:
+      context: ./django-app-v5.1.4
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
@@ -35,43 +35,9 @@ services:
     networks:
       - test_network
 
-  express-app-v4.18.2:
+  fastapi-app-v0.115.6:
     build:
-      context: ./express-app-v4.18.2
-      dockerfile: Dockerfile
-    ports:
-      - "3100:3100"
-    environment:
-      - DB_HOST=postgres
-      - DB_NAME=testdb
-      - DB_USER=testuser
-      - DB_PASSWORD=testpass
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  postgrest-v12.2.3:
-    image: postgrest/postgrest:v12.2.3
-    ports:
-      - "3000:3000"
-    environment:
-      PGRST_DB_URI: postgres://testuser:testpass@postgres:5432/testdb
-      PGRST_DB_SCHEMA: public
-      PGRST_DB_ANON_ROLE: testuser
-      PGRST_SERVER_PROXY_URI: "http://postgrest-v12.2.3:3000" 
-    volumes:
-      - ./postgrest-v12.2.3/postgrest.conf:/etc/postgrest.conf
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  fastapi-app-v0.103.2:
-    build: 
-      context: ./fastapi-app-v0.103.2
+      context: ./fastapi-app-v0.115.6
       dockerfile: Dockerfile
     ports:
       - "8001:8001"
@@ -86,9 +52,9 @@ services:
     networks:
       - test_network
 
-  fastify-app-v4.26.1:
+  fastify-app-v5.2.1:
     build:
-      context: ./fastify-app-v4.26.1
+      context: ./fastify-app-v5.2.1
       dockerfile: Dockerfile
     ports:
       - "3101:3101"
@@ -103,12 +69,12 @@ services:
     networks:
       - test_network
 
-  deno-app-v1.40.2:
+  bun-app-v1.1.42:
     build:
-      context: ./deno-app-v1.40.2
+      context: ./bun-app-v1.1.42
       dockerfile: Dockerfile
     ports:
-      - "3102:3102"
+      - "3104:3104"
     environment:
       - DB_HOST=postgres
       - DB_NAME=testdb
@@ -120,98 +86,9 @@ services:
     networks:
       - test_network
 
-  swoole-php-app-8.3.13:
+  go-app-v1.23.4:
     build:
-      context: ./swoole-php-app-8.3.13
-      dockerfile: Dockerfile
-    ports:
-      - "3103:3103"
-    environment:
-      - DB_HOST=postgres
-      - DB_NAME=testdb
-      - DB_USER=testuser
-      - DB_PASSWORD=testpass
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  npgsqlrest-aot-v2.2.1:
-    image: vbilopav/npgsqlrest:v2.2.1
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./npgsqlrest-aot-v2.2.1/appsettings.json:/app/appsettings.json
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  net8-npgsqlrest-jit-v2.12.1:
-    build:
-      context: ./net8-npgsqlrest-jit-v2.12.1
-      dockerfile: Dockerfile
-    ports:
-      - "5001:5001"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  net8-minapi-ef-jit-v8.0.10:
-    build:
-      context: ./net8-minapi-ef-jit-v8.0.10
-      dockerfile: Dockerfile
-    ports:
-      - "5002:5002"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  net8-minapi-dapper-jit-v2.1.35:
-    build:
-      context: ./net8-minapi-dapper-jit-v2.1.35
-      dockerfile: Dockerfile
-    ports:
-      - "5003:5003"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  net8-minapi-norm-jit-v5.4.0:
-    build:
-      context: ./net8-minapi-norm-jit-v5.4.0
-      dockerfile: Dockerfile
-    ports:
-      - "5004:5004"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  net8-minapi-ado-jit-v8.0.5:
-    build:
-      context: ./net8-minapi-ado-jit-v8.0.5
-      dockerfile: Dockerfile
-    ports:
-      - "5005:5005"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  go-app-v1.22.9:
-    build:
-      context: ./go-app-v1.22.9
+      context: ./go-app-v1.23.4
       dockerfile: Dockerfile
     ports:
       - "5200:5200"
@@ -221,23 +98,9 @@ services:
     networks:
       - test_network
 
-  rust-app-v1.75.0:
+  java24-spring-boot-v3.4.1:
     build:
-      context: ./rust-app-v1.75.0
-      dockerfile: Dockerfile
-    ports:
-      - "5300:5300"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      - RUST_LOG=warn
-    networks:
-      - test_network
-
-  java21-spring-boot-v3.2.2:
-    build:
-      context: ./java21-spring-boot-v3.2.2
+      context: ./java24-spring-boot-v3.4.1
       dockerfile: Dockerfile
     ports:
       - "5400:5400"
@@ -252,12 +115,26 @@ services:
     networks:
       - test_network
 
-  perl-net-server-prefork-v5.34:
-    build: 
-      context: ./perl-net-server-prefork-v5.34
+  rust-app-v1.83.0:
+    build:
+      context: ./rust-app-v1.83.0
       dockerfile: Dockerfile
     ports:
-      - "8088:8088"
+      - "5300:5300"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - RUST_LOG=warn
+    networks:
+      - test_network
+
+  swoole-php-app-v8.4.0:
+    build:
+      context: ./swoole-php-app-v8.4.0
+      dockerfile: Dockerfile
+    ports:
+      - "3103:3103"
     environment:
       - DB_HOST=postgres
       - DB_NAME=testdb
@@ -269,156 +146,92 @@ services:
     networks:
       - test_network
 
-  npgsqlrest-aot-v2.4.0:
-    image: vbilopav/npgsqlrest:v2.4.0
+  postgrest-v12.2.8:
+    image: postgrest/postgrest:v12.2.8
     ports:
-      - "5500:5500"
+      - "3000:3000"
+    environment:
+      PGRST_DB_URI: postgres://testuser:testpass@postgres:5432/testdb
+      PGRST_DB_SCHEMA: public
+      PGRST_DB_ANON_ROLE: testuser
+      PGRST_SERVER_PROXY_URI: "http://postgrest-v12.2.8:3000"
     volumes:
-      - ./npgsqlrest-aot-v2.4.0/appsettings.json:/app/appsettings.json
+      - ./postgrest-v12.2.8/postgrest.conf:/etc/postgrest.conf
     depends_on:
       postgres:
         condition: service_healthy
     networks:
       - test_network
 
-  npgsqlrest-aot-v2.5.0:
-    image: vbilopav/npgsqlrest:v2.5.0
+  net9-minapi-ef-jit:
+    build:
+      context: ./net9-minapi-ef-jit
+      dockerfile: Dockerfile
     ports:
-      - "5506:5506"
+      - "5002:5002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - test_network
+
+  net10-minapi-ef-jit:
+    build:
+      context: ./net10-minapi-ef-jit
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - test_network
+
+  net10-minapi-dapper-jit:
+    build:
+      context: ./net10-minapi-dapper-jit
+      dockerfile: Dockerfile
+    ports:
+      - "5004:5004"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - test_network
+
+  npgsqlrest-aot-v2.36.2:
+    image: vbilopav/npgsqlrest:v2.36.2
+    ports:
+      - "5006:5000"
     volumes:
-      - ./npgsqlrest-aot-v2.5.0/appsettings.json:/app/appsettings.json
+      - ./npgsqlrest-aot-v2.36.2/appsettings.json:/app/appsettings.json
     depends_on:
       postgres:
         condition: service_healthy
     networks:
       - test_network
 
-  npgsqlrest-aot-v2.6.0:
-    image: vbilopav/npgsqlrest:v2.6.0
+  npgsqlrest-aot-v3.2.2:
+    image: vbilopav/npgsqlrest:v3.2.2
     ports:
-      - "5508:5508"
+      - "5001:5001"
     volumes:
-      - ./npgsqlrest-aot-v2.6.0/appsettings.json:/app/appsettings.json
+      - ./npgsqlrest-aot-v3.2.2/appsettings.json:/app/appsettings.json
     depends_on:
       postgres:
         condition: service_healthy
     networks:
       - test_network
 
-  npgsqlrest-aot-v2.7.0:
-    image: vbilopav/npgsqlrest:v2.7.0
+  npgsqlrest-jit-v3.2.2:
+    image: vbilopav/npgsqlrest:v3.2.2-jit
     ports:
-      - "5510:5510"
+      - "5005:5005"
     volumes:
-      - ./npgsqlrest-aot-v2.7.0/appsettings.json:/app/appsettings.json
+      - ./npgsqlrest-jit-v3.2.2/appsettings.json:/app/appsettings.json
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - test_network
-
-  net9-npgsqlrest-jit-v2.13.1:
-    build:
-      context: ./net9-npgsqlrest-jit-v2.13.1
-      dockerfile: Dockerfile
-    ports:
-      - "5501:5501"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  net9-npgsqlrest-jit-v2.14.0:
-    build:
-      context: ./net9-npgsqlrest-jit-v2.14.0
-      dockerfile: Dockerfile
-    ports:
-      - "5507:5507"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  net9-npgsqlrest-jit-v2.15.0:
-    build:
-      context: ./net9-npgsqlrest-jit-v2.15.0
-      dockerfile: Dockerfile
-    ports:
-      - "5509:5509"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  net9-npgsqlrest-jit-v2.16.0:
-    build:
-      context: ./net9-npgsqlrest-jit-v2.16.0
-      dockerfile: Dockerfile
-    ports:
-      - "5511:5511"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  net9-minapi-ef-jit-v9.0.1:
-    build:
-      context: ./net9-minapi-ef-jit-v9.0.1
-      dockerfile: Dockerfile
-    ports:
-      - "5502:5502"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  net9-minapi-dapper-jit-v2.1.35:
-    build:
-      context: ./net9-minapi-dapper-jit-v2.1.35
-      dockerfile: Dockerfile
-    ports:
-      - "5503:5503"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  net9-minapi-norm-jit-v5.4.0:
-    build:
-      context: ./net9-minapi-norm-jit-v5.4.0
-      dockerfile: Dockerfile
-    ports:
-      - "5504:5504"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  net9-minapi-ado-jit-v8.0.5:
-    build:
-      context: ./net9-minapi-ado-jit-v8.0.5
-      dockerfile: Dockerfile
-    ports:
-      - "5505:5505"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  omnigres-master:
-    build:
-      context: ./omnigres-master
-      dockerfile: Dockerfile
-    ports:
-      - "18080:8080"
     networks:
       - test_network
 
@@ -428,36 +241,21 @@ services:
       - ./_k6/scripts:/scripts
       - ./_k6/results:/results
     depends_on:
-      - django-app-v5.0.9
-      - express-app-v4.18.2
-      - postgrest-v12.2.3
-      - fastapi-app-v0.103.2
-      - fastify-app-v4.26.1
-      - deno-app-v1.40.2
-      - swoole-php-app-8.3.13
-      - npgsqlrest-aot-v2.2.1
-      - net8-npgsqlrest-jit-v2.12.1
-      - net8-minapi-ef-jit-v8.0.10
-      - net8-minapi-dapper-jit-v2.1.35
-      - net8-minapi-norm-jit-v5.4.0
-      - net8-minapi-ado-jit-v8.0.5
-      - go-app-v1.22.9
-      - rust-app-v1.75.0
-      - java21-spring-boot-v3.2.2
-      - perl-net-server-prefork-v5.34
-      - npgsqlrest-aot-v2.4.0
-      - npgsqlrest-aot-v2.5.0
-      - npgsqlrest-aot-v2.6.0
-      - npgsqlrest-aot-v2.7.0
-      - net9-npgsqlrest-jit-v2.13.1
-      - net9-npgsqlrest-jit-v2.14.0
-      - net9-npgsqlrest-jit-v2.15.0
-      - net9-npgsqlrest-jit-v2.16.0
-      - net9-minapi-ef-jit-v9.0.1
-      - net9-minapi-dapper-jit-v2.1.35
-      - net9-minapi-norm-jit-v5.4.0
-      - net9-minapi-ado-jit-v8.0.5
-      - omnigres-master
+      - django-app-v5.1.4
+      - fastapi-app-v0.115.6
+      - fastify-app-v5.2.1
+      - bun-app-v1.1.42
+      - go-app-v1.23.4
+      - java24-spring-boot-v3.4.1
+      - rust-app-v1.83.0
+      - swoole-php-app-v8.4.0
+      - postgrest-v12.2.8
+      - net9-minapi-ef-jit
+      - net10-minapi-ef-jit
+      - net10-minapi-dapper-jit
+      - npgsqlrest-aot-v2.36.2
+      - npgsqlrest-aot-v3.2.2
+      - npgsqlrest-jit-v3.2.2
     entrypoint: ["/bin/sh"]
     command: ["-c", "tail -f /dev/null"]
     networks:

@@ -1,144 +1,74 @@
-// express-app-v4.18.2
-GET http://localhost:3100/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// django-app-v5.1.4
+GET http://localhost:8000/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// django-app-v5.0.9
-GET http://localhost:8000/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// fastapi-app-v0.115.6
+GET http://localhost:8001/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// postgrest-v12.2.3
-GET http://localhost:3000/rpc/test_func_v1?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// fastify-app-v5.2.1
+GET http://localhost:3101/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// fastapi-app-v0.103.2
-GET http://localhost:8001/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// bun-app-v1.1.42
+GET http://localhost:3104/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// fastify-app-v4.26.1
-GET http://localhost:3101/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// go-app-v1.23.4
+GET http://localhost:5200/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// deno-app-v1.40.2
-GET http://localhost:3102/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// java24-spring-boot-v3.4.1
+GET http://localhost:5400/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// swoole-php-app-8.3.13
-GET http://localhost:3103/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// rust-app-v1.83.0
+GET http://localhost:5300/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// npgsqlrest-aot-v2.2.1
-GET http://localhost:5000/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// swoole-php-app-v8.4.0
+GET http://localhost:3103/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// net8-npgsqlrest-jit-v2.12.1
-GET http://localhost:5001/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// postgrest-v12.2.8
+GET http://localhost:3000/rpc/perf_test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// net8-minapi-ef-jit-v8.0.10
-GET http://localhost:5002/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// net9-minapi-ef-jit
+GET http://localhost:5002/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
 
 ###
 
-// net8-minapi-dapper-jit-v2.1.35
-GET http://localhost:5003/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// net10-minapi-ef-jit
+GET http://localhost:5003/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
 
 ###
 
-// net8-minapi-norm-jit-v5.4.0
-GET http://localhost:5004/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// net10-minapi-dapper-jit
+GET http://localhost:5004/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
 
 ###
 
-// net8-minapi-ado-jit-v8.0.5
-GET http://localhost:5005/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// npgsqlrest-aot-v2.36.2
+GET http://localhost:5006/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
 
 ###
 
-// go-app-v1.22.9
-GET http://localhost:5200/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// npgsqlrest-aot-v3.2.2
+GET http://localhost:5001/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
 
 ###
 
-// rust-app-v1.75.0
-GET http://localhost:5300/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// java21-spring-boot-v3.2.2
-GET http://localhost:5400/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// perl-net-server-prefork-v5.34
-GET http://localhost:8088/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// npgsqlrest-aot-v2.4.0
-GET http://localhost:5500/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// npgsqlrest-aot-v2.5.0
-GET http://localhost:5506/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// npgsqlrest-aot-v2.6.0
-GET http://localhost:5508/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// npgsqlrest-aot-v2.7.0
-GET http://localhost:5510/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// net9-npgsqlrest-jit-v2.13.1
-GET http://localhost:5501/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// net9-npgsqlrest-jit-v2.14.0
-GET http://localhost:5507/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// net9-npgsqlrest-jit-v2.15.0
-GET http://localhost:5509/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// net9-npgsqlrest-jit-v2.16.0
-GET http://localhost:5511/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// net9-minapi-ef-jit-v9.0.1
-GET http://localhost:5502/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// net9-minapi-dapper-jit-v2.1.35
-GET http://localhost:5503/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// net9-minapi-norm-jit-v5.4.0
-GET http://localhost:5504/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
-
-###
-
-// net9-minapi-ado-jit-v8.0.5
-GET http://localhost:5505/api/test-data?_records=3&_text_param=Hello%20World&_int_param=12345&_ts_param=2021-01-01T00:00:00.000Z&_bool_param=true
+// npgsqlrest-jit-v3.2.2
+GET http://localhost:5005/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
 
 ###
