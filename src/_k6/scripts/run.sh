@@ -15,12 +15,12 @@ while read -r tag port; do
     k6 run /scripts/script.js -e STAMP=$STAMP -e TAG=$tag -e PORT=$port -e RECORDS=$records -e DURATION=$duration -e TARGET=$target
     sleep 10 # sleep for 10 seconds between tests
 done << EOF
-django-app-v5.1.4 8000
-fastapi-app-v0.115.6 8001
-fastify-app-v5.2.1 3101
+django-app-v6.0 8000
+fastapi-app-v0.127.1 8001
+fastify-app-v5.6.2 3101
 bun-app-v1.1.42 3104
-go-app-v1.23.4 5200
-java24-spring-boot-v3.4.1 5400
+go-app-v1.24 5200
+java24-spring-boot-v4.0.1 5400
 rust-app-v1.83.0 5300
 swoole-php-app-v8.4.0 3103
 postgrest-v12.2.8 3000

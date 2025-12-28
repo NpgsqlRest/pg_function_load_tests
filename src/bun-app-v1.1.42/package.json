@@ -2,6 +2,6 @@
   "name": "bun-test-app",
   "type": "module",
   "dependencies": {
-    "postgres": "3.4.5"
+    "postgres": "3.4.7"
   }
 }

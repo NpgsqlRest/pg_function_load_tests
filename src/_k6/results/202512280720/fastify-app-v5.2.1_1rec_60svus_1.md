@@ -1,0 +1,1 @@
+|fastify-app-v5.2.1|1|60s|1|151853|2530.83/s|0.39ms|0|[summary](/202512280720/fastify-app-v5.2.1_1rec_60svus_1_summary.txt)|

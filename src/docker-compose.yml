@@ -18,9 +18,9 @@ services:
     networks:
       - test_network
 
-  django-app-v5.1.4:
+  django-app-v6.0:
     build:
-      context: ./django-app-v5.1.4
+      context: ./django-app-v6.0
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
@@ -35,9 +35,9 @@ services:
     networks:
       - test_network
 
-  fastapi-app-v0.115.6:
+  fastapi-app-v0.127.1:
     build:
-      context: ./fastapi-app-v0.115.6
+      context: ./fastapi-app-v0.127.1
       dockerfile: Dockerfile
     ports:
       - "8001:8001"
@@ -52,9 +52,9 @@ services:
     networks:
       - test_network
 
-  fastify-app-v5.2.1:
+  fastify-app-v5.6.2:
     build:
-      context: ./fastify-app-v5.2.1
+      context: ./fastify-app-v5.6.2
       dockerfile: Dockerfile
     ports:
       - "3101:3101"
@@ -86,9 +86,9 @@ services:
     networks:
       - test_network
 
-  go-app-v1.23.4:
+  go-app-v1.24:
     build:
-      context: ./go-app-v1.23.4
+      context: ./go-app-v1.24
       dockerfile: Dockerfile
     ports:
       - "5200:5200"
@@ -98,9 +98,9 @@ services:
     networks:
       - test_network
 
-  java24-spring-boot-v3.4.1:
+  java24-spring-boot-v4.0.1:
     build:
-      context: ./java24-spring-boot-v3.4.1
+      context: ./java24-spring-boot-v4.0.1
       dockerfile: Dockerfile
     ports:
       - "5400:5400"
@@ -241,12 +241,12 @@ services:
       - ./_k6/scripts:/scripts
       - ./_k6/results:/results
     depends_on:
-      - django-app-v5.1.4
-      - fastapi-app-v0.115.6
-      - fastify-app-v5.2.1
+      - django-app-v6.0
+      - fastapi-app-v0.127.1
+      - fastify-app-v5.6.2
       - bun-app-v1.1.42
-      - go-app-v1.23.4
-      - java24-spring-boot-v3.4.1
+      - go-app-v1.24
+      - java24-spring-boot-v4.0.1
       - rust-app-v1.83.0
       - swoole-php-app-v8.4.0
       - postgrest-v12.2.8

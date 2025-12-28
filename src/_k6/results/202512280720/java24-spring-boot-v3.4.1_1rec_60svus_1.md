@@ -1,0 +1,1 @@
+|java24-spring-boot-v3.4.1|1|60s|1|138544|2309.01/s|0.43ms|0|[summary](/202512280720/java24-spring-boot-v3.4.1_1rec_60svus_1_summary.txt)|

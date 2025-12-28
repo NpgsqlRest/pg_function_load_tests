@@ -66,16 +66,16 @@ test_service "net10-minapi-ef-jit" "5003" "/api/perf-test" "$PARAMS_REPEATED_ARR
 test_service "net10-minapi-dapper-jit" "5004" "/api/perf-test" "$PARAMS_REPEATED_ARRAYS"
 
 echo "=== Python Implementations (PostgreSQL Array Literals) ==="
-test_service "django-app-v5.1.4" "8000" "/api/perf-test" "$PARAMS_PG_ARRAYS"
-test_service "fastapi-app-v0.115.6" "8001" "/api/perf-test" "$PARAMS_PG_ARRAYS"
+test_service "django-app-v6.0" "8000" "/api/perf-test" "$PARAMS_PG_ARRAYS"
+test_service "fastapi-app-v0.127.1" "8001" "/api/perf-test" "$PARAMS_PG_ARRAYS"
 
 echo "=== Node.js/Bun Implementations (PostgreSQL Array Literals) ==="
-test_service "fastify-app-v5.2.1" "3101" "/api/perf-test" "$PARAMS_PG_ARRAYS"
+test_service "fastify-app-v5.6.2" "3101" "/api/perf-test" "$PARAMS_PG_ARRAYS"
 test_service "bun-app-v1.1.42" "3104" "/api/perf-test" "$PARAMS_PG_ARRAYS"
 
 echo "=== Other Implementations (PostgreSQL Array Literals) ==="
-test_service "go-app-v1.23.4" "5200" "/api/perf-test" "$PARAMS_PG_ARRAYS"
-test_service "java24-spring-boot-v3.4.1" "5400" "/api/perf-test" "$PARAMS_PG_ARRAYS"
+test_service "go-app-v1.24" "5200" "/api/perf-test" "$PARAMS_PG_ARRAYS"
+test_service "java24-spring-boot-v4.0.1" "5400" "/api/perf-test" "$PARAMS_PG_ARRAYS"
 test_service "rust-app-v1.83.0" "5300" "/api/perf-test" "$PARAMS_PG_ARRAYS"
 test_service "swoole-php-app-v8.4.0" "3103" "/api/perf-test" "$PARAMS_PG_ARRAYS"
 

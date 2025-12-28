@@ -1,0 +1,1 @@
+|go-app-v1.23.4|1|60s|1|157730|2628.75/s|0.38ms|0|[summary](/202512280720/go-app-v1.23.4_1rec_60svus_1_summary.txt)|

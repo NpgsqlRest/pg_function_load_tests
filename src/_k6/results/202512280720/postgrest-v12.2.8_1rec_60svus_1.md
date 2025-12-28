@@ -1,0 +1,1 @@
+|postgrest-v12.2.8|1|60s|1|112511|1875.14/s|0.53ms|0|[summary](/202512280720/postgrest-v12.2.8_1rec_60svus_1_summary.txt)|

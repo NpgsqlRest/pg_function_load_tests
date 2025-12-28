@@ -53,8 +53,8 @@ public class Result
     public float real_val { get; set; }
     public double double_val { get; set; }
     public bool bool_val { get; set; }
-    public DateTime date_val { get; set; }
-    public TimeSpan time_val { get; set; }
+    public DateOnly date_val { get; set; }
+    public TimeOnly time_val { get; set; }
     public DateTime timestamp_val { get; set; }
     public DateTimeOffset timestamptz_val { get; set; }
     public TimeSpan interval_val { get; set; }
