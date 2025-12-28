@@ -27,7 +27,7 @@ postgrest-v12.2.8 3000
 net9-minapi-ef-jit 5002
 net10-minapi-ef-jit 5003
 net10-minapi-dapper-jit 5004
-npgsqlrest-aot-v2.36.2 5006
+npgsqlrest-aot-v2.36.2 5000
 npgsqlrest-aot-v3.2.2 5001
 npgsqlrest-jit-v3.2.2 5005
 EOF
