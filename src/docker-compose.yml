@@ -1,7 +1,13 @@
 services:
   postgres:
     image: postgres:17.2-alpine
-    command: postgres -c 'max_connections=5000'
+    # Connection calculation:
+    # - Tests are SERIALIZED (one service tested at a time)
+    # - Active service: 100 connections (pool max)
+    # - 13 idle services: ~200 connections (idle pools maintain ~10-20 each)
+    # - Total during test: ~300 connections
+    # - Setting 2000 provides 6x headroom, avoids memory issues (5000 was excessive)
+    command: postgres -c 'max_connections=2000'
     environment:
       POSTGRES_USER: testuser
       POSTGRES_PASSWORD: testpass
@@ -18,9 +24,9 @@ services:
     networks:
       - test_network
 
-  django-app-v6.0:
+  django-app-v6.0.1:
     build:
-      context: ./django-app-v6.0
+      context: ./django-app-v6.0.1
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
@@ -35,9 +41,9 @@ services:
     networks:
       - test_network
 
-  fastapi-app-v0.127.1:
+  fastapi-app-v0.128.0:
     build:
-      context: ./fastapi-app-v0.127.1
+      context: ./fastapi-app-v0.128.0
       dockerfile: Dockerfile
     ports:
       - "8001:8001"
@@ -52,9 +58,9 @@ services:
     networks:
       - test_network
 
-  fastify-app-v5.6.2:
+  fastify-app-v5.7.1:
     build:
-      context: ./fastify-app-v5.6.2
+      context: ./fastify-app-v5.7.1
       dockerfile: Dockerfile
     ports:
       - "3101:3101"
@@ -69,9 +75,9 @@ services:
     networks:
       - test_network
 
-  bun-app-v1.1.42:
+  bun-app-v1.3.3:
     build:
-      context: ./bun-app-v1.1.42
+      context: ./bun-app-v1.3.3
       dockerfile: Dockerfile
     ports:
       - "3104:3104"
@@ -86,9 +92,9 @@ services:
     networks:
       - test_network
 
-  go-app-v1.24:
+  go-app-v1.25:
     build:
-      context: ./go-app-v1.24
+      context: ./go-app-v1.25
       dockerfile: Dockerfile
     ports:
       - "5200:5200"
@@ -115,9 +121,9 @@ services:
     networks:
       - test_network
 
-  rust-app-v1.83.0:
+  rust-app-v1.91.1:
     build:
-      context: ./rust-app-v1.83.0
+      context: ./rust-app-v1.91.1
       dockerfile: Dockerfile
     ports:
       - "5300:5300"
@@ -125,13 +131,13 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      - RUST_LOG=warn
+      - RUST_LOG=error
     networks:
       - test_network
 
-  swoole-php-app-v8.4.0:
+  swoole-php-app-v6.0:
     build:
-      context: ./swoole-php-app-v8.4.0
+      context: ./swoole-php-app-v6.0
       dockerfile: Dockerfile
     ports:
       - "3103:3103"
@@ -146,17 +152,17 @@ services:
     networks:
       - test_network
 
-  postgrest-v12.2.8:
-    image: postgrest/postgrest:v12.2.8
+  postgrest-v14.3:
+    image: postgrest/postgrest:v14.3
     ports:
       - "3000:3000"
     environment:
       PGRST_DB_URI: postgres://testuser:testpass@postgres:5432/testdb
       PGRST_DB_SCHEMA: public
       PGRST_DB_ANON_ROLE: testuser
-      PGRST_SERVER_PROXY_URI: "http://postgrest-v12.2.8:3000"
+      PGRST_SERVER_PROXY_URI: "http://postgrest-v14.3:3000"
     volumes:
-      - ./postgrest-v12.2.8/postgrest.conf:/etc/postgrest.conf
+      - ./postgrest-v14.3/postgrest.conf:/etc/postgrest.conf
     depends_on:
       postgres:
         condition: service_healthy
@@ -199,36 +205,24 @@ services:
     networks:
       - test_network
 
-  npgsqlrest-aot-v2.36.2:
-    image: vbilopav/npgsqlrest:v2.36.2
-    ports:
-      - "5006:5000"
-    volumes:
-      - ./npgsqlrest-aot-v2.36.2/appsettings.json:/app/appsettings.json
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  npgsqlrest-aot-v3.2.2:
-    image: vbilopav/npgsqlrest:v3.2.2
-    ports:
-      - "5001:5001"
-    volumes:
-      - ./npgsqlrest-aot-v3.2.2/appsettings.json:/app/appsettings.json
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - test_network
-
-  npgsqlrest-jit-v3.2.2:
-    image: vbilopav/npgsqlrest:v3.2.2-jit
+  npgsqlrest-aot-v3.4.6:
+    image: vbilopav/npgsqlrest:v3.4.6
     ports:
       - "5005:5005"
     volumes:
-      - ./npgsqlrest-jit-v3.2.2/appsettings.json:/app/appsettings.json
+      - ./npgsqlrest-aot-v3.4.6/appsettings.json:/app/appsettings.json
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - test_network
+
+  npgsqlrest-jit-v3.4.6:
+    image: vbilopav/npgsqlrest:v3.4.6-jit
+    ports:
+      - "5006:5006"
+    volumes:
+      - ./npgsqlrest-jit-v3.4.6/appsettings.json:/app/appsettings.json
     depends_on:
       postgres:
         condition: service_healthy
@@ -236,26 +230,27 @@ services:
       - test_network
 
   test:
-    image: grafana/k6:latest
+    build:
+      context: ./_k6
+      dockerfile: Dockerfile
     volumes:
       - ./_k6/scripts:/scripts
       - ./_k6/results:/results
     depends_on:
-      - django-app-v6.0
-      - fastapi-app-v0.127.1
-      - fastify-app-v5.6.2
-      - bun-app-v1.1.42
-      - go-app-v1.24
+      - django-app-v6.0.1
+      - fastapi-app-v0.128.0
+      - fastify-app-v5.7.1
+      - bun-app-v1.3.3
+      - go-app-v1.25
       - java24-spring-boot-v4.0.1
-      - rust-app-v1.83.0
-      - swoole-php-app-v8.4.0
-      - postgrest-v12.2.8
+      - rust-app-v1.91.1
+      - swoole-php-app-v6.0
+      - postgrest-v14.3
       - net9-minapi-ef-jit
       - net10-minapi-ef-jit
       - net10-minapi-dapper-jit
-      - npgsqlrest-aot-v2.36.2
-      - npgsqlrest-aot-v3.2.2
-      - npgsqlrest-jit-v3.2.2
+      - npgsqlrest-aot-v3.4.6
+      - npgsqlrest-jit-v3.4.6
     entrypoint: ["/bin/sh"]
     command: ["-c", "tail -f /dev/null"]
     networks:

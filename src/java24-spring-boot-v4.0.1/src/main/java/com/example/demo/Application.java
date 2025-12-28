@@ -13,6 +13,8 @@ import java.sql.Array;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @SpringBootApplication
 @RestController
@@ -71,6 +73,67 @@ public class Application {
                 row.put(fieldName, null);
             }
         }
+    }
+
+    // New benchmark endpoints
+
+    @GetMapping("/api/perf-minimal")
+    public ResponseEntity<?> perfMinimal() {
+        String sql = "SELECT status, ts FROM public.perf_minimal()";
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/api/perf-post")
+    public ResponseEntity<?> perfPost(@RequestBody Map<String, Object> body) {
+        Integer records = body.get("_records") != null ? ((Number) body.get("_records")).intValue() : 10;
+        String payload = "{}";
+        if (body.get("_payload") != null) {
+            try {
+                payload = new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(body.get("_payload"));
+            } catch (Exception e) {
+                payload = "{}";
+            }
+        }
+        String sql = "SELECT row_num, echo, computed FROM public.perf_post(?, ?::jsonb)";
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql, records, payload);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/api/perf-nested")
+    public ResponseEntity<?> perfNested(
+            @RequestParam(value = "_records", defaultValue = "100") Integer records,
+            @RequestParam(value = "_depth", defaultValue = "3") Integer depth) {
+        String sql = "SELECT row_num, nested FROM public.perf_nested(?, ?)";
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql, records, depth);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/api/perf-large-payload")
+    public ResponseEntity<?> perfLargePayload(
+            @RequestParam(value = "_size_kb", defaultValue = "100") Integer sizeKb) {
+        String sql = "SELECT data FROM public.perf_large_payload(?)";
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql, sizeKb);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/api/perf-many-params")
+    public ResponseEntity<?> perfManyParams(
+            @RequestParam("_p1") String p1, @RequestParam("_p2") Integer p2, @RequestParam("_p3") Boolean p3, @RequestParam("_p4") String p4, @RequestParam("_p5") String p5,
+            @RequestParam("_p6") String p6, @RequestParam("_p7") Integer p7, @RequestParam("_p8") Boolean p8, @RequestParam("_p9") String p9, @RequestParam("_p10") String p10,
+            @RequestParam("_p11") String p11, @RequestParam("_p12") Integer p12, @RequestParam("_p13") Boolean p13, @RequestParam("_p14") String p14, @RequestParam("_p15") String p15,
+            @RequestParam("_p16") String p16, @RequestParam("_p17") Integer p17, @RequestParam("_p18") Boolean p18, @RequestParam("_p19") String p19, @RequestParam("_p20") String p20) {
+        String sql = """
+            SELECT param_count, checksum FROM public.perf_many_params(
+                ?, ?, ?, ?::numeric, ?,
+                ?, ?, ?, ?::numeric, ?,
+                ?, ?, ?, ?::numeric, ?,
+                ?, ?, ?, ?::numeric, ?
+            )
+            """;
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql,
+            p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20);
+        return ResponseEntity.ok(result);
     }
 
 }

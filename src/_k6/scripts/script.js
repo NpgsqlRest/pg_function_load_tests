@@ -100,11 +100,26 @@ export default function () {
 export function handleSummary(data) {
     const fileTag = `${tag}_${records}rec_${duration}vus_${target}`;
     const reqs = data.metrics.http_reqs.values.count;
-    const reqsPerSec = data.metrics.http_reqs.values.rate.toFixed(2) + "/s";
-    const reqsDuration = data.metrics.iteration_duration.values.avg.toFixed(2) + "ms";
+    const rps = data.metrics.http_reqs.values.rate;
+    const avgDuration = data.metrics.iteration_duration.values.avg;
     const failedReqs = data.metrics.http_req_failed.values.passes;
+
+    // JSON data for aggregation (sortable by rps)
+    const jsonData = JSON.stringify({
+        scenario: "perf-test",
+        tag: tag,
+        vus: target,
+        records: records,
+        duration: duration,
+        requests: reqs,
+        rps: rps,
+        avgLatency: avgDuration,
+        failed: failedReqs,
+        summaryFile: `${fileTag}_summary.txt`
+    });
+
     return {
         [`/results/${stamp}/${fileTag}_summary.txt`]: textSummary(data, { indent: ' ', enableColors: false }),
-        [`/results/${stamp}/${fileTag}.md`]: `|${tag}|${target}|${duration}|${records}|${reqs}|${reqsPerSec}|${reqsDuration}|${failedReqs}|[summary](/${stamp}/${fileTag}_summary.txt)|`,
+        [`/results/${stamp}/${fileTag}.json`]: jsonData,
     }
 }

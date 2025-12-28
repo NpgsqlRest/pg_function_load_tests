@@ -1,0 +1,8 @@
+{
+  "name": "fastify-test-app",
+  "type": "module",
+  "dependencies": {
+    "fastify": "5.7.1",
+    "pg": "8.16.3"
+  }
+}
