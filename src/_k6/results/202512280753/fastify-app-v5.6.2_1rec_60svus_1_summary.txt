@@ -1,0 +1,22 @@
+     ✓ fastify-app-v5.6.2 status is 200
+     ✓ fastify-app-v5.6.2 response is JSON
+     ✓ fastify-app-v5.6.2 response has all data records
+     ✓ fastify-app-v5.6.2 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 89596      ✗ 0    
+     data_received..................: 20 MB   338 kB/s
+     data_sent......................: 11 MB   189 kB/s
+     http_req_blocked...............: avg=5.34µs  min=1.22µs   med=4.67µs  max=990.91µs p(90)=6.19µs  p(95)=7.09µs  
+     http_req_connecting............: avg=12ns    min=0s       med=0s      max=271.58µs p(90)=0s      p(95)=0s      
+   ✓ http_req_duration..............: avg=2.26ms  min=847.08µs med=2.25ms  max=7.23ms   p(90)=2.54ms  p(95)=2.65ms  
+       { expected_response:true }...: avg=2.26ms  min=847.08µs med=2.25ms  max=7.23ms   p(90)=2.54ms  p(95)=2.65ms  
+   ✓ http_req_failed................: 0.00%   ✓ 0          ✗ 22399
+     http_req_receiving.............: avg=68.09µs min=16.93µs  med=63.65µs max=828.58µs p(90)=91.1µs  p(95)=104.58µs
+     http_req_sending...............: avg=20.21µs min=4.18µs   med=16.14µs max=702.26µs p(90)=29.99µs p(95)=35.07µs 
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s       p(90)=0s      p(95)=0s      
+     http_req_waiting...............: avg=2.17ms  min=817.89µs med=2.16ms  max=7.16ms   p(90)=2.44ms  p(95)=2.54ms  
+     http_reqs......................: 22399   373.304338/s
+     iteration_duration.............: avg=2.66ms  min=956.17µs med=2.65ms  max=7.62ms   p(90)=2.98ms  p(95)=3.11ms  
+     iterations.....................: 22399   373.304338/s
+     vus............................: 1       min=1        max=1  
+     vus_max........................: 1       min=1        max=1  

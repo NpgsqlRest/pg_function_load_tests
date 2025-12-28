@@ -1,1 +1,0 @@
-|net9-minapi-ef-jit|1|60s|1|119305|1988.38/s|0.50ms|0|[summary](/202512280720/net9-minapi-ef-jit_1rec_60svus_1_summary.txt)|

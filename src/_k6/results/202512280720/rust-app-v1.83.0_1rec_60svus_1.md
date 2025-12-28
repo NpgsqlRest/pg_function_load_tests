@@ -1,1 +1,0 @@
-|rust-app-v1.83.0|1|60s|1|127959|2132.62/s|0.47ms|0|[summary](/202512280720/rust-app-v1.83.0_1rec_60svus_1_summary.txt)|

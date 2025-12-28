@@ -1,1 +1,0 @@
-|django-app-v5.1.4|1|60s|1|73999|1233.28/s|0.81ms|0|[summary](/202512280720/django-app-v5.1.4_1rec_60svus_1_summary.txt)|
