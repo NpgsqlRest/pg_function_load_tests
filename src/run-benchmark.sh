@@ -43,31 +43,35 @@ start_stats_collector() {
     local container=$1
     local output_file=$2
 
-    # Collect stats in background, output CSV format
-    (
-        echo "timestamp,cpu_percent,mem_usage_mb,mem_limit_mb,mem_percent" > "$output_file"
+    # Write header
+    echo "timestamp,cpu_percent,mem_usage_mb,mem_limit_mb,mem_percent" > "$output_file"
+
+    # Start background collector - use nohup to ensure it runs independently
+    nohup bash -c '
+        container="$1"
+        output_file="$2"
+        interval="$3"
+
         while true; do
             stats=$(docker stats --no-stream --format "{{.CPUPerc}},{{.MemUsage}},{{.MemPerc}}" "$container" 2>/dev/null || echo "0%,0MiB / 0MiB,0%")
             timestamp=$(date +%s)
 
-            # Parse memory (e.g., "123.4MiB / 1GiB" -> "123.4,1024")
-            cpu=$(echo "$stats" | cut -d',' -f1 | tr -d '%')
-            mem_raw=$(echo "$stats" | cut -d',' -f2)
-            mem_pct=$(echo "$stats" | cut -d',' -f3 | tr -d '%')
+            cpu=$(echo "$stats" | cut -d"," -f1 | tr -d "%")
+            mem_raw=$(echo "$stats" | cut -d"," -f2)
+            mem_pct=$(echo "$stats" | cut -d"," -f3 | tr -d "%")
 
-            # Extract usage and limit
-            mem_usage=$(echo "$mem_raw" | cut -d'/' -f1 | tr -d ' ')
-            mem_limit=$(echo "$mem_raw" | cut -d'/' -f2 | tr -d ' ')
+            mem_usage=$(echo "$mem_raw" | cut -d"/" -f1 | tr -d " ")
+            mem_limit=$(echo "$mem_raw" | cut -d"/" -f2 | tr -d " ")
 
             # Convert to MB
             convert_to_mb() {
                 local val=$1
                 if echo "$val" | grep -q "GiB"; then
-                    echo "$val" | tr -d 'GiB' | awk '{printf "%.2f", $1 * 1024}'
+                    echo "$val" | tr -d "GiB" | awk "{printf \"%.2f\", \$1 * 1024}"
                 elif echo "$val" | grep -q "MiB"; then
-                    echo "$val" | tr -d 'MiB'
+                    echo "$val" | tr -d "MiB"
                 elif echo "$val" | grep -q "KiB"; then
-                    echo "$val" | tr -d 'KiB' | awk '{printf "%.2f", $1 / 1024}'
+                    echo "$val" | tr -d "KiB" | awk "{printf \"%.2f\", \$1 / 1024}"
                 else
                     echo "0"
                 fi
@@ -77,9 +81,10 @@ start_stats_collector() {
             limit_mb=$(convert_to_mb "$mem_limit")
 
             echo "${timestamp},${cpu},${usage_mb},${limit_mb},${mem_pct}" >> "$output_file"
-            sleep "$STATS_INTERVAL"
+            sleep "$interval"
         done
-    ) &
+    ' _ "$container" "$output_file" "$STATS_INTERVAL" > /dev/null 2>&1 &
+
     echo $!
 }
 
