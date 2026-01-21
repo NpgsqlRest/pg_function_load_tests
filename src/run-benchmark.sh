@@ -123,11 +123,15 @@ summarize_stats() {
 echo -e "${YELLOW}Starting resource monitors...${NC}"
 declare -A STATS_PIDS
 
-for container in $(get_service_containers); do
+CONTAINERS=$(get_service_containers)
+echo "Found containers: $(echo $CONTAINERS | wc -w)"
+
+for container in $CONTAINERS; do
     # Extract service name from container name (e.g., "src-django-app-v6.0.1-1" -> "django-app-v6.0.1")
     service_name=$(echo "$container" | sed 's/^src-//' | sed 's/-[0-9]*$//')
     stats_file="${STATS_DIR}/${service_name}_stats.csv"
 
+    echo "  Starting monitor for: $service_name..."
     pid=$(start_stats_collector "$container" "$stats_file")
     STATS_PIDS["$service_name"]=$pid
     echo "  Monitoring: $service_name (PID: $pid)"
