@@ -156,8 +156,8 @@ test_service_all_endpoints() {
 }
 
 echo "=== NpgsqlRest Implementations ==="
-test_service_all_endpoints "npgsqlrest-aot-v3.4.6" "5005" "repeated" "/api" "false"
-test_service_all_endpoints "npgsqlrest-jit-v3.4.6" "5006" "repeated" "/api" "false"
+test_service_all_endpoints "npgsqlrest-aot-v3.4.7" "5005" "repeated" "/api" "false"
+test_service_all_endpoints "npgsqlrest-jit-v3.4.7" "5006" "repeated" "/api" "false"
 
 echo "=== PostgREST ==="
 test_service_all_endpoints "postgrest-v14.3" "3000" "pg" "/rpc" "true"

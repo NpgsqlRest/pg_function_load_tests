@@ -205,24 +205,24 @@ services:
     networks:
       - test_network
 
-  npgsqlrest-aot-v3.4.6:
-    image: vbilopav/npgsqlrest:v3.4.6
+  npgsqlrest-aot-v3.4.7:
+    image: vbilopav/npgsqlrest:v3.4.7
     ports:
       - "5005:5005"
     volumes:
-      - ./npgsqlrest-aot-v3.4.6/appsettings.json:/app/appsettings.json
+      - ./npgsqlrest-aot-v3.4.7/appsettings.json:/app/appsettings.json
     depends_on:
       postgres:
         condition: service_healthy
     networks:
       - test_network
 
-  npgsqlrest-jit-v3.4.6:
-    image: vbilopav/npgsqlrest:v3.4.6-jit
+  npgsqlrest-jit-v3.4.7:
+    image: vbilopav/npgsqlrest:v3.4.7-jit
     ports:
       - "5006:5006"
     volumes:
-      - ./npgsqlrest-jit-v3.4.6/appsettings.json:/app/appsettings.json
+      - ./npgsqlrest-jit-v3.4.7/appsettings.json:/app/appsettings.json
     depends_on:
       postgres:
         condition: service_healthy
@@ -249,8 +249,8 @@ services:
       - net9-minapi-ef-jit
       - net10-minapi-ef-jit
       - net10-minapi-dapper-jit
-      - npgsqlrest-aot-v3.4.6
-      - npgsqlrest-jit-v3.4.6
+      - npgsqlrest-aot-v3.4.7
+      - npgsqlrest-jit-v3.4.7
     entrypoint: ["/bin/sh"]
     command: ["-c", "tail -f /dev/null"]
     networks:

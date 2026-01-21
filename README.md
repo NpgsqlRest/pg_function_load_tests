@@ -18,8 +18,8 @@ This project performs load performance testing for Web APIs on different tech st
 | .NET 9 Minimal API (EF) | 9.0 | 5002 | C# |
 | .NET 10 Minimal API (EF) | 10.0 | 5003 | C# |
 | .NET 10 Minimal API (Dapper) | 10.0 | 5004 | C# |
-| NpgsqlRest (AOT) | 3.4.6 | 5005 | C# |
-| NpgsqlRest (JIT) | 3.4.6 | 5006 | C# |
+| NpgsqlRest (AOT) | 3.4.7 | 5005 | C# |
+| NpgsqlRest (JIT) | 3.4.7 | 5006 | C# |
 
 ### API Differences
 

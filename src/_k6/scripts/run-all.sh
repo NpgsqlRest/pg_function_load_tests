@@ -235,8 +235,8 @@ postgrest-v14.3 3000
 net9-minapi-ef-jit 5002
 net10-minapi-ef-jit 5003
 net10-minapi-dapper-jit 5004
-npgsqlrest-aot-v3.4.6 5005
-npgsqlrest-jit-v3.4.6 5006
+npgsqlrest-aot-v3.4.7 5005
+npgsqlrest-jit-v3.4.7 5006
 EOF
 
 # =============================================================================

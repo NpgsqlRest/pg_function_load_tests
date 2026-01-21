@@ -419,70 +419,70 @@ Content-Type: application/json
 {"_records": 3, "_payload": {"test": "value"}}
 
 ### ============================================
-### npgsqlrest-aot-v3.4.6 (port 5005)
+### npgsqlrest-aot-v3.4.7 (port 5005)
 ### ============================================
 
-// npgsqlrest-aot-v3.4.6 - perf-test
+// npgsqlrest-aot-v3.4.7 - perf-test
 GET http://localhost:5005/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
 
 ###
 
-// npgsqlrest-aot-v3.4.6 - perf-minimal
+// npgsqlrest-aot-v3.4.7 - perf-minimal
 GET http://localhost:5005/api/perf-minimal
 
 ###
 
-// npgsqlrest-aot-v3.4.6 - perf-nested
+// npgsqlrest-aot-v3.4.7 - perf-nested
 GET http://localhost:5005/api/perf-nested?_records=3&_depth=3
 
 ###
 
-// npgsqlrest-aot-v3.4.6 - perf-large-payload
+// npgsqlrest-aot-v3.4.7 - perf-large-payload
 GET http://localhost:5005/api/perf-large-payload?_size_kb=10
 
 ###
 
-// npgsqlrest-aot-v3.4.6 - perf-many-params
+// npgsqlrest-aot-v3.4.7 - perf-many-params
 GET http://localhost:5005/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
 
 ###
 
-// npgsqlrest-aot-v3.4.6 - perf-post
+// npgsqlrest-aot-v3.4.7 - perf-post
 POST http://localhost:5005/api/perf-post
 Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
 
 ### ============================================
-### npgsqlrest-jit-v3.4.6 (port 5006)
+### npgsqlrest-jit-v3.4.7 (port 5006)
 ### ============================================
 
-// npgsqlrest-jit-v3.4.6 - perf-test
+// npgsqlrest-jit-v3.4.7 - perf-test
 GET http://localhost:5006/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
 
 ###
 
-// npgsqlrest-jit-v3.4.6 - perf-minimal
+// npgsqlrest-jit-v3.4.7 - perf-minimal
 GET http://localhost:5006/api/perf-minimal
 
 ###
 
-// npgsqlrest-jit-v3.4.6 - perf-nested
+// npgsqlrest-jit-v3.4.7 - perf-nested
 GET http://localhost:5006/api/perf-nested?_records=3&_depth=3
 
 ###
 
-// npgsqlrest-jit-v3.4.6 - perf-large-payload
+// npgsqlrest-jit-v3.4.7 - perf-large-payload
 GET http://localhost:5006/api/perf-large-payload?_size_kb=10
 
 ###
 
-// npgsqlrest-jit-v3.4.6 - perf-many-params
+// npgsqlrest-jit-v3.4.7 - perf-many-params
 GET http://localhost:5006/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
 
 ###
 
-// npgsqlrest-jit-v3.4.6 - perf-post
+// npgsqlrest-jit-v3.4.7 - perf-post
 POST http://localhost:5006/api/perf-post
 Content-Type: application/json
 
