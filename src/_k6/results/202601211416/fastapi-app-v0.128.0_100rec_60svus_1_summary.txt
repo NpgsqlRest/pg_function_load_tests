@@ -1,0 +1,22 @@
+     ✓ fastapi-app-v0.128.0 status is 200
+     ✓ fastapi-app-v0.128.0 response is JSON
+     ✓ fastapi-app-v0.128.0 response has all data records
+     ✓ fastapi-app-v0.128.0 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 8744      ✗ 0   
+     data_received..................: 161 MB  2.7 MB/s
+     data_sent......................: 1.1 MB  19 kB/s
+     http_req_blocked...............: avg=7.83µs   min=2.16µs  med=6.54µs   max=1.06ms   p(90)=9.4µs    p(95)=10.67µs
+     http_req_connecting............: avg=173ns    min=0s      med=0s       max=378.5µs  p(90)=0s       p(95)=0s     
+   ✓ http_req_duration..............: avg=15.22ms  min=6.34ms  med=16.3ms   max=137.02ms p(90)=19.49ms  p(95)=22.25ms
+       { expected_response:true }...: avg=15.22ms  min=6.34ms  med=16.3ms   max=137.02ms p(90)=19.49ms  p(95)=22.25ms
+   ✓ http_req_failed................: 0.00%   ✓ 0         ✗ 2186
+     http_req_receiving.............: avg=329.42µs min=47.28µs med=219.37µs max=4.26ms   p(90)=659.72µs p(95)=1.02ms 
+     http_req_sending...............: avg=29.64µs  min=8.44µs  med=23.99µs  max=1.2ms    p(90)=38µs     p(95)=49.47µs
+     http_req_tls_handshaking.......: avg=0s       min=0s      med=0s       max=0s       p(90)=0s       p(95)=0s     
+     http_req_waiting...............: avg=14.86ms  min=6.26ms  med=15.97ms  max=134.33ms p(90)=18.91ms  p(95)=21.79ms
+     http_reqs......................: 2186    36.425173/s
+     iteration_duration.............: avg=27.43ms  min=10.95ms med=29.01ms  max=150.74ms p(90)=34.91ms  p(95)=39.81ms
+     iterations.....................: 2186    36.425173/s
+     vus............................: 1       min=1       max=1 
+     vus_max........................: 1       min=1       max=1 

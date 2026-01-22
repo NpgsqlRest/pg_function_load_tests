@@ -1,0 +1,28 @@
+{
+  "bun-app-v1.3.3": {"peakMemMb":168.00,"avgMemMb":59.31,"avgCpu":4.29}
+,
+  "django-app-v6.0.1": {"peakMemMb":824.00,"avgMemMb":386.77,"avgCpu":11.84}
+,
+  "fastapi-app-v0.128.0": {"peakMemMb":198.10,"avgMemMb":133.73,"avgCpu":4.29}
+,
+  "fastify-app-v5.7.1": {"peakMemMb":411.40,"avgMemMb":58.96,"avgCpu":3.68}
+,
+  "go-app-v1.25": {"peakMemMb":75.94,"avgMemMb":21.35,"avgCpu":4.84}
+,
+  "java24-spring-boot-v4.0.1": {"peakMemMb":1010.00,"avgMemMb":806.79,"avgCpu":5.38}
+,
+  "net10-minapi-dapper-jit": {"peakMemMb":192.70,"avgMemMb":96.55,"avgCpu":4.19}
+,
+  "net10-minapi-ef-jit": {"peakMemMb":256.50,"avgMemMb":143.59,"avgCpu":6.16}
+,
+  "net9-minapi-ef-jit": {"peakMemMb":276.60,"avgMemMb":133.80,"avgCpu":6.36}
+,
+  "npgsqlrest-aot-v3.4.7": {"peakMemMb":237.80,"avgMemMb":59.84,"avgCpu":4.30}
+,
+  "npgsqlrest-jit-v3.4.7": {"peakMemMb":321.30,"avgMemMb":111.41,"avgCpu":4.42}
+,
+  "rust-app-v1.91.1": {"peakMemMb":168.20,"avgMemMb":43.03,"avgCpu":3.79}
+,
+  "swoole-php-app-v6.0": {"peakMemMb":78.99,"avgMemMb":50.92,"avgCpu":4.49}
+
+}

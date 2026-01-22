@@ -1,0 +1,22 @@
+     ✓ bun-app-v1.3.3 status is 200
+     ✓ bun-app-v1.3.3 response is JSON
+     ✓ bun-app-v1.3.3 response has all data records
+     ✓ bun-app-v1.3.3 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 19088     ✗ 0    
+     data_received..................: 1.8 GB  30 MB/s
+     data_sent......................: 2.4 MB  40 kB/s
+     http_req_blocked...............: avg=722.86µs min=2.48µs  med=5.68µs   max=685.16ms p(90)=8.14µs   p(95)=11.55µs 
+     http_req_connecting............: avg=366.65µs min=0s      med=0s       max=249.74ms p(90)=0s       p(95)=0s      
+   ✓ http_req_duration..............: avg=104.42ms min=8.52ms  med=53ms     max=1.96s    p(90)=250.8ms  p(95)=421.2ms 
+       { expected_response:true }...: avg=104.42ms min=8.52ms  med=53ms     max=1.96s    p(90)=250.8ms  p(95)=421.2ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0         ✗ 4772 
+     http_req_receiving.............: avg=49.65ms  min=83.01µs med=1.2ms    max=1.9s     p(90)=174.59ms p(95)=335.98ms
+     http_req_sending...............: avg=2.7ms    min=7.22µs  med=18.51µs  max=791.63ms p(90)=95.65µs  p(95)=143.48µs
+     http_req_tls_handshaking.......: avg=0s       min=0s      med=0s       max=0s       p(90)=0s       p(95)=0s      
+     http_req_waiting...............: avg=52.06ms  min=8.14ms  med=44.32ms  max=463.83ms p(90)=92.43ms  p(95)=110.71ms
+     http_reqs......................: 4772    78.551792/s
+     iteration_duration.............: avg=637.58ms min=38.5ms  med=440.06ms max=7.59s    p(90)=1.42s    p(95)=1.88s   
+     iterations.....................: 4772    78.551792/s
+     vus............................: 99      min=2       max=99 
+     vus_max........................: 100     min=100     max=100

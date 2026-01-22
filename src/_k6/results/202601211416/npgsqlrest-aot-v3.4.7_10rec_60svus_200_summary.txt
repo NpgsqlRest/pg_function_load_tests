@@ -1,0 +1,22 @@
+     ✓ npgsqlrest-aot-v3.4.7 status is 200
+     ✓ npgsqlrest-aot-v3.4.7 response is JSON
+     ✓ npgsqlrest-aot-v3.4.7 response has all data records
+     ✓ npgsqlrest-aot-v3.4.7 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 535412      ✗ 0     
+     data_received..................: 959 MB  16 MB/s
+     data_sent......................: 72 MB   1.2 MB/s
+     http_req_blocked...............: avg=29.18µs min=1.07µs   med=3.21µs  max=269.7ms  p(90)=4.67µs   p(95)=6.64µs  
+     http_req_connecting............: avg=9.38µs  min=0s       med=0s      max=136.19ms p(90)=0s       p(95)=0s      
+   ✓ http_req_duration..............: avg=26.31ms min=1.02ms   med=13.01ms max=785.03ms p(90)=56.23ms  p(95)=103.33ms
+       { expected_response:true }...: avg=26.31ms min=1.02ms   med=13.01ms max=785.03ms p(90)=56.23ms  p(95)=103.33ms
+   ✓ http_req_failed................: 0.00%   ✓ 0           ✗ 133853
+     http_req_receiving.............: avg=8.7ms   min=12.18µs  med=34.25µs max=776.58ms p(90)=14.41ms  p(95)=63.03ms 
+     http_req_sending...............: avg=1.07ms  min=4.38µs   med=10.37µs max=621.65ms p(90)=55.51µs  p(95)=129.23µs
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s       p(90)=0s       p(95)=0s      
+     http_req_waiting...............: avg=16.53ms min=981.39µs med=12.06ms max=204.59ms p(90)=36.06ms  p(95)=44.93ms 
+     http_reqs......................: 133853  2228.145517/s
+     iteration_duration.............: avg=44.77ms min=1.65ms   med=19.23ms max=1.11s    p(90)=120.55ms p(95)=180.74ms
+     iterations.....................: 133853  2228.145517/s
+     vus............................: 199     min=4         max=199 
+     vus_max........................: 200     min=200       max=200 

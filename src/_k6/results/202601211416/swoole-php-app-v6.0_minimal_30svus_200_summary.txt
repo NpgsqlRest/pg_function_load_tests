@@ -1,0 +1,21 @@
+     ✓ swoole-php-app-v6.0 status is 200
+     ✓ swoole-php-app-v6.0 response is JSON
+     ✓ swoole-php-app-v6.0 response has status ok
+
+     checks.........................: 100.00% ✓ 1108224     ✗ 0     
+     data_received..................: 79 MB   2.6 MB/s
+     data_sent......................: 36 MB   1.2 MB/s
+     http_req_blocked...............: avg=8.94µs   min=711ns    med=2µs     max=81.87ms  p(90)=3.09µs  p(95)=3.79µs 
+     http_req_connecting............: avg=1.13µs   min=0s       med=0s      max=29.24ms  p(90)=0s      p(95)=0s     
+   ✓ http_req_duration..............: avg=7.47ms   min=245.76µs med=5.14ms  max=179.06ms p(90)=16.42ms p(95)=21.8ms 
+       { expected_response:true }...: avg=7.47ms   min=245.76µs med=5.14ms  max=179.06ms p(90)=16.42ms p(95)=21.8ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0           ✗ 369408
+     http_req_receiving.............: avg=162.76µs min=5.87µs   med=18.08µs max=111.58ms p(90)=32.29µs p(95)=114.4µs
+     http_req_sending...............: avg=69.81µs  min=2.15µs   med=6.69µs  max=101.99ms p(90)=10.61µs p(95)=15.86µs
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s       p(90)=0s      p(95)=0s     
+     http_req_waiting...............: avg=7.24ms   min=227.88µs med=5.04ms  max=119.15ms p(90)=16.11ms p(95)=21.34ms
+     http_reqs......................: 369408  12308.86903/s
+     iteration_duration.............: avg=8.08ms   min=303.23µs med=5.47ms  max=179.17ms p(90)=17.68ms p(95)=23.86ms
+     iterations.....................: 369408  12308.86903/s
+     vus............................: 199     min=7         max=199 
+     vus_max........................: 200     min=200       max=200 

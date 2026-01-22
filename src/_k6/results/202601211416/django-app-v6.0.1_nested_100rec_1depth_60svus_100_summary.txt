@@ -1,0 +1,23 @@
+     ✓ django-app-v6.0.1 status is 200
+     ✓ django-app-v6.0.1 response is JSON
+     ✓ django-app-v6.0.1 response has all records
+     ✗ django-app-v6.0.1 response has nested structure
+      ↳  0% — ✓ 0 / ✗ 100217
+
+     checks.........................: 75.00% ✓ 300651     ✗ 100217
+     data_received..................: 434 MB 7.2 MB/s
+     data_sent......................: 12 MB  192 kB/s
+     http_req_blocked...............: avg=5.59µs   min=1.16µs med=3.12µs  max=19.75ms  p(90)=4.34µs  p(95)=5.14µs  
+     http_req_connecting............: avg=372ns    min=0s     med=0s      max=6.95ms   p(90)=0s      p(95)=0s      
+   ✓ http_req_duration..............: avg=28.73ms  min=1.24ms med=26.12ms max=212.04ms p(90)=53.74ms p(95)=65.41ms 
+       { expected_response:true }...: avg=28.73ms  min=1.24ms med=26.12ms max=212.04ms p(90)=53.74ms p(95)=65.41ms 
+   ✓ http_req_failed................: 0.00%  ✓ 0          ✗ 100217
+     http_req_receiving.............: avg=109.72µs min=14.8µs med=35.18µs max=35.05ms  p(90)=62.62µs p(95)=150.04µs
+     http_req_sending...............: avg=32.57µs  min=4.14µs med=9.46µs  max=32.78ms  p(90)=18.02µs p(95)=37.45µs 
+     http_req_tls_handshaking.......: avg=0s       min=0s     med=0s      max=0s       p(90)=0s      p(95)=0s      
+     http_req_waiting...............: avg=28.59ms  min=1.2ms  med=25.99ms max=212ms    p(90)=53.54ms p(95)=65.12ms 
+     http_reqs......................: 100217 1668.56734/s
+     iteration_duration.............: avg=29.96ms  min=1.67ms med=27.36ms max=212.7ms  p(90)=55.02ms p(95)=67.03ms 
+     iterations.....................: 100217 1668.56734/s
+     vus............................: 99     min=2        max=99  
+     vus_max........................: 100    min=100      max=100 
