@@ -2,12 +2,15 @@ import { check } from "k6";
 import http from "k6/http";
 import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.2/index.js';
 
-const stamp = __ENV.STAMP.trim();
+const stamp = (__ENV.STAMP || '').trim();
 const tag = __ENV.TAG.trim();
 const records = Number(__ENV.RECORDS.trim() || "10")
 const duration = __ENV.DURATION.trim() || "60s";
+const ramp = (__ENV.RAMP || '10s').trim();
 const target = Number(__ENV.TARGET.trim() || "100");
 const port = __ENV.PORT.trim();
+// Optional remote host override (two-server topology); defaults to the docker service name
+const targetHost = (__ENV.TARGET_HOST || '').trim() || tag;
 
 // Determine the path based on the service type
 function getPath(tag) {
@@ -21,7 +24,6 @@ function getPath(tag) {
 // .NET minimal API and NpgsqlRest bind arrays this way
 function usesRepeatedQueryParams(tag) {
     return tag.indexOf('npgsqlrest') !== -1 ||
-           tag.indexOf('net9-minapi') !== -1 ||
            tag.indexOf('net10-minapi') !== -1;
 }
 
@@ -48,7 +50,7 @@ const baseParams = {
 // Build URL with all test parameters
 // NpgsqlRest uses repeated query params for arrays: _int_array=1&_int_array=2&_int_array=3
 // Other services use PostgreSQL array literal: _int_array={1,2,3}
-let baseUrl = 'http://' + tag + ':' + port + path + '?' +
+let baseUrl = 'http://' + targetHost + ':' + port + path + '?' +
     Object.entries(baseParams)
     .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
     .join('&');
@@ -63,6 +65,7 @@ if (usesRepeatedQueryParams(tag)) {
 }
 
 export const options = {
+    summaryTrendStats: ['avg', 'min', 'med', 'max', 'p(90)', 'p(95)', 'p(99)'],
     thresholds: {
         http_req_failed: [{ threshold: "rate<0.01", abortOnFail: true }], // availability threshold for error rate
         http_req_duration: ["p(99)<1000"], // Latency threshold for percentile
@@ -71,7 +74,8 @@ export const options = {
         breaking: {
             executor: "ramping-vus",
             stages: [
-                { duration: duration, target: target },
+                { duration: ramp, target: target },   // ramp up
+                { duration: duration, target: target },  // hold at target
             ],
         },
     },
@@ -98,11 +102,13 @@ export default function () {
 }
 
 export function handleSummary(data) {
+    if (!stamp) { return {}; }  // warmup mode: no output files
     const fileTag = `${tag}_${records}rec_${duration}vus_${target}`;
     const reqs = data.metrics.http_reqs.values.count;
     const rps = data.metrics.http_reqs.values.rate;
     const avgDuration = data.metrics.iteration_duration.values.avg;
     const failedReqs = data.metrics.http_req_failed.values.passes;
+    const dur = data.metrics.http_req_duration ? data.metrics.http_req_duration.values : {};
 
     // JSON data for aggregation (sortable by rps)
     const jsonData = JSON.stringify({
@@ -115,6 +121,16 @@ export function handleSummary(data) {
         rps: rps,
         avgLatency: avgDuration,
         failed: failedReqs,
+        latency: {
+            avg: dur.avg,
+            med: dur.med,
+            p90: dur['p(90)'],
+            p95: dur['p(95)'],
+            p99: dur['p(99)'],
+            max: dur.max
+        },
+        dataReceivedBytes: data.metrics.data_received ? data.metrics.data_received.values.count : 0,
+        dataSentBytes: data.metrics.data_sent ? data.metrics.data_sent.values.count : 0,
         summaryFile: `${fileTag}_summary.txt`
     });
 

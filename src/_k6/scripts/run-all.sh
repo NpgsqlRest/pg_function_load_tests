@@ -68,6 +68,12 @@ SERVER_PARAMS_DURATION="60s"
 # This ensures each test starts from a clean baseline state
 SERVER_SLEEP="30"
 
+# Ramp-up stage before the measured hold (k6 stages: ramp to target, then hold)
+SERVER_RAMP="10s"
+# Untimed warmup run before every measured test (JIT compilation, connection pools,
+# PG plan cache for the exact endpoint under test). 0 = skip.
+SERVER_WARMUP="10s"
+
 # =============================================================================
 # LOCAL PROFILE (for quick validation and development)
 # Designed to complete quickly while still testing basic functionality
@@ -104,6 +110,8 @@ LOCAL_PARAMS_DURATION="15s"
 
 # common settings
 LOCAL_SLEEP="2"
+LOCAL_RAMP="3s"
+LOCAL_WARMUP="2s"
 
 # =============================================================================
 # MINIMAL PROFILE (for markdown generation testing only)
@@ -142,6 +150,8 @@ MINIMAL_PARAMS_DURATION="3s"
 
 # common settings - no sleep needed for minimal
 MINIMAL_SLEEP="1"
+MINIMAL_RAMP="1s"
+MINIMAL_WARMUP="0"
 
 # =============================================================================
 # Apply profile settings
@@ -165,6 +175,8 @@ if [ "$PROFILE" = "server" ]; then
     PARAMS_VUS="$SERVER_PARAMS_VUS"
     PARAMS_DURATION="$SERVER_PARAMS_DURATION"
     SLEEP_BETWEEN="$SERVER_SLEEP"
+    RAMP="$SERVER_RAMP"
+    WARMUP="$SERVER_WARMUP"
     echo "*** Using SERVER profile (Hetzner CCX33)"
 elif [ "$PROFILE" = "minimal" ]; then
     PERFTEST_RECORDS="$MINIMAL_PERFTEST_RECORDS"
@@ -185,6 +197,8 @@ elif [ "$PROFILE" = "minimal" ]; then
     PARAMS_VUS="$MINIMAL_PARAMS_VUS"
     PARAMS_DURATION="$MINIMAL_PARAMS_DURATION"
     SLEEP_BETWEEN="$MINIMAL_SLEEP"
+    RAMP="$MINIMAL_RAMP"
+    WARMUP="$MINIMAL_WARMUP"
     echo "*** Using MINIMAL profile (markdown validation only)"
 else
     PERFTEST_RECORDS="$LOCAL_PERFTEST_RECORDS"
@@ -205,16 +219,21 @@ else
     PARAMS_VUS="$LOCAL_PARAMS_VUS"
     PARAMS_DURATION="$LOCAL_PARAMS_DURATION"
     SLEEP_BETWEEN="$LOCAL_SLEEP"
+    RAMP="$LOCAL_RAMP"
+    WARMUP="$LOCAL_WARMUP"
     echo "*** Using LOCAL profile (quick validation)"
 fi
 
 # =============================================================================
 # Test execution setup
 # =============================================================================
-STAMP=$(date +"%Y%m%d%H%M")
+# Respect a STAMP passed from the host (run-benchmark.sh) so the host results
+# dir and the container results dir are guaranteed to match; generate otherwise.
+STAMP=${STAMP:-$(date +"%Y%m%d%H%M")}
 
 mkdir -p /results
 mkdir -p /results/$STAMP
+echo "start_epoch,end_epoch,tag,script,exit_code" > /results/$STAMP/test_log.csv
 
 echo "*** Starting unified benchmark suite"
 echo "*** Output will be saved in /results/$STAMP"
@@ -223,46 +242,125 @@ echo "*** Scenario: $SCENARIO"
 
 # Service definitions: tag port
 read -r -d '' SERVICES << 'EOF'
-django-app-v6.0.1 8000
-fastapi-app-v0.128.0 8001
-fastify-app-v5.7.1 3101
-bun-app-v1.3.3 3104
-go-app-v1.25 5200
-java24-spring-boot-v4.0.1 5400
-rust-app-v1.91.1 5300
-swoole-php-app-v6.0 3103
-postgrest-v14.3 3000
-net9-minapi-ef-jit 5002
+django-app-v6.0.7 8000
+fastapi-app-v0.139.0 8001
+fastify-app-v5.10.0 3101
+bun-app-v1.3.14 3104
+go-app-v1.26 5200
+java25-spring-boot-v4.1.0 5400
+rust-app-v1.97.0 5300
+swoole-php-app-v6.2.1 3103
+express-app-v5.2.1 3102
+deno-app-v2.9.2 3105
+axum-app-v0.8.9 5301
+postgrest-v14.14 3000
 net10-minapi-ef-jit 5003
 net10-minapi-dapper-jit 5004
-npgsqlrest-aot-v3.4.7 5005
-npgsqlrest-jit-v3.4.7 5006
+npgsqlrest-routine-aot-v3.4.7 5005
+npgsqlrest-routine-jit-v3.4.7 5006
+npgsqlrest-routine-aot-v3.21.0 5007
+npgsqlrest-routine-jit-v3.21.0 5008
+npgsqlrest-file-aot-v3.21.0 5009
+npgsqlrest-file-jit-v3.21.0 5010
 EOF
 
 # =============================================================================
 # Helper functions
 # =============================================================================
 
+# Optional remote target host (two-server topology): when TARGET_HOST is set,
+# k6 connects to TARGET_HOST:port instead of the docker service name.
+TARGET_HOST=${TARGET_HOST:-""}
+
+# Pause idle services during each test (removes idle JVM/CLR/pool background noise
+# while preserving JIT-warmed state). Requires the docker CLI and the docker socket
+# mounted into this container; silently disabled otherwise.
+PAUSE_IDLE=${PAUSE_IDLE:-"true"}
+DOCKER_OK="false"
+if [ "$PAUSE_IDLE" = "true" ] && command -v docker > /dev/null 2>&1 && docker ps > /dev/null 2>&1; then
+    DOCKER_OK="true"
+    echo "*** PAUSE_IDLE enabled: idle services will be paused during tests"
+else
+    echo "*** PAUSE_IDLE disabled (no docker CLI/socket or PAUSE_IDLE=false)"
+fi
+
+service_container() {
+    docker ps -aq --filter "label=com.docker.compose.service=$1" | head -n 1
+}
+
+# Pause every service except the active one; unpause the active one.
+# postgres and the test container are never touched (not in SERVICES).
+ensure_only_active() {
+    [ "$DOCKER_OK" = "true" ] || return 0
+    local active=$1
+    echo "$SERVICES" | while read -r tag port; do
+        [ -z "$tag" ] && continue
+        local cid=$(service_container "$tag")
+        [ -z "$cid" ] && continue
+        if [ "$tag" = "$active" ]; then
+            docker unpause "$cid" > /dev/null 2>&1 || true
+        else
+            docker pause "$cid" > /dev/null 2>&1 || true
+        fi
+    done
+}
+
+unpause_all() {
+    [ "$DOCKER_OK" = "true" ] || return 0
+    echo "$SERVICES" | while read -r tag port; do
+        [ -z "$tag" ] && continue
+        local cid=$(service_container "$tag")
+        [ -z "$cid" ] && continue
+        docker unpause "$cid" > /dev/null 2>&1 || true
+    done
+}
+trap unpause_all EXIT
+
+# Per-test test log: start/end epochs let resource stats be windowed to the
+# exact period each service was under load; exit code records threshold aborts.
+TEST_LOG="/results/$STAMP/test_log.csv"
+
+# Warmup + measured run. The warmup run uses the SAME script and parameters
+# (so JIT compiles the exact code path and PG caches the exact plan) but no
+# STAMP -> the script writes no output files.
+run_k6() {
+    local script_path=$1
+    local script_name=$2
+    local tag=$3
+    local port=$4
+    shift 4
+
+    ensure_only_active "$tag"
+
+    local host_args=""
+    [ -n "$TARGET_HOST" ] && host_args="-e TARGET_HOST=$TARGET_HOST"
+
+    if [ "$WARMUP" != "0" ]; then
+        echo "  warmup ($WARMUP)..."
+        k6 run "$script_path" -e TAG=$tag -e PORT=$port $host_args \
+            -e DURATION=$WARMUP -e RAMP=2s "$@" > /dev/null 2>&1 || true
+        sleep 2
+    fi
+
+    echo "*** Running $script_name for $tag:$port"
+    local start=$(date +%s)
+    k6 run "$script_path" -e STAMP=$STAMP -e TAG=$tag -e PORT=$port $host_args \
+        -e RAMP=$RAMP "$@"
+    local code=$?
+    local end=$(date +%s)
+    echo "$start,$end,$tag,$script_name,$code" >> "$TEST_LOG"
+    if [ $code -ne 0 ]; then
+        echo "!!! $tag $script_name exited with code $code (threshold abort or error)"
+    fi
+    sleep $SLEEP_BETWEEN
+}
+
 run_test() {
     local script=$1
     local tag=$2
     local port=$3
     shift 3
-    echo "*** Running $script for $tag:$port"
-    k6 run /scripts/${script} -e STAMP=$STAMP -e TAG=$tag -e PORT=$port "$@"
-    sleep $SLEEP_BETWEEN
-}
-
-# Warmup function - sends requests to trigger JIT compilation
-# Results are NOT recorded (no STAMP passed)
-warmup_service() {
-    local tag=$1
-    local port=$2
-    echo "  Warming up $tag..."
-    # Quick warmup: 10 VUs for 5 seconds, minimal endpoint
-    k6 run --quiet /scripts/scenarios/minimal-baseline.js \
-        -e TAG=$tag -e PORT=$port -e DURATION=5s -e TARGET=10 \
-        --summary-trend-stats="avg" --no-summary 2>/dev/null || true
+    run_k6 "/scripts/${script}" "$script" "$tag" "$port" "$@"
 }
 
 run_scenario_test() {
@@ -270,9 +368,7 @@ run_scenario_test() {
     local tag=$2
     local port=$3
     shift 3
-    echo "*** Running scenarios/$script for $tag:$port"
-    k6 run /scripts/scenarios/${script} -e STAMP=$STAMP -e TAG=$tag -e PORT=$port "$@"
-    sleep $SLEEP_BETWEEN
+    run_k6 "/scripts/scenarios/${script}" "scenarios/$script" "$tag" "$port" "$@"
 }
 
 run_for_all_services() {
@@ -295,26 +391,13 @@ run_for_all_services() {
 }
 
 # =============================================================================
-# WARMUP PHASE
-# JIT-compiled frameworks (Java, .NET) need warmup before stable benchmarks.
-# This phase triggers JIT compilation so it doesn't affect actual measurements.
+# WARMUP
+# Warmup now happens per test inside run_k6(): each measured run is preceded by
+# an untimed run of the SAME script and parameters, so JIT compilation, connection
+# pools, and PostgreSQL plan caches are warm for the exact code path being measured.
+# (The old global warmup phase only exercised perf-minimal and silently crashed on
+# a missing STAMP env - it never actually warmed anything.)
 # =============================================================================
-if [ "$PROFILE" = "server" ]; then
-    echo ""
-    echo "############################################################"
-    echo "# WARMUP PHASE: Triggering JIT compilation for all services"
-    echo "############################################################"
-    echo ""
-
-    echo "$SERVICES" | while read -r tag port; do
-        [ -z "$tag" ] && continue
-        warmup_service "$tag" "$port"
-    done
-
-    echo ""
-    echo "*** Warmup complete. Waiting ${SLEEP_BETWEEN}s before starting benchmarks..."
-    sleep $SLEEP_BETWEEN
-fi
 
 # =============================================================================
 # SCENARIO 1: perf_test (Original comprehensive data type serialization)
@@ -586,8 +669,38 @@ generate_table "nested" "vus_depth" "Nested JSON Serialization"
 generate_table "large" "vus_size" "Large Payload"
 generate_table "params" "vus" "Many Parameters (20 params)"
 
-# Clean up JSON files
+# =============================================================================
+# Merge per-test JSON results into one machine-readable dataset.
+# results.json + results.csv are the raw data every report view (and the blog
+# analysis) is generated from - regenerate views any time without re-running.
+# =============================================================================
+jq -s "{
+    meta: {
+        stamp: \"$STAMP\",
+        profile: \"$PROFILE\",
+        scenario: \"$SCENARIO\",
+        ramp: \"$RAMP\",
+        warmup: \"$WARMUP\",
+        sleepBetween: \"$SLEEP_BETWEEN\"
+    },
+    results: .
+}" /results/$STAMP/*.json > /tmp/results.json 2>/dev/null
+
+jq -rs '
+    ["scenario","tag","vus","records","depth","sizeKb","duration","requests","rps",
+     "latencyAvg","latencyMed","latencyP90","latencyP95","latencyP99","latencyMax",
+     "dataReceivedBytes","dataSentBytes","failed"],
+    (.[] | [.scenario, .tag, .vus, (.records // ""), (.depth // ""), (.sizeKb // ""),
+            .duration, .requests, .rps,
+            (.latency.avg // .avgLatency // ""), (.latency.med // ""), (.latency.p90 // ""),
+            (.latency.p95 // ""), (.latency.p99 // ""), (.latency.max // ""),
+            (.dataReceivedBytes // ""), (.dataSentBytes // ""), .failed])
+    | @csv' /results/$STAMP/*.json > /tmp/results.csv 2>/dev/null
+
+# Replace per-test JSON files with the merged dataset
 rm /results/$STAMP/*.json 2>/dev/null
+mv /tmp/results.json /results/$STAMP/results.json
+mv /tmp/results.csv /results/$STAMP/results.csv
 
 echo ""
 echo "=========================================="

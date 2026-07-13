@@ -9,17 +9,27 @@ This document details the differences between services when calling the same Pos
 | Django | 8000 | `/api/perf-*` | Python |
 | FastAPI | 8001 | `/api/perf-*` | Python |
 | Fastify | 3101 | `/api/perf-*` | Node.js |
+| Express | 3102 | `/api/perf-*` | Node.js |
 | Bun | 3104 | `/api/perf-*` | TypeScript |
+| Deno | 3105 | `/api/perf-*` | TypeScript |
 | Go | 5200 | `/api/perf-*` | Go |
 | Spring Boot | 5400 | `/api/perf-*` | Java |
 | Rust (Actix) | 5300 | `/api/perf-*` | Rust |
+| Rust (Axum) | 5301 | `/api/perf-*` | Rust |
 | Swoole | 3103 | `/api/perf-*` | PHP |
 | PostgREST | 3000 | `/rpc/perf_*` | Haskell |
-| .NET 9 (EF) | 5002 | `/api/perf-*` | C# |
 | .NET 10 (EF) | 5003 | `/api/perf-*` | C# |
 | .NET 10 (Dapper) | 5004 | `/api/perf-*` | C# |
-| NpgsqlRest (AOT) | 5005 | `/api/perf-*` | C# |
-| NpgsqlRest (JIT) | 5006 | `/api/perf-*` | C# |
+| NpgsqlRest 3.4.7 Routine (AOT) | 5005 | `/api/perf-*` | C# |
+| NpgsqlRest 3.4.7 Routine (JIT) | 5006 | `/api/perf-*` | C# |
+| NpgsqlRest 3.21 Routine (AOT) | 5007 | `/api/perf-*` | C# |
+| NpgsqlRest 3.21 Routine (JIT) | 5008 | `/api/perf-*` | C# |
+| NpgsqlRest 3.21 SQL Files (AOT) | 5009 | `/api/perf-*` | C# |
+| NpgsqlRest 3.21 SQL Files (JIT) | 5010 | `/api/perf-*` | C# |
+
+**NpgsqlRest endpoint sources**: Routine services call the PostgreSQL functions from `_postgres/init.sql`. SQL Files services execute raw queries from `_sql_files/*.sql` directly (no function call) — the query bodies are kept identical to the function bodies.
+
+**Sibling implementations** (added 2026-07): in the serialization tables below, **Express** behaves identically to **Fastify** (same `pg` driver: bigint/numeric as strings, interval as object), **Deno** behaves identically to **Bun** (same `postgres.js` driver: bigint/numeric as strings, interval as PostgreSQL string), and **Axum** behaves identically to **Rust (Actix)** (same `tokio-postgres` stack: numbers as numbers, interval as PostgreSQL string).
 
 ## URL Pattern Differences
 
@@ -52,7 +62,7 @@ This document details the differences between services when calling the same Pos
 | Rust | `application/json` |
 | Swoole | `application/json` |
 | PostgREST | `application/json; charset=utf-8` |
-| .NET 9/10 (EF/Dapper) | `application/json; charset=utf-8` |
+| .NET 10 (EF/Dapper) | `application/json; charset=utf-8` |
 | NpgsqlRest (AOT/JIT) | `application/json` |
 
 ### Transfer-Encoding
@@ -94,7 +104,7 @@ This document details the differences between services when calling the same Pos
 | Fastify | Object | `{"days":1}` |
 | Bun | PostgreSQL string | `1 day` |
 | Go | PostgreSQL string | `1 day` |
-| Spring Boot | Complex object | `{"days":1,"hours":0,...,"value":"0 years 0 mons 1 days..."}` |
+| Spring Boot | PostgreSQL string | `1 days` |
 | Rust | PostgreSQL string | `1 day` |
 | Swoole | PostgreSQL string | `1 day` |
 | PostgREST | PostgreSQL string | `1 day` |
@@ -144,17 +154,14 @@ This document details the differences between services when calling the same Pos
 | Fastify | Native object | Native object |
 | Bun | Merged array | Merged array |
 | Go | String `"{...}"` | String `"{...}"` |
-| Spring Boot | Wrapped object | Wrapped object |
+| Spring Boot | Native object | Native object |
 | Rust | Native object | Native object |
 | Swoole | String `"{...}"` | String `"{...}"` |
 | PostgREST | Native object | Native object |
 | .NET (all) | Native object | Native object |
 | NpgsqlRest | Native object | Native object |
 
-**Spring Boot Special Case**: Wraps JSON types in metadata object:
-```json
-{"null":false,"type":"jsonb","value":"{\"key\": \"value\"}"}
-```
+**Spring Boot** (since 2026-07): a custom Jackson serializer emits PostgreSQL json/jsonb values as raw JSON (previously they were wrapped in a `{"null":...,"type":...,"value":...}` metadata object, inflating payloads).
 
 **Bun Special Case**: Returns JSON as array of original + computed:
 ```json
@@ -207,7 +214,7 @@ Tests nested JSONB serialization with `_records=2&_depth=2`:
 | Fastify | Native object `{"a":{"b":1}}` |
 | Bun | Native object `{"a":{"b":1}}` |
 | Go | String `"{\"a\": {\"b\": 1}}"` |
-| Spring Boot | Wrapped object `{"null":false,"type":"jsonb","value":"..."}` |
+| Spring Boot | Native object (with spaces) `{"a": {"b": 1}}` |
 | Rust | Native object `{"a":{"b":1}}` |
 | Swoole | String `"{\"a\": {\"b\": 1}}"` |
 | PostgREST | Native object (with spaces) `{"a": {"b": 1}}` |
@@ -227,7 +234,7 @@ Tests POST body parsing with JSON payload `{"_records": 2, "_payload": {"test": 
 | Fastify | Native object `{"test":"value"}` |
 | Bun | String `"{\"test\":\"value\"}"` (no spaces) |
 | Go | String `"{\"test\": \"value\"}"` |
-| Spring Boot | Wrapped object |
+| Spring Boot | Native object (with spaces) `{"test": "value"}` |
 | Rust | Native object `{"test":"value"}` |
 | Swoole | String `"{\"test\": \"value\"}"` |
 | PostgREST | Native object (with spaces) `{"test": "value"}` |
@@ -267,6 +274,5 @@ These differences generally don't affect benchmark validity because:
 3. **Same PostgreSQL functions** - database work is identical
 
 However, note:
-- **Spring Boot's wrapped JSON types** add overhead to response size
 - **Swoole's string arrays** may be smaller than JSON arrays
 - **String vs native JSON** affects client-side parsing but not server overhead

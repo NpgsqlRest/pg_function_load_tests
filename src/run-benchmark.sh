@@ -97,16 +97,54 @@ stop_stats_collector() {
     fi
 }
 
-# Calculate stats summary from CSV
+# Calculate stats summary from CSV.
+# When a test_log.csv exists (written by run-all.sh), avg/peak CPU and memory are
+# computed ONLY over the windows when that service was actually under test —
+# otherwise the averages would include days of idle time and be meaningless.
 summarize_stats() {
     local stats_file=$1
+    local service_name=$2
 
     if [ ! -f "$stats_file" ] || [ $(wc -l < "$stats_file") -lt 2 ]; then
         echo '{"peakMemMb":0,"avgMemMb":0,"avgCpu":0}'
         return
     fi
 
-    # Skip header, calculate peak/avg memory and avg CPU
+    local windows_file=""
+    local test_log="${RESULTS_DIR}/test_log.csv"
+    if [ -n "$service_name" ] && [ -f "$test_log" ]; then
+        windows_file=$(mktemp)
+        # test_log.csv: start_epoch,end_epoch,tag,script,exit_code
+        awk -F',' -v tag="$service_name" '$3 == tag { print $1, $2 }' "$test_log" > "$windows_file"
+    fi
+
+    if [ -n "$windows_file" ] && [ -s "$windows_file" ]; then
+        # Only samples inside this service's test windows
+        awk -F'[ ,]' '
+        NR == FNR { ws[++n] = $1; we[n] = $2; next }
+        FNR == 1 { next }
+        {
+            for (i = 1; i <= n; i++) {
+                if ($1 >= ws[i] && $1 <= we[i]) {
+                    if ($3 > max_mem) max_mem = $3
+                    sum_mem += $3; sum_cpu += $2; count++
+                    break
+                }
+            }
+        }
+        END {
+            if (count > 0) {
+                printf "{\"peakMemMb\":%.2f,\"avgMemMb\":%.2f,\"avgCpu\":%.2f}", max_mem, sum_mem/count, sum_cpu/count
+            } else {
+                print "{\"peakMemMb\":0,\"avgMemMb\":0,\"avgCpu\":0}"
+            }
+        }' "$windows_file" "$stats_file"
+        rm -f "$windows_file"
+        return
+    fi
+    [ -n "$windows_file" ] && rm -f "$windows_file"
+
+    # Fallback: whole-run stats (no test log available)
     tail -n +2 "$stats_file" | awk -F',' '
     BEGIN { max_mem=0; sum_mem=0; sum_cpu=0; count=0 }
     {
@@ -132,7 +170,7 @@ CONTAINERS=$(get_service_containers)
 echo "Found containers: $(echo $CONTAINERS | wc -w)"
 
 for container in $CONTAINERS; do
-    # Extract service name from container name (e.g., "src-django-app-v6.0.1-1" -> "django-app-v6.0.1")
+    # Extract service name from container name (e.g., "src-django-app-v6.0.7-1" -> "django-app-v6.0.7")
     service_name=$(echo "$container" | sed 's/^src-//' | sed 's/-[0-9]*$//')
     stats_file="${STATS_DIR}/${service_name}_stats.csv"
 
@@ -170,7 +208,8 @@ RESOURCE_SUMMARY="${RESULTS_DIR}/resource_usage.md"
 cat > "$RESOURCE_SUMMARY" << 'EOF'
 # Resource Usage Summary
 
-Memory and CPU usage captured during benchmark execution.
+Memory and CPU usage per service, measured ONLY during that service's test windows
+(idle periods are excluded via test_log.csv).
 
 | Service | Peak Memory (MB) | Avg Memory (MB) | Avg CPU (%) |
 |---------|----------------:|----------------:|------------:|
@@ -180,7 +219,7 @@ for stats_file in "${STATS_DIR}"/*_stats.csv; do
     [ -f "$stats_file" ] || continue
 
     service_name=$(basename "$stats_file" _stats.csv)
-    summary=$(summarize_stats "$stats_file")
+    summary=$(summarize_stats "$stats_file" "$service_name")
 
     peak_mem=$(echo "$summary" | grep -o '"peakMemMb":[0-9.]*' | cut -d':' -f2)
     avg_mem=$(echo "$summary" | grep -o '"avgMemMb":[0-9.]*' | cut -d':' -f2)
@@ -197,7 +236,7 @@ for stats_file in "${STATS_DIR}"/*_stats.csv; do
     [ -f "$stats_file" ] || continue
 
     service_name=$(basename "$stats_file" _stats.csv)
-    summary=$(summarize_stats "$stats_file")
+    summary=$(summarize_stats "$stats_file" "$service_name")
 
     if [ "$first" = true ]; then
         first=false
@@ -209,9 +248,20 @@ done
 echo "" >> "$RESOURCE_JSON"
 echo "}" >> "$RESOURCE_JSON"
 
+# Generate the analysis report (pivot tables, scaling, cross-scenario summary)
+# from the merged dataset. Re-runnable at any time:
+#   python3 generate-report.py _k6/results/<stamp>
+if command -v python3 > /dev/null 2>&1; then
+    echo ""
+    echo -e "${GREEN}Generating analysis report...${NC}"
+    python3 "$(dirname "$0")/generate-report.py" "$RESULTS_DIR" || echo "report generation failed (rerun manually)"
+fi
+
 echo ""
 echo -e "${GREEN}=== Benchmark Complete ===${NC}"
 echo "Results: $RESULTS_DIR"
 echo "  - Benchmark results: ${STAMP}_all.md"
+echo "  - Analysis report: report.md"
+echo "  - Raw dataset: results.json / results.csv"
 echo "  - Resource usage: resource_usage.md"
 echo "  - Raw stats: stats/*.csv"

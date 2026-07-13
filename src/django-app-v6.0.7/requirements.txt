@@ -1,0 +1,5 @@
+Django==6.0.7
+psycopg[binary,pool]==3.3.4
+gunicorn==26.0.0
+uvicorn[standard]==0.51.0
+uvloop==0.22.1

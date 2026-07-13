@@ -6,20 +6,28 @@ This project performs load performance testing for Web APIs on different tech st
 
 | Framework | Version | Port | Language |
 |-----------|---------|------|----------|
-| Django | 6.0.1 | 8000 | Python |
-| FastAPI | 0.128.0 | 8001 | Python |
-| Fastify | 5.7.1 | 3101 | Node.js |
-| Bun | 1.3.3 | 3104 | Bun/TypeScript |
-| Go (net/http) | 1.25 | 5200 | Go |
-| Spring Boot | 4.0.1 | 5400 | Java 24 |
-| Actix-web | 1.91.1 | 5300 | Rust |
-| Swoole | 6.0 | 3103 | PHP |
-| PostgREST | 14.3 | 3000 | Haskell |
-| .NET 9 Minimal API (EF) | 9.0 | 5002 | C# |
+| Django | 6.0.7 | 8000 | Python |
+| FastAPI | 0.139.0 | 8001 | Python |
+| Fastify | 5.10.0 | 3101 | Node.js |
+| Express | 5.2.1 | 3102 | Node.js |
+| Bun | 1.3.14 | 3104 | Bun/TypeScript |
+| Deno | 2.9.2 | 3105 | Deno/TypeScript |
+| Go (net/http) | 1.26 | 5200 | Go |
+| Spring Boot | 4.1.0 | 5400 | Java 25 |
+| Actix-web | 1.97.0 | 5300 | Rust |
+| Axum | 0.8.9 | 5301 | Rust |
+| Swoole | 6.2.1 | 3103 | PHP |
+| PostgREST | 14.14 | 3000 | Haskell |
 | .NET 10 Minimal API (EF) | 10.0 | 5003 | C# |
 | .NET 10 Minimal API (Dapper) | 10.0 | 5004 | C# |
-| NpgsqlRest (AOT) | 3.4.7 | 5005 | C# |
-| NpgsqlRest (JIT) | 3.4.7 | 5006 | C# |
+| NpgsqlRest Routine (AOT) | 3.4.7 | 5005 | C# |
+| NpgsqlRest Routine (JIT) | 3.4.7 | 5006 | C# |
+| NpgsqlRest Routine (AOT) | 3.21.0 | 5007 | C# |
+| NpgsqlRest Routine (JIT) | 3.21.0 | 5008 | C# |
+| NpgsqlRest SQL Files (AOT) | 3.21.0 | 5009 | C# |
+| NpgsqlRest SQL Files (JIT) | 3.21.0 | 5010 | C# |
+
+NpgsqlRest is tested with two endpoint sources: **Routine** services expose the PostgreSQL functions from `src/_postgres/init.sql`; **SQL Files** services (3.21.0+) expose raw-query `.sql` file endpoints from `src/_sql_files/` (the query bodies are twins of the functions, executed directly without a function call).
 
 ### API Differences
 
@@ -61,7 +69,7 @@ Wait for health checks to pass (all services depend on PostgreSQL being ready).
 
 ### Verify Services
 
-Test all 14 services and 84 endpoints:
+Test all 20 services and 120 endpoints:
 
 ```bash
 ./test-services.sh
@@ -115,6 +123,9 @@ chmod -R 777 src/_k6/results
 # Start a tmux session (survives SSH disconnection)
 tmux
 
+# Start the stack with CPU partitioning (recommended on the server)
+docker-compose -f docker-compose.yml -f docker-compose.server.yml up --build --detach
+
 # Run full benchmark suite with resource monitoring
 PROFILE=server ./run-benchmark.sh
 
@@ -126,18 +137,33 @@ docker-compose exec test /bin/sh -c "PROFILE=server /scripts/run-all.sh"
 ```
 
 **Server profile settings:**
-- 60s test duration per combination
+- 10s ramp-up + 60s measured hold per combination (30s hold for minimal baseline)
 - VUs: 1, 50, 100, 200 (up to 500 for minimal baseline)
 - 30s sleep between tests (TCP TIME_WAIT clearance)
-- JIT warmup phase before benchmarks
+- 10s untimed warmup run before every measured test (same script and parameters)
+- Idle services are paused (`docker pause`) while another service is under test
 
 ### Results
 
 Results are saved to `src/_k6/results/<timestamp>/`:
-- `<timestamp>_all.md` - Unified summary with all results
-- `resource_usage.md` - Memory and CPU usage per service (when using run-benchmark.sh)
+- `results.json` / `results.csv` - **The raw dataset**: one record per test with throughput,
+  latency percentiles (avg/med/p90/p95/p99/max), bytes transferred, and failure counts,
+  plus run metadata (profile, ramp, warmup). Every analysis view is derived from this.
+- `report.md` - Generated analysis: per-scenario pivot matrices (framework × combo, medals
+  for top 3), scaling-behavior table, latency distribution, cross-scenario summary,
+  resource usage, test completion (aborts), and lines-of-code comparison
+- `<timestamp>_all.md` - Detailed per-combination tables (one table per scenario/VU/records)
+- `resource_usage.md` - Memory and CPU per service, measured only during its test windows
+- `test_log.csv` - Start/end time and k6 exit code for every test
 - `stats/` - Raw resource monitoring data
 - Individual test summaries for each service/scenario combination
+
+Regenerate the analysis views at any time (e.g. after tweaking `generate-report.py`)
+without re-running the benchmark:
+
+```bash
+python3 generate-report.py _k6/results/<timestamp>
+```
 
 ## Architecture
 
@@ -145,14 +171,14 @@ Results are saved to `src/_k6/results/<timestamp>/`:
 
 ```yaml
 postgres:
-  image: postgres:17.2-alpine
+  image: postgres:18.4-alpine
   command: postgres -c 'max_connections=2000'
 ```
 
 **Connection calculation:**
 - Tests are serialized (one service at a time)
 - Active service: 100 connections (pool max)
-- 13 idle services: ~200 connections
+- 19 idle services: ~200 connections
 - Total during test: ~300 connections
 - Setting 2000 provides 6x headroom
 
@@ -168,6 +194,53 @@ The 30s sleep between tests (server profile) allows:
 - Connection pools to stabilize
 - CPU/memory to return to baseline
 - JIT-compiled code to cool down
+
+## Fairness & Methodology
+
+Changes made in the 2026-07 round to keep the comparison fair, balanced, and realistic
+(these intentionally break comparability with earlier rounds):
+
+**Equal core budget for every framework.** Single-threaded event-loop frameworks now run
+one worker per CPU core (uvicorn `--workers`, gunicorn `-w`, Node.js `cluster`,
+Bun `SO_REUSEPORT` workers), matching natively multi-threaded runtimes (Go, Rust, .NET,
+JVM). Swoole was reduced from `cpu*2` to `cpu` workers. Worker counts follow `nproc`,
+which respects cpuset limits.
+
+**Equal database connection budget.** Every service gets an aggregate pool of ~100
+connections. Multi-worker services split it evenly (workers x per-worker pool ~= 100).
+Fixed: Django previously ran with psycopg_pool defaults (4 per worker), PostgREST with
+its default `db-pool` of 10.
+
+**Real, per-test warmup.** Every measured test is preceded by an untimed run of the same
+script and parameters, so JIT compilation (JVM/.NET), connection pools, and PostgreSQL
+plan caches are warm for the exact code path being measured. (The previous global warmup
+phase silently crashed on a missing env var and only targeted one endpoint.)
+
+**Ramp + hold load shape.** Tests now ramp to the target VUs (10s on server profile) and
+hold there for the full measured duration. Previously the ramp spanned the whole test, so
+a "200 VU" test averaged ~100 VUs and never sustained its labeled concurrency.
+
+**CPU partitioning** (`docker-compose.server.yml`). PostgreSQL (cores 0-1) and the k6
+load generator (cores 2-3) are pinned away from the service under test (cores 4-7), so
+the measured service never competes with the database or the load generator for CPU.
+
+**Idle services are paused.** During each test, all other services are frozen with
+`docker pause` (cgroup freezer) - removing idle JVM/CLR GC ticks, pool keepalives, and
+scheduler noise while preserving their JIT-warmed state. Controlled by `PAUSE_IDLE`
+(default `true`; requires the docker socket mounted into the test container).
+
+**Serialization parity.** Spring Boot now serializes PostgreSQL `json`/`jsonb` values as
+raw JSON like every other framework (previously Jackson wrapped them in a
+`{"null":...,"type":...,"value":...}` object, inflating its payloads).
+
+**Honest bookkeeping.** Each test's start/end time and k6 exit code are recorded in
+`test_log.csv` (threshold aborts are visible instead of silently missing), and
+`resource_usage.md` averages CPU/memory only over each service's active test windows
+instead of the whole multi-day run.
+
+**Two-server topology (optional).** All k6 scripts accept `TARGET_HOST` to point at a
+remote application server, so the load generator can run on a separate instance over a
+private network. `./test-services.sh <host>` validates a remote stack the same way.
 
 ## Manual Testing
 

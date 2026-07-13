@@ -156,30 +156,36 @@ test_service_all_endpoints() {
 }
 
 echo "=== NpgsqlRest Implementations ==="
-test_service_all_endpoints "npgsqlrest-aot-v3.4.7" "5005" "repeated" "/api" "false"
-test_service_all_endpoints "npgsqlrest-jit-v3.4.7" "5006" "repeated" "/api" "false"
+test_service_all_endpoints "npgsqlrest-routine-aot-v3.4.7" "5005" "repeated" "/api" "false"
+test_service_all_endpoints "npgsqlrest-routine-jit-v3.4.7" "5006" "repeated" "/api" "false"
+test_service_all_endpoints "npgsqlrest-routine-aot-v3.21.0" "5007" "repeated" "/api" "false"
+test_service_all_endpoints "npgsqlrest-routine-jit-v3.21.0" "5008" "repeated" "/api" "false"
+test_service_all_endpoints "npgsqlrest-file-aot-v3.21.0" "5009" "repeated" "/api" "false"
+test_service_all_endpoints "npgsqlrest-file-jit-v3.21.0" "5010" "repeated" "/api" "false"
 
 echo "=== PostgREST ==="
-test_service_all_endpoints "postgrest-v14.3" "3000" "pg" "/rpc" "true"
+test_service_all_endpoints "postgrest-v14.14" "3000" "pg" "/rpc" "true"
 
 echo "=== .NET Implementations ==="
-test_service_all_endpoints "net9-minapi-ef-jit" "5002" "repeated" "/api" "false"
 test_service_all_endpoints "net10-minapi-ef-jit" "5003" "repeated" "/api" "false"
 test_service_all_endpoints "net10-minapi-dapper-jit" "5004" "repeated" "/api" "false"
 
 echo "=== Python Implementations ==="
-test_service_all_endpoints "django-app-v6.0.1" "8000" "pg" "/api" "false"
-test_service_all_endpoints "fastapi-app-v0.128.0" "8001" "pg" "/api" "false"
+test_service_all_endpoints "django-app-v6.0.7" "8000" "pg" "/api" "false"
+test_service_all_endpoints "fastapi-app-v0.139.0" "8001" "pg" "/api" "false"
 
 echo "=== Node.js/Bun Implementations ==="
-test_service_all_endpoints "fastify-app-v5.7.1" "3101" "pg" "/api" "false"
-test_service_all_endpoints "bun-app-v1.3.3" "3104" "pg" "/api" "false"
+test_service_all_endpoints "fastify-app-v5.10.0" "3101" "pg" "/api" "false"
+test_service_all_endpoints "bun-app-v1.3.14" "3104" "pg" "/api" "false"
+test_service_all_endpoints "express-app-v5.2.1" "3102" "pg" "/api" "false"
+test_service_all_endpoints "deno-app-v2.9.2" "3105" "pg" "/api" "false"
 
 echo "=== Other Implementations ==="
-test_service_all_endpoints "go-app-v1.25" "5200" "pg" "/api" "false"
-test_service_all_endpoints "java24-spring-boot-v4.0.1" "5400" "pg" "/api" "false"
-test_service_all_endpoints "rust-app-v1.91.1" "5300" "pg" "/api" "false"
-test_service_all_endpoints "swoole-php-app-v6.0" "3103" "pg" "/api" "false"
+test_service_all_endpoints "go-app-v1.26" "5200" "pg" "/api" "false"
+test_service_all_endpoints "java25-spring-boot-v4.1.0" "5400" "pg" "/api" "false"
+test_service_all_endpoints "rust-app-v1.97.0" "5300" "pg" "/api" "false"
+test_service_all_endpoints "axum-app-v0.8.9" "5301" "pg" "/api" "false"
+test_service_all_endpoints "swoole-php-app-v6.2.1" "3103" "pg" "/api" "false"
 
 echo "=============================================="
 echo "Test Summary"

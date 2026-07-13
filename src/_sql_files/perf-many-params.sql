@@ -1,0 +1,25 @@
+-- Raw-query twin of public.perf_many_params() in _postgres/init.sql — keep both in sync.
+-- All 20 parameters are declared and bound (same types as the function signature) even
+-- though only $1/$10/$20 appear in the statement, mirroring the function endpoint.
+-- HTTP GET
+-- @param $1 _p1 text
+-- @param $2 _p2 int
+-- @param $3 _p3 bool
+-- @param $4 _p4 numeric
+-- @param $5 _p5 text
+-- @param $6 _p6 text
+-- @param $7 _p7 int
+-- @param $8 _p8 bool
+-- @param $9 _p9 numeric
+-- @param $10 _p10 text
+-- @param $11 _p11 text
+-- @param $12 _p12 int
+-- @param $13 _p13 bool
+-- @param $14 _p14 numeric
+-- @param $15 _p15 text
+-- @param $16 _p16 text
+-- @param $17 _p17 int
+-- @param $18 _p18 bool
+-- @param $19 _p19 numeric
+-- @param $20 _p20 text
+select 20 as param_count, md5($1 || coalesce($10, '') || coalesce($20, '')) as checksum;

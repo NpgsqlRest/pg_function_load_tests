@@ -1,0 +1,66 @@
+# =============================================================================
+# SERVER OVERRIDE: CPU partitioning for fair measurements (Hetzner CCX33, 8 vCPU)
+#
+# Pins PostgreSQL and the k6 load generator away from the services under test so
+# the measured service never competes with the database or the load generator
+# for CPU. Only one service is under load at a time (tests are serialized), so
+# every service shares the same dedicated core set.
+#
+#   cores 0-1: PostgreSQL
+#   cores 2-3: k6 load generator (test container)
+#   cores 4-7: the service under test
+#
+# Usage on the benchmark server:
+#   docker-compose -f docker-compose.yml -f docker-compose.server.yml up --build --detach
+#
+# Two-server topology (k6 on a separate load-generator instance): keep this file
+# on the app server and widen the services to "2-7" since k6 runs elsewhere.
+#
+# Note: worker counts inside containers follow nproc, which respects cpuset —
+# event-loop services automatically start 4 workers here.
+# =============================================================================
+services:
+  postgres:
+    cpuset: "0,1"
+  test:
+    cpuset: "2,3"
+  django-app-v6.0.7:
+    cpuset: "4-7"
+  fastapi-app-v0.139.0:
+    cpuset: "4-7"
+  fastify-app-v5.10.0:
+    cpuset: "4-7"
+  bun-app-v1.3.14:
+    cpuset: "4-7"
+  go-app-v1.26:
+    cpuset: "4-7"
+  java25-spring-boot-v4.1.0:
+    cpuset: "4-7"
+  rust-app-v1.97.0:
+    cpuset: "4-7"
+  swoole-php-app-v6.2.1:
+    cpuset: "4-7"
+  express-app-v5.2.1:
+    cpuset: "4-7"
+  deno-app-v2.9.2:
+    cpuset: "4-7"
+  axum-app-v0.8.9:
+    cpuset: "4-7"
+  postgrest-v14.14:
+    cpuset: "4-7"
+  net10-minapi-ef-jit:
+    cpuset: "4-7"
+  net10-minapi-dapper-jit:
+    cpuset: "4-7"
+  npgsqlrest-routine-aot-v3.4.7:
+    cpuset: "4-7"
+  npgsqlrest-routine-jit-v3.4.7:
+    cpuset: "4-7"
+  npgsqlrest-routine-aot-v3.21.0:
+    cpuset: "4-7"
+  npgsqlrest-routine-jit-v3.21.0:
+    cpuset: "4-7"
+  npgsqlrest-file-aot-v3.21.0:
+    cpuset: "4-7"
+  npgsqlrest-file-jit-v3.21.0:
+    cpuset: "4-7"

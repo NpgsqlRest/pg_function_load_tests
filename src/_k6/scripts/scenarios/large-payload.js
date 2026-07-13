@@ -2,11 +2,14 @@ import { check } from "k6";
 import http from "k6/http";
 import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.2/index.js';
 
-const stamp = __ENV.STAMP.trim();
+const stamp = (__ENV.STAMP || '').trim();
 const tag = __ENV.TAG.trim();
 const port = __ENV.PORT.trim();
+// Optional remote host override (two-server topology); defaults to the docker service name
+const targetHost = (__ENV.TARGET_HOST || '').trim() || tag;
 const sizeKb = Number(__ENV.SIZE_KB ? __ENV.SIZE_KB.trim() : "100");
 const duration = __ENV.DURATION ? __ENV.DURATION.trim() : "60s";
+const ramp = (__ENV.RAMP || '10s').trim();
 const target = Number(__ENV.TARGET ? __ENV.TARGET.trim() : "50");
 
 // Determine the path based on the service type
@@ -18,9 +21,10 @@ function getPath(tag) {
 }
 
 const path = getPath(tag);
-const url = 'http://' + tag + ':' + port + path + '?_size_kb=' + sizeKb;
+const url = 'http://' + targetHost + ':' + port + path + '?_size_kb=' + sizeKb;
 
 export const options = {
+    summaryTrendStats: ['avg', 'min', 'med', 'max', 'p(90)', 'p(95)', 'p(99)'],
     thresholds: {
         http_req_failed: [{ threshold: "rate<0.01", abortOnFail: true }],
         http_req_duration: ["p(99)<5000"], // Large payloads take longer
@@ -29,7 +33,8 @@ export const options = {
         large_payload: {
             executor: "ramping-vus",
             stages: [
-                { duration: duration, target: target },
+                { duration: ramp, target: target },   // ramp up
+                { duration: duration, target: target },  // hold at target
             ],
         },
     },
@@ -49,11 +54,13 @@ export default function () {
 }
 
 export function handleSummary(data) {
+    if (!stamp) { return {}; }  // warmup mode: no output files
     const fileTag = `${tag}_large_${sizeKb}kb_${duration}vus_${target}`;
     const reqs = data.metrics.http_reqs.values.count;
     const rps = data.metrics.http_reqs.values.rate;
     const avgDuration = data.metrics.iteration_duration.values.avg;
     const failedReqs = data.metrics.http_req_failed.values.passes;
+    const dur = data.metrics.http_req_duration ? data.metrics.http_req_duration.values : {};
     const dataReceivedBytes = data.metrics.data_received.values.count;
 
     // JSON data for aggregation (sortable by rps)
@@ -68,6 +75,16 @@ export function handleSummary(data) {
         avgLatency: avgDuration,
         dataReceived: dataReceivedBytes,
         failed: failedReqs,
+        latency: {
+            avg: dur.avg,
+            med: dur.med,
+            p90: dur['p(90)'],
+            p95: dur['p(95)'],
+            p99: dur['p(99)'],
+            max: dur.max
+        },
+        dataReceivedBytes: data.metrics.data_received ? data.metrics.data_received.values.count : 0,
+        dataSentBytes: data.metrics.data_sent ? data.metrics.data_sent.values.count : 0,
         summaryFile: `${fileTag}_summary.txt`
     });
 
