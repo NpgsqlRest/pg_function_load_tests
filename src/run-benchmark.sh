@@ -33,9 +33,11 @@ chmod -R 777 "$RESULTS_DIR"
 echo "Results directory: $RESULTS_DIR"
 echo ""
 
-# Get list of service containers (exclude postgres and test)
+# Get list of service containers (exclude postgres and the k6 test container).
+# Exact-match the container names: a substring filter would also drop postgrest
+# ("postgres" is a prefix of "postgrest"), silently losing its resource stats.
 get_service_containers() {
-    docker-compose ps --format '{{.Name}}' | grep -v -E '(postgres|test)' | sort
+    docker-compose ps --format '{{.Name}}' | grep -v -E '^src-(postgres|test)-1$' | sort
 }
 
 # Start collecting stats for a specific container
