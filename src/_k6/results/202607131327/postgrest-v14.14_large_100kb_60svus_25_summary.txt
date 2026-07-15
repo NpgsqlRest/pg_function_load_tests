@@ -1,0 +1,21 @@
+     ✓ postgrest-v14.14 status is 200
+     ✓ postgrest-v14.14 response is JSON
+     ✓ postgrest-v14.14 response has expected size
+
+     checks.........................: 100.00% ✓ 153123     ✗ 0    
+     data_received..................: 5.2 GB  75 MB/s
+     data_sent......................: 5.7 MB  82 kB/s
+     http_req_blocked...............: avg=3.23µs   min=970ns   med=2.15µs  max=4.42ms   p(90)=3.12µs   p(95)=3.64µs   p(99)=14.71µs
+     http_req_connecting............: avg=374ns    min=0s      med=0s      max=4.37ms   p(90)=0s       p(95)=0s       p(99)=0s     
+   ✓ http_req_duration..............: avg=30.66ms  min=2.26ms  med=26.12ms max=221.86ms p(90)=54.57ms  p(95)=67.14ms  p(99)=96.18ms
+       { expected_response:true }...: avg=30.66ms  min=2.26ms  med=26.12ms max=221.86ms p(90)=54.57ms  p(95)=67.14ms  p(99)=96.18ms
+   ✓ http_req_failed................: 0.00%   ✓ 0          ✗ 51041
+     http_req_receiving.............: avg=178.43µs min=21.75µs med=55.83µs max=33.5ms   p(90)=150.56µs p(95)=387.07µs p(99)=3.09ms 
+     http_req_sending...............: avg=141.42µs min=3.09µs  med=6.94µs  max=36.48ms  p(90)=506.78µs p(95)=710.96µs p(99)=2.06ms 
+     http_req_tls_handshaking.......: avg=0s       min=0s      med=0s      max=0s       p(90)=0s       p(95)=0s       p(99)=0s     
+     http_req_waiting...............: avg=30.34ms  min=2.11ms  med=25.82ms max=221.82ms p(90)=54.13ms  p(95)=66.86ms  p(99)=95.88ms
+     http_reqs......................: 51041   728.819424/s
+     iteration_duration.............: avg=31.83ms  min=2.96ms  med=27.3ms  max=222.87ms p(90)=55.78ms  p(95)=68.41ms  p(99)=97.51ms
+     iterations.....................: 51041   728.819424/s
+     vus............................: 25      min=3        max=25 
+     vus_max........................: 25      min=25       max=25 
