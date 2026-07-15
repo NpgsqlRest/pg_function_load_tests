@@ -257,11 +257,16 @@ GET http://localhost:3000/rpc/perf_minimal
 
 ## Latest Results
 
-- [PostgreSQL REST API Benchmark 2025](https://npgsqlrest.github.io/blog/postgresql-rest-api-benchmark-2025.html)
-- [Test Branch](https://github.com/vb-consulting/pg_function_load_tests/tree/202412302119)
-- [Test Results Raw Output](https://github.com/vb-consulting/pg_function_load_tests/blob/202412302119/src/_k6/results/202412302119.md)
-- [Parsed Tests Results Discussion Thread](https://github.com/vb-consulting/pg_function_load_tests/discussions/8)
-- [Interactive Chart](https://vb-consulting.github.io/blog/npgsqlrest/load-test/)
+**July 2026 round** — 20 services, 760 tests, full fairness overhaul:
+
+- 📊 **[Full analysis series](https://npgsqlrest.github.io/blog/benchmarks-2026-07/)** — methodology, per-framework deep dives, overall analysis, raw result tables
+- [Results branch (202607131327)](https://github.com/NpgsqlRest/pg_function_load_tests/tree/202607131327) — the exact code that ran
+- [Raw dataset & report](https://github.com/NpgsqlRest/pg_function_load_tests/tree/202607131327/src/_k6/results/202607131327) — `results.csv`, `report.md`, 760 k6 summaries, resource stats
+
+**Previous rounds:**
+
+- [January 2026](https://npgsqlrest.github.io/blog/postgresql-rest-api-benchmark-2026.html) ([branch 202601211416](https://github.com/NpgsqlRest/pg_function_load_tests/tree/202601211416)) — not comparable to July 2026 (methodology changed)
+- [2025](https://npgsqlrest.github.io/blog/postgresql-rest-api-benchmark-2025.html) ([branch 202412302119](https://github.com/NpgsqlRest/pg_function_load_tests/tree/202412302119))
 
 ## License
 
