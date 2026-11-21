@@ -1,0 +1,82 @@
+# =============================================================================
+# SERVER OVERRIDE for a 48 vCPU machine (Hetzner CCX63): PostgreSQL and the load
+# generator get far more CPU than the service under test, so that the service is
+# the part that runs out of CPU first, in every scenario.
+#
+# The service keeps the four cores it had in July 2026 (CCX33: PostgreSQL 2 cores,
+# k6 2 cores, service 4 cores), so its numbers stay comparable with that round;
+# what changes is that the other two no longer hold it back. See ANALYSIS.md.
+#
+#   cores 0-15:  PostgreSQL
+#   cores 16-27: k6 load generator (test container)
+#   cores 28-31: the service under test
+#   cores 32-47: left to the operating system, dockerd and the resource collector
+#
+# Usage on the benchmark server:
+#   docker-compose -f docker-compose.yml -f docker-compose.server-48.yml up --build --detach
+# =============================================================================
+services:
+  postgres:
+    cpuset: "0-15"
+  test:
+    cpuset: "16-27"
+  django-app-v6.1.3:
+    cpuset: "28-31"
+  fastapi-app-v0.165.0:
+    cpuset: "28-31"
+  fastify-app-v5.12.8:
+    cpuset: "28-31"
+  bun-app-v1.4.5:
+    cpuset: "28-31"
+  go-app-v1.27:
+    cpuset: "28-31"
+  java25-spring-boot-v4.2.0:
+    cpuset: "28-31"
+  rust-app-v1.100.0:
+    cpuset: "28-31"
+  swoole-php-app-v6.2.6:
+    cpuset: "28-31"
+  express-app-v5.3.0:
+    cpuset: "28-31"
+  deno-app-v2.9.8:
+    cpuset: "28-31"
+  axum-app-v0.8.9:
+    cpuset: "28-31"
+  postgrest-v16.6:
+    cpuset: "28-31"
+  net10-minapi-ef-jit:
+    cpuset: "28-31"
+  net10-minapi-dapper-jit:
+    cpuset: "28-31"
+  net11-minapi-ef-jit:
+    cpuset: "28-31"
+  net11-minapi-dapper-jit:
+    cpuset: "28-31"
+  npgsqlrest-routine-aot-v3.21.0:
+    cpuset: "28-31"
+  npgsqlrest-routine-jit-v3.21.0:
+    cpuset: "28-31"
+  npgsqlrest-file-aot-v3.21.0:
+    cpuset: "28-31"
+  npgsqlrest-file-jit-v3.21.0:
+    cpuset: "28-31"
+  npgsqlrest-routine-aot-v4.1.0:
+    cpuset: "28-31"
+  npgsqlrest-routine-jit-v4.1.0:
+    cpuset: "28-31"
+  npgsqlrest-file-aot-v4.1.0:
+    cpuset: "28-31"
+  npgsqlrest-file-jit-v4.1.0:
+    cpuset: "28-31"
+  gin-app-v1.12.0:
+    cpuset: "28-31"
+  nestjs-app-v12.6.0:
+    cpuset: "28-31"
+  laravel-v13.43.0-octane-app:
+    cpuset: "28-31"
+  net11-minapi-npgsql-jit:
+    cpuset: "28-31"
+  postgraphile-v5.2.1:
+    cpuset: "28-31"
+  hasura-v2.50.10:
+    cpuset: "28-31"

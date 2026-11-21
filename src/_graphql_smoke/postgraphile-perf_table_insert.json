@@ -1,0 +1,1 @@
+{"query":"mutation($item_id: Int, $quantity: Int, $note: String) { perfTableInsert(input: { _itemId: $item_id, _quantity: $quantity, _note: $note }) { result { id itemId quantity note createdAt } } }","variables":{"item_id":5,"quantity":2,"note":"smoke test"}}

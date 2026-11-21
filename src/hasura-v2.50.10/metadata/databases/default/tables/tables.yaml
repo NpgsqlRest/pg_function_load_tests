@@ -1,0 +1,8 @@
+- "!include hasura_perf_test_row.yaml"
+- "!include hasura_perf_post_row.yaml"
+- "!include hasura_perf_nested_row.yaml"
+- "!include hasura_perf_minimal_row.yaml"
+- "!include hasura_perf_large_payload_row.yaml"
+- "!include hasura_perf_many_params_row.yaml"
+- "!include hasura_perf_table_row.yaml"
+- "!include hasura_perf_table_insert_row.yaml"

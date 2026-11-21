@@ -1,0 +1,3 @@
+function:
+  name: perf_table_list
+  schema: hasura

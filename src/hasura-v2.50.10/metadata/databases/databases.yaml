@@ -1,0 +1,15 @@
+- name: default
+  kind: postgres
+  configuration:
+    connection_info:
+      database_url:
+        from_env: HASURA_GRAPHQL_DATABASE_URL
+      isolation_level: read-committed
+      # the same number of connections as the pool of every other service
+      pool_settings:
+        max_connections: 100
+        idle_timeout: 180
+        retries: 1
+      use_prepared_statements: true
+  tables: "!include default/tables/tables.yaml"
+  functions: "!include default/functions/functions.yaml"

@@ -1,0 +1,1 @@
+{"query":"query($args: hasura_perf_large_payload_args!) { hasura_perf_large_payload(args: $args) { data } }","variables":{"args":{"_size_kb":10}}}

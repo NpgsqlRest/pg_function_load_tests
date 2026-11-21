@@ -1,0 +1,1 @@
+{"query":"query($args: hasura_perf_nested_args!) { hasura_perf_nested(args: $args) { row_num nested } }","variables":{"args":{"_records":3,"_depth":3}}}

@@ -176,6 +176,44 @@ struct ManyParams {
     _p16: String, _p17: i32, _p18: bool, _p19: String, _p20: String,
 }
 
+#[derive(Serialize)]
+struct TableItemResult {
+    id: i32,
+    name: String,
+    category: i32,
+    price: f64,
+    active: bool,
+    created_at: DateTime<Utc>,
+}
+
+#[derive(Deserialize)]
+struct TableGetParams {
+    _id: i32,
+}
+
+#[derive(Deserialize)]
+struct TableListParams {
+    _category: i32,
+    _after_id: i32,
+    _limit: i32,
+}
+
+#[derive(Serialize)]
+struct TableInsertResult {
+    id: i64,
+    item_id: i32,
+    quantity: i32,
+    note: Option<String>,
+    created_at: DateTime<Utc>,
+}
+
+#[derive(Deserialize)]
+struct TableInsertBody {
+    _item_id: i32,
+    _quantity: i32,
+    _note: String,
+}
+
 async fn perf_minimal(State(pool): State<Pool>) -> Json<Vec<MinimalResult>> {
     let client = pool.get().await.unwrap();
     let rows = client.query("SELECT status, ts FROM public.perf_minimal()", &[]).await.unwrap();
@@ -258,6 +296,65 @@ async fn perf_many_params(State(pool): State<Pool>, Query(query): Query<ManyPara
     Json(results)
 }
 
+async fn perf_table_get(State(pool): State<Pool>, Query(query): Query<TableGetParams>) -> Json<Vec<TableItemResult>> {
+    let client = pool.get().await.unwrap();
+
+    let sql = format!(
+        "SELECT id, name, category, price::float8, active, created_at FROM public.perf_table_get({})",
+        query._id
+    );
+    let rows = client.query(&sql, &[]).await.unwrap();
+
+    let results: Vec<TableItemResult> = rows.iter().map(|row| TableItemResult {
+        id: row.get(0),
+        name: row.get(1),
+        category: row.get(2),
+        price: row.get(3),
+        active: row.get(4),
+        created_at: row.get(5),
+    }).collect();
+    Json(results)
+}
+
+async fn perf_table_list(State(pool): State<Pool>, Query(query): Query<TableListParams>) -> Json<Vec<TableItemResult>> {
+    let client = pool.get().await.unwrap();
+
+    let sql = format!(
+        "SELECT id, name, category, price::float8, active, created_at FROM public.perf_table_list({}, {}, {})",
+        query._category, query._after_id, query._limit
+    );
+    let rows = client.query(&sql, &[]).await.unwrap();
+
+    let results: Vec<TableItemResult> = rows.iter().map(|row| TableItemResult {
+        id: row.get(0),
+        name: row.get(1),
+        category: row.get(2),
+        price: row.get(3),
+        active: row.get(4),
+        created_at: row.get(5),
+    }).collect();
+    Json(results)
+}
+
+async fn perf_table_insert(State(pool): State<Pool>, Json(body): Json<TableInsertBody>) -> Json<Vec<TableInsertResult>> {
+    let client = pool.get().await.unwrap();
+
+    let sql = format!(
+        "SELECT id, item_id, quantity, note, created_at FROM public.perf_table_insert({}, {}, '{}')",
+        body._item_id, body._quantity, body._note.replace("'", "''")
+    );
+    let rows = client.query(&sql, &[]).await.unwrap();
+
+    let results: Vec<TableInsertResult> = rows.iter().map(|row| TableInsertResult {
+        id: row.get(0),
+        item_id: row.get(1),
+        quantity: row.get(2),
+        note: row.get(3),
+        created_at: row.get(4),
+    }).collect();
+    Json(results)
+}
+
 #[tokio::main]
 async fn main() {
     let mut cfg = Config::new();
@@ -277,6 +374,9 @@ async fn main() {
         .route("/api/perf-nested", get(perf_nested))
         .route("/api/perf-large-payload", get(perf_large_payload))
         .route("/api/perf-many-params", get(perf_many_params))
+        .route("/api/perf-table-get", get(perf_table_get))
+        .route("/api/perf-table-list", get(perf_table_list))
+        .route("/api/perf-table-insert", post(perf_table_insert))
         .with_state(pool);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:5301").await.unwrap();

@@ -1,0 +1,5 @@
+function:
+  name: perf_table_insert
+  schema: hasura
+configuration:
+  exposed_as: mutation

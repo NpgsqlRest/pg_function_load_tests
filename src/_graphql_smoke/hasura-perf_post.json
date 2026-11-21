@@ -1,0 +1,1 @@
+{"query":"query($args: hasura_perf_post_args!) { hasura_perf_post(args: $args) { row_num echo computed } }","variables":{"args":{"_records":3,"_payload":{"test":"value"}}}}

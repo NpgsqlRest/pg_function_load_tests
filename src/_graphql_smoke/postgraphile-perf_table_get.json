@@ -1,0 +1,1 @@
+{"query":"query($id: Int) { perfTableGet(_id: $id) { nodes { id name category price active createdAt } } }","variables":{"id":123456}}

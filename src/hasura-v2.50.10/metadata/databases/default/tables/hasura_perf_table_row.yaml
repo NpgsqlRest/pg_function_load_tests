@@ -1,0 +1,3 @@
+table:
+  name: perf_table_row
+  schema: hasura

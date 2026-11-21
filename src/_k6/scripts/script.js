@@ -1,5 +1,7 @@
 import { check } from "k6";
 import http from "k6/http";
+import { seconds, countHold, holdRps, rawSummary } from './lib/measure.js';
+import { graphqlKind, graphqlRequest, graphqlRows } from './lib/graphql.js';
 import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.2/index.js';
 
 const stamp = (__ENV.STAMP || '').trim();
@@ -7,6 +9,7 @@ const tag = __ENV.TAG.trim();
 const records = Number(__ENV.RECORDS.trim() || "10")
 const duration = __ENV.DURATION.trim() || "60s";
 const ramp = (__ENV.RAMP || '10s').trim();
+const rampSeconds = seconds(ramp);
 const target = Number(__ENV.TARGET.trim() || "100");
 const port = __ENV.PORT.trim();
 // Optional remote host override (two-server topology); defaults to the docker service name
@@ -24,7 +27,7 @@ function getPath(tag) {
 // .NET minimal API and NpgsqlRest bind arrays this way
 function usesRepeatedQueryParams(tag) {
     return tag.indexOf('npgsqlrest') !== -1 ||
-           tag.indexOf('net10-minapi') !== -1;
+           /^net\d+-minapi/.test(tag);
 }
 
 const path = __ENV.REQ_PATH ? __ENV.REQ_PATH.trim() : getPath(tag);
@@ -64,6 +67,17 @@ if (usesRepeatedQueryParams(tag)) {
     url = baseUrl + '&_int_array=' + encodeURIComponent('{1,2,3}') + '&_text_array=' + encodeURIComponent('{a,b,c}');
 }
 
+// GraphQL services get the same operation as a query with variables (lib/graphql.js); rows() gives the checks
+// below the same rows whichever way they came.
+const gql = graphqlKind(tag);
+const gqlRequest = gql ? graphqlRequest(gql, 'http://' + targetHost + ':' + port, 'perf_test', {
+    _records: records, _text: 'ABCDEFGHIJKLMNOPRSTUVWXYZ', _int: 1234567890, _bigint: '9223372036854770000',
+    _numeric: '12345.6789', _real: 123.45, _double: 123456.789012, _bool: true, _date: '2024-01-15',
+    _timestamp: '2024-01-15T10:30:00', _timestamptz: '2024-01-15T10:30:00Z', _uuid: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+    _json: { key: 'value' }, _jsonb: { key: 'value' }, _int_array: [1, 2, 3], _text_array: ['a', 'b', 'c'],
+}) : null;
+const rows = (r) => (gql ? graphqlRows(gql, 'perf_test', r) : JSON.parse(r.body));
+
 export const options = {
     summaryTrendStats: ['avg', 'min', 'med', 'max', 'p(90)', 'p(95)', 'p(99)'],
     thresholds: {
@@ -82,13 +96,14 @@ export const options = {
 };
 
 export default function () {
-    const res = http.get(url);
+    const res = gql ? http.post(gqlRequest.url, gqlRequest.body, gqlRequest.params) : http.get(url);
+    countHold(rampSeconds);
     check(res, {
         [`${tag} status is 200`]: (r) => r.status === 200,
         [`${tag} response is JSON`]: (r) => r.headers['Content-Type'] && r.headers['Content-Type'].includes('application/json'),
-        [`${tag} response has all data records`]: (r) => r.body && JSON.parse(r.body).length == records,
+        [`${tag} response has all data records`]: (r) => r.body && rows(r).length == records,
         [`${tag} response first item has expected fields`]: (r) => {
-            let d = JSON.parse(r.body)[0];
+            let d = rows(r)[0];
             return d.row_num !== undefined &&
                    d.text_val !== undefined &&
                    d.varchar_val !== undefined &&
@@ -119,6 +134,7 @@ export function handleSummary(data) {
         duration: duration,
         requests: reqs,
         rps: rps,
+        rpsHold: holdRps(data, seconds(duration)),
         avgLatency: avgDuration,
         failed: failedReqs,
         latency: {
@@ -134,8 +150,8 @@ export function handleSummary(data) {
         summaryFile: `${fileTag}_summary.txt`
     });
 
-    return {
+    return Object.assign({
         [`/results/${stamp}/${fileTag}_summary.txt`]: textSummary(data, { indent: ' ', enableColors: false }),
         [`/results/${stamp}/${fileTag}.json`]: jsonData,
-    }
+    }, rawSummary(stamp, fileTag, data));
 }

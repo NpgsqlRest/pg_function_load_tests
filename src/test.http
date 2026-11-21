@@ -1,317 +1,425 @@
 ### ============================================
-### django-app-v6.0.7 (port 8000)
+### django-app-v6.1.3 (port 8000)
 ### ============================================
 
-// django-app-v6.0.7 - perf-test
+// django-app-v6.1.3 - perf-test
 GET http://localhost:8000/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// django-app-v6.0.7 - perf-minimal
+// django-app-v6.1.3 - perf-minimal
 GET http://localhost:8000/api/perf-minimal
 
 ###
 
-// django-app-v6.0.7 - perf-nested
+// django-app-v6.1.3 - perf-nested
 GET http://localhost:8000/api/perf-nested?_records=3&_depth=3
 
 ###
 
-// django-app-v6.0.7 - perf-large-payload
+// django-app-v6.1.3 - perf-large-payload
 GET http://localhost:8000/api/perf-large-payload?_size_kb=10
 
 ###
 
-// django-app-v6.0.7 - perf-many-params
+// django-app-v6.1.3 - perf-many-params
 GET http://localhost:8000/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
 
 ###
 
-// django-app-v6.0.7 - perf-post
+// django-app-v6.1.3 - perf-post
 POST http://localhost:8000/api/perf-post
 Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
 
+### django-app-v6.1.3 - perf_table_get
+GET http://localhost:8000/api/perf-table-get?_id=123456
+
+### django-app-v6.1.3 - perf_table_list
+GET http://localhost:8000/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### django-app-v6.1.3 - perf_table_insert
+POST http://localhost:8000/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
 ### ============================================
-### fastapi-app-v0.139.0 (port 8001)
+### fastapi-app-v0.165.0 (port 8001)
 ### ============================================
 
-// fastapi-app-v0.139.0 - perf-test
+// fastapi-app-v0.165.0 - perf-test
 GET http://localhost:8001/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// fastapi-app-v0.139.0 - perf-minimal
+// fastapi-app-v0.165.0 - perf-minimal
 GET http://localhost:8001/api/perf-minimal
 
 ###
 
-// fastapi-app-v0.139.0 - perf-nested
+// fastapi-app-v0.165.0 - perf-nested
 GET http://localhost:8001/api/perf-nested?_records=3&_depth=3
 
 ###
 
-// fastapi-app-v0.139.0 - perf-large-payload
+// fastapi-app-v0.165.0 - perf-large-payload
 GET http://localhost:8001/api/perf-large-payload?_size_kb=10
 
 ###
 
-// fastapi-app-v0.139.0 - perf-many-params
+// fastapi-app-v0.165.0 - perf-many-params
 GET http://localhost:8001/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
 
 ###
 
-// fastapi-app-v0.139.0 - perf-post
+// fastapi-app-v0.165.0 - perf-post
 POST http://localhost:8001/api/perf-post
 Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
 
+### fastapi-app-v0.165.0 - perf_table_get
+GET http://localhost:8001/api/perf-table-get?_id=123456
+
+### fastapi-app-v0.165.0 - perf_table_list
+GET http://localhost:8001/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### fastapi-app-v0.165.0 - perf_table_insert
+POST http://localhost:8001/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
 ### ============================================
-### fastify-app-v5.10.0 (port 3101)
+### fastify-app-v5.12.8 (port 3101)
 ### ============================================
 
-// fastify-app-v5.10.0 - perf-test
+// fastify-app-v5.12.8 - perf-test
 GET http://localhost:3101/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// fastify-app-v5.10.0 - perf-minimal
+// fastify-app-v5.12.8 - perf-minimal
 GET http://localhost:3101/api/perf-minimal
 
 ###
 
-// fastify-app-v5.10.0 - perf-nested
+// fastify-app-v5.12.8 - perf-nested
 GET http://localhost:3101/api/perf-nested?_records=3&_depth=3
 
 ###
 
-// fastify-app-v5.10.0 - perf-large-payload
+// fastify-app-v5.12.8 - perf-large-payload
 GET http://localhost:3101/api/perf-large-payload?_size_kb=10
 
 ###
 
-// fastify-app-v5.10.0 - perf-many-params
+// fastify-app-v5.12.8 - perf-many-params
 GET http://localhost:3101/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
 
 ###
 
-// fastify-app-v5.10.0 - perf-post
+// fastify-app-v5.12.8 - perf-post
 POST http://localhost:3101/api/perf-post
 Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
 
+### fastify-app-v5.12.8 - perf_table_get
+GET http://localhost:3101/api/perf-table-get?_id=123456
+
+### fastify-app-v5.12.8 - perf_table_list
+GET http://localhost:3101/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### fastify-app-v5.12.8 - perf_table_insert
+POST http://localhost:3101/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
 ### ============================================
-### bun-app-v1.3.14 (port 3104)
+### bun-app-v1.4.5 (port 3104)
 ### ============================================
 
-// bun-app-v1.3.14 - perf-test
+// bun-app-v1.4.5 - perf-test
 GET http://localhost:3104/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// bun-app-v1.3.14 - perf-minimal
+// bun-app-v1.4.5 - perf-minimal
 GET http://localhost:3104/api/perf-minimal
 
 ###
 
-// bun-app-v1.3.14 - perf-nested
+// bun-app-v1.4.5 - perf-nested
 GET http://localhost:3104/api/perf-nested?_records=3&_depth=3
 
 ###
 
-// bun-app-v1.3.14 - perf-large-payload
+// bun-app-v1.4.5 - perf-large-payload
 GET http://localhost:3104/api/perf-large-payload?_size_kb=10
 
 ###
 
-// bun-app-v1.3.14 - perf-many-params
+// bun-app-v1.4.5 - perf-many-params
 GET http://localhost:3104/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
 
 ###
 
-// bun-app-v1.3.14 - perf-post
+// bun-app-v1.4.5 - perf-post
 POST http://localhost:3104/api/perf-post
 Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
 
+### bun-app-v1.4.5 - perf_table_get
+GET http://localhost:3104/api/perf-table-get?_id=123456
+
+### bun-app-v1.4.5 - perf_table_list
+GET http://localhost:3104/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### bun-app-v1.4.5 - perf_table_insert
+POST http://localhost:3104/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
 ### ============================================
-### go-app-v1.26 (port 5200)
+### go-app-v1.27 (port 5200)
 ### ============================================
 
-// go-app-v1.26 - perf-test
+// go-app-v1.27 - perf-test
 GET http://localhost:5200/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// go-app-v1.26 - perf-minimal
+// go-app-v1.27 - perf-minimal
 GET http://localhost:5200/api/perf-minimal
 
 ###
 
-// go-app-v1.26 - perf-nested
+// go-app-v1.27 - perf-nested
 GET http://localhost:5200/api/perf-nested?_records=3&_depth=3
 
 ###
 
-// go-app-v1.26 - perf-large-payload
+// go-app-v1.27 - perf-large-payload
 GET http://localhost:5200/api/perf-large-payload?_size_kb=10
 
 ###
 
-// go-app-v1.26 - perf-many-params
+// go-app-v1.27 - perf-many-params
 GET http://localhost:5200/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
 
 ###
 
-// go-app-v1.26 - perf-post
+// go-app-v1.27 - perf-post
 POST http://localhost:5200/api/perf-post
 Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
 
+### go-app-v1.27 - perf_table_get
+GET http://localhost:5200/api/perf-table-get?_id=123456
+
+### go-app-v1.27 - perf_table_list
+GET http://localhost:5200/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### go-app-v1.27 - perf_table_insert
+POST http://localhost:5200/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
 ### ============================================
-### java25-spring-boot-v4.1.0 (port 5400)
+### java25-spring-boot-v4.2.0 (port 5400)
 ### ============================================
 
-// java25-spring-boot-v4.1.0 - perf-test
+// java25-spring-boot-v4.2.0 - perf-test
 GET http://localhost:5400/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// java25-spring-boot-v4.1.0 - perf-minimal
+// java25-spring-boot-v4.2.0 - perf-minimal
 GET http://localhost:5400/api/perf-minimal
 
 ###
 
-// java25-spring-boot-v4.1.0 - perf-nested
+// java25-spring-boot-v4.2.0 - perf-nested
 GET http://localhost:5400/api/perf-nested?_records=3&_depth=3
 
 ###
 
-// java25-spring-boot-v4.1.0 - perf-large-payload
+// java25-spring-boot-v4.2.0 - perf-large-payload
 GET http://localhost:5400/api/perf-large-payload?_size_kb=10
 
 ###
 
-// java25-spring-boot-v4.1.0 - perf-many-params
+// java25-spring-boot-v4.2.0 - perf-many-params
 GET http://localhost:5400/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
 
 ###
 
-// java25-spring-boot-v4.1.0 - perf-post
+// java25-spring-boot-v4.2.0 - perf-post
 POST http://localhost:5400/api/perf-post
 Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
 
+### java25-spring-boot-v4.2.0 - perf_table_get
+GET http://localhost:5400/api/perf-table-get?_id=123456
+
+### java25-spring-boot-v4.2.0 - perf_table_list
+GET http://localhost:5400/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### java25-spring-boot-v4.2.0 - perf_table_insert
+POST http://localhost:5400/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
 ### ============================================
-### rust-app-v1.97.0 (port 5300)
+### rust-app-v1.100.0 (port 5300)
 ### ============================================
 
-// rust-app-v1.97.0 - perf-test
+// rust-app-v1.100.0 - perf-test
 GET http://localhost:5300/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// rust-app-v1.97.0 - perf-minimal
+// rust-app-v1.100.0 - perf-minimal
 GET http://localhost:5300/api/perf-minimal
 
 ###
 
-// rust-app-v1.97.0 - perf-nested
+// rust-app-v1.100.0 - perf-nested
 GET http://localhost:5300/api/perf-nested?_records=3&_depth=3
 
 ###
 
-// rust-app-v1.97.0 - perf-large-payload
+// rust-app-v1.100.0 - perf-large-payload
 GET http://localhost:5300/api/perf-large-payload?_size_kb=10
 
 ###
 
-// rust-app-v1.97.0 - perf-many-params
+// rust-app-v1.100.0 - perf-many-params
 GET http://localhost:5300/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
 
 ###
 
-// rust-app-v1.97.0 - perf-post
+// rust-app-v1.100.0 - perf-post
 POST http://localhost:5300/api/perf-post
 Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
 
+### rust-app-v1.100.0 - perf_table_get
+GET http://localhost:5300/api/perf-table-get?_id=123456
+
+### rust-app-v1.100.0 - perf_table_list
+GET http://localhost:5300/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### rust-app-v1.100.0 - perf_table_insert
+POST http://localhost:5300/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
 ### ============================================
-### swoole-php-app-v6.2.1 (port 3103)
+### swoole-php-app-v6.2.6 (port 3103)
 ### ============================================
 
-// swoole-php-app-v6.2.1 - perf-test
+// swoole-php-app-v6.2.6 - perf-test
 GET http://localhost:3103/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// swoole-php-app-v6.2.1 - perf-minimal
+// swoole-php-app-v6.2.6 - perf-minimal
 GET http://localhost:3103/api/perf-minimal
 
 ###
 
-// swoole-php-app-v6.2.1 - perf-nested
+// swoole-php-app-v6.2.6 - perf-nested
 GET http://localhost:3103/api/perf-nested?_records=3&_depth=3
 
 ###
 
-// swoole-php-app-v6.2.1 - perf-large-payload
+// swoole-php-app-v6.2.6 - perf-large-payload
 GET http://localhost:3103/api/perf-large-payload?_size_kb=10
 
 ###
 
-// swoole-php-app-v6.2.1 - perf-many-params
+// swoole-php-app-v6.2.6 - perf-many-params
 GET http://localhost:3103/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
 
 ###
 
-// swoole-php-app-v6.2.1 - perf-post
+// swoole-php-app-v6.2.6 - perf-post
 POST http://localhost:3103/api/perf-post
 Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
 
+### swoole-php-app-v6.2.6 - perf_table_get
+GET http://localhost:3103/api/perf-table-get?_id=123456
+
+### swoole-php-app-v6.2.6 - perf_table_list
+GET http://localhost:3103/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### swoole-php-app-v6.2.6 - perf_table_insert
+POST http://localhost:3103/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
 ### ============================================
-### postgrest-v14.14 (port 3000)
+### postgrest-v16.6 (port 3000)
 ### ============================================
 
-// postgrest-v14.14 - perf_test
+// postgrest-v16.6 - perf_test
 GET http://localhost:3000/rpc/perf_test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// postgrest-v14.14 - perf_minimal
+// postgrest-v16.6 - perf_minimal
 GET http://localhost:3000/rpc/perf_minimal
 
 ###
 
-// postgrest-v14.14 - perf_nested
+// postgrest-v16.6 - perf_nested
 GET http://localhost:3000/rpc/perf_nested?_records=3&_depth=3
 
 ###
 
-// postgrest-v14.14 - perf_large_payload
+// postgrest-v16.6 - perf_large_payload
 GET http://localhost:3000/rpc/perf_large_payload?_size_kb=10
 
 ###
 
-// postgrest-v14.14 - perf_many_params
+// postgrest-v16.6 - perf_many_params
 GET http://localhost:3000/rpc/perf_many_params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
 
 ###
 
-// postgrest-v14.14 - perf_post
+// postgrest-v16.6 - perf_post
 POST http://localhost:3000/rpc/perf_post
 Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
+
+### postgrest-v16.6 - perf_table_get
+GET http://localhost:3000/rpc/perf_table_get?_id=123456
+
+### postgrest-v16.6 - perf_table_list
+GET http://localhost:3000/rpc/perf_table_list?_category=7&_after_id=250000&_limit=20
+
+### postgrest-v16.6 - perf_table_insert
+POST http://localhost:3000/rpc/perf_table_insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
 
 ### ============================================
 ### net10-minapi-ef-jit (port 5003)
@@ -348,6 +456,18 @@ Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
 
+### net10-minapi-ef-jit - perf_table_get
+GET http://localhost:5003/api/perf-table-get?_id=123456
+
+### net10-minapi-ef-jit - perf_table_list
+GET http://localhost:5003/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### net10-minapi-ef-jit - perf_table_insert
+POST http://localhost:5003/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
 ### ============================================
 ### net10-minapi-dapper-jit (port 5004)
 ### ============================================
@@ -383,77 +503,17 @@ Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
 
-### ============================================
-### npgsqlrest-routine-aot-v3.4.7 (port 5005)
-### ============================================
+### net10-minapi-dapper-jit - perf_table_get
+GET http://localhost:5004/api/perf-table-get?_id=123456
 
-// npgsqlrest-routine-aot-v3.4.7 - perf-test
-GET http://localhost:5005/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
+### net10-minapi-dapper-jit - perf_table_list
+GET http://localhost:5004/api/perf-table-list?_category=7&_after_id=250000&_limit=20
 
-###
-
-// npgsqlrest-routine-aot-v3.4.7 - perf-minimal
-GET http://localhost:5005/api/perf-minimal
-
-###
-
-// npgsqlrest-routine-aot-v3.4.7 - perf-nested
-GET http://localhost:5005/api/perf-nested?_records=3&_depth=3
-
-###
-
-// npgsqlrest-routine-aot-v3.4.7 - perf-large-payload
-GET http://localhost:5005/api/perf-large-payload?_size_kb=10
-
-###
-
-// npgsqlrest-routine-aot-v3.4.7 - perf-many-params
-GET http://localhost:5005/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
-
-###
-
-// npgsqlrest-routine-aot-v3.4.7 - perf-post
-POST http://localhost:5005/api/perf-post
+### net10-minapi-dapper-jit - perf_table_insert
+POST http://localhost:5004/api/perf-table-insert
 Content-Type: application/json
 
-{"_records": 3, "_payload": {"test": "value"}}
-
-### ============================================
-### npgsqlrest-routine-jit-v3.4.7 (port 5006)
-### ============================================
-
-// npgsqlrest-routine-jit-v3.4.7 - perf-test
-GET http://localhost:5006/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
-
-###
-
-// npgsqlrest-routine-jit-v3.4.7 - perf-minimal
-GET http://localhost:5006/api/perf-minimal
-
-###
-
-// npgsqlrest-routine-jit-v3.4.7 - perf-nested
-GET http://localhost:5006/api/perf-nested?_records=3&_depth=3
-
-###
-
-// npgsqlrest-routine-jit-v3.4.7 - perf-large-payload
-GET http://localhost:5006/api/perf-large-payload?_size_kb=10
-
-###
-
-// npgsqlrest-routine-jit-v3.4.7 - perf-many-params
-GET http://localhost:5006/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
-
-###
-
-// npgsqlrest-routine-jit-v3.4.7 - perf-post
-POST http://localhost:5006/api/perf-post
-Content-Type: application/json
-
-{"_records": 3, "_payload": {"test": "value"}}
-
-###
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
 
 ### ============================================
 ### npgsqlrest-routine-aot-v3.21.0 (port 5007)
@@ -492,6 +552,18 @@ Content-Type: application/json
 
 ###
 
+### npgsqlrest-routine-aot-v3.21.0 - perf_table_get
+GET http://localhost:5007/api/perf-table-get?_id=123456
+
+### npgsqlrest-routine-aot-v3.21.0 - perf_table_list
+GET http://localhost:5007/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### npgsqlrest-routine-aot-v3.21.0 - perf_table_insert
+POST http://localhost:5007/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
 ### ============================================
 ### npgsqlrest-routine-jit-v3.21.0 (port 5008)
 ### ============================================
@@ -528,6 +600,18 @@ Content-Type: application/json
 {"_records": 3, "_payload": {"test": "value"}}
 
 ###
+
+### npgsqlrest-routine-jit-v3.21.0 - perf_table_get
+GET http://localhost:5008/api/perf-table-get?_id=123456
+
+### npgsqlrest-routine-jit-v3.21.0 - perf_table_list
+GET http://localhost:5008/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### npgsqlrest-routine-jit-v3.21.0 - perf_table_insert
+POST http://localhost:5008/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
 
 ### ============================================
 ### npgsqlrest-file-aot-v3.21.0 (port 5009)
@@ -566,6 +650,18 @@ Content-Type: application/json
 
 ###
 
+### npgsqlrest-file-aot-v3.21.0 - perf_table_get
+GET http://localhost:5009/api/perf-table-get?_id=123456
+
+### npgsqlrest-file-aot-v3.21.0 - perf_table_list
+GET http://localhost:5009/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### npgsqlrest-file-aot-v3.21.0 - perf_table_insert
+POST http://localhost:5009/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
 ### ============================================
 ### npgsqlrest-file-jit-v3.21.0 (port 5010)
 ### ============================================
@@ -603,75 +699,111 @@ Content-Type: application/json
 
 ###
 
+### npgsqlrest-file-jit-v3.21.0 - perf_table_get
+GET http://localhost:5010/api/perf-table-get?_id=123456
+
+### npgsqlrest-file-jit-v3.21.0 - perf_table_list
+GET http://localhost:5010/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### npgsqlrest-file-jit-v3.21.0 - perf_table_insert
+POST http://localhost:5010/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
 ### ============================================
-### express-app-v5.2.1 (port 3102)
+### express-app-v5.3.0 (port 3102)
 ### ============================================
 
-// express-app-v5.2.1 - perf-test
+// express-app-v5.3.0 - perf-test
 GET http://localhost:3102/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// express-app-v5.2.1 - perf-minimal
+// express-app-v5.3.0 - perf-minimal
 GET http://localhost:3102/api/perf-minimal
 
 ###
 
-// express-app-v5.2.1 - perf-nested
+// express-app-v5.3.0 - perf-nested
 GET http://localhost:3102/api/perf-nested?_records=3&_depth=3
 
 ###
 
-// express-app-v5.2.1 - perf-large-payload
+// express-app-v5.3.0 - perf-large-payload
 GET http://localhost:3102/api/perf-large-payload?_size_kb=10
 
 ###
 
-// express-app-v5.2.1 - perf-many-params
+// express-app-v5.3.0 - perf-many-params
 GET http://localhost:3102/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
 
 ###
 
-// express-app-v5.2.1 - perf-post
+// express-app-v5.3.0 - perf-post
 POST http://localhost:3102/api/perf-post
 Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
 
+### express-app-v5.3.0 - perf_table_get
+GET http://localhost:3102/api/perf-table-get?_id=123456
+
+### express-app-v5.3.0 - perf_table_list
+GET http://localhost:3102/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### express-app-v5.3.0 - perf_table_insert
+POST http://localhost:3102/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
 ### ============================================
-### deno-app-v2.9.2 (port 3105)
+### deno-app-v2.9.8 (port 3105)
 ### ============================================
 
-// deno-app-v2.9.2 - perf-test
+// deno-app-v2.9.8 - perf-test
 GET http://localhost:3105/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
 
 ###
 
-// deno-app-v2.9.2 - perf-minimal
+// deno-app-v2.9.8 - perf-minimal
 GET http://localhost:3105/api/perf-minimal
 
 ###
 
-// deno-app-v2.9.2 - perf-nested
+// deno-app-v2.9.8 - perf-nested
 GET http://localhost:3105/api/perf-nested?_records=3&_depth=3
 
 ###
 
-// deno-app-v2.9.2 - perf-large-payload
+// deno-app-v2.9.8 - perf-large-payload
 GET http://localhost:3105/api/perf-large-payload?_size_kb=10
 
 ###
 
-// deno-app-v2.9.2 - perf-many-params
+// deno-app-v2.9.8 - perf-many-params
 GET http://localhost:3105/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
 
 ###
 
-// deno-app-v2.9.2 - perf-post
+// deno-app-v2.9.8 - perf-post
 POST http://localhost:3105/api/perf-post
 Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
+
+### deno-app-v2.9.8 - perf_table_get
+GET http://localhost:3105/api/perf-table-get?_id=123456
+
+### deno-app-v2.9.8 - perf_table_list
+GET http://localhost:3105/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### deno-app-v2.9.8 - perf_table_insert
+POST http://localhost:3105/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
 
 ### ============================================
 ### axum-app-v0.8.9 (port 5301)
@@ -707,3 +839,811 @@ POST http://localhost:5301/api/perf-post
 Content-Type: application/json
 
 {"_records": 3, "_payload": {"test": "value"}}
+
+### axum-app-v0.8.9 - perf_table_get
+GET http://localhost:5301/api/perf-table-get?_id=123456
+
+### axum-app-v0.8.9 - perf_table_list
+GET http://localhost:5301/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### axum-app-v0.8.9 - perf_table_insert
+POST http://localhost:5301/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
+### ============================================
+### net11-minapi-ef-jit (port 5013)
+### ============================================
+
+// net11-minapi-ef-jit - perf-test
+GET http://localhost:5013/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
+
+###
+
+// net11-minapi-ef-jit - perf-minimal
+GET http://localhost:5013/api/perf-minimal
+
+###
+
+// net11-minapi-ef-jit - perf-nested
+GET http://localhost:5013/api/perf-nested?_records=3&_depth=3
+
+###
+
+// net11-minapi-ef-jit - perf-large-payload
+GET http://localhost:5013/api/perf-large-payload?_size_kb=10
+
+###
+
+// net11-minapi-ef-jit - perf-many-params
+GET http://localhost:5013/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
+
+###
+
+// net11-minapi-ef-jit - perf-post
+POST http://localhost:5013/api/perf-post
+Content-Type: application/json
+
+{"_records": 3, "_payload": {"test": "value"}}
+
+### net11-minapi-ef-jit - perf_table_get
+GET http://localhost:5013/api/perf-table-get?_id=123456
+
+### net11-minapi-ef-jit - perf_table_list
+GET http://localhost:5013/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### net11-minapi-ef-jit - perf_table_insert
+POST http://localhost:5013/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
+### ============================================
+### net11-minapi-dapper-jit (port 5014)
+### ============================================
+
+// net11-minapi-dapper-jit - perf-test
+GET http://localhost:5014/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
+
+###
+
+// net11-minapi-dapper-jit - perf-minimal
+GET http://localhost:5014/api/perf-minimal
+
+###
+
+// net11-minapi-dapper-jit - perf-nested
+GET http://localhost:5014/api/perf-nested?_records=3&_depth=3
+
+###
+
+// net11-minapi-dapper-jit - perf-large-payload
+GET http://localhost:5014/api/perf-large-payload?_size_kb=10
+
+###
+
+// net11-minapi-dapper-jit - perf-many-params
+GET http://localhost:5014/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
+
+###
+
+// net11-minapi-dapper-jit - perf-post
+POST http://localhost:5014/api/perf-post
+Content-Type: application/json
+
+{"_records": 3, "_payload": {"test": "value"}}
+
+### net11-minapi-dapper-jit - perf_table_get
+GET http://localhost:5014/api/perf-table-get?_id=123456
+
+### net11-minapi-dapper-jit - perf_table_list
+GET http://localhost:5014/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### net11-minapi-dapper-jit - perf_table_insert
+POST http://localhost:5014/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
+### ============================================
+### npgsqlrest-routine-aot-v4.1.0 (port 5005)
+### ============================================
+
+// npgsqlrest-routine-aot-v4.1.0 - perf-test
+GET http://localhost:5005/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
+
+###
+
+// npgsqlrest-routine-aot-v4.1.0 - perf-minimal
+GET http://localhost:5005/api/perf-minimal
+
+###
+
+// npgsqlrest-routine-aot-v4.1.0 - perf-nested
+GET http://localhost:5005/api/perf-nested?_records=3&_depth=3
+
+###
+
+// npgsqlrest-routine-aot-v4.1.0 - perf-large-payload
+GET http://localhost:5005/api/perf-large-payload?_size_kb=10
+
+###
+
+// npgsqlrest-routine-aot-v4.1.0 - perf-many-params
+GET http://localhost:5005/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
+
+###
+
+// npgsqlrest-routine-aot-v4.1.0 - perf-post
+POST http://localhost:5005/api/perf-post
+Content-Type: application/json
+
+{"_records": 3, "_payload": {"test": "value"}}
+
+###
+
+### npgsqlrest-routine-aot-v4.1.0 - perf_table_get
+GET http://localhost:5005/api/perf-table-get?_id=123456
+
+### npgsqlrest-routine-aot-v4.1.0 - perf_table_list
+GET http://localhost:5005/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### npgsqlrest-routine-aot-v4.1.0 - perf_table_insert
+POST http://localhost:5005/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
+### ============================================
+### npgsqlrest-routine-jit-v4.1.0 (port 5006)
+### ============================================
+
+// npgsqlrest-routine-jit-v4.1.0 - perf-test
+GET http://localhost:5006/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
+
+###
+
+// npgsqlrest-routine-jit-v4.1.0 - perf-minimal
+GET http://localhost:5006/api/perf-minimal
+
+###
+
+// npgsqlrest-routine-jit-v4.1.0 - perf-nested
+GET http://localhost:5006/api/perf-nested?_records=3&_depth=3
+
+###
+
+// npgsqlrest-routine-jit-v4.1.0 - perf-large-payload
+GET http://localhost:5006/api/perf-large-payload?_size_kb=10
+
+###
+
+// npgsqlrest-routine-jit-v4.1.0 - perf-many-params
+GET http://localhost:5006/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
+
+###
+
+// npgsqlrest-routine-jit-v4.1.0 - perf-post
+POST http://localhost:5006/api/perf-post
+Content-Type: application/json
+
+{"_records": 3, "_payload": {"test": "value"}}
+
+###
+
+### npgsqlrest-routine-jit-v4.1.0 - perf_table_get
+GET http://localhost:5006/api/perf-table-get?_id=123456
+
+### npgsqlrest-routine-jit-v4.1.0 - perf_table_list
+GET http://localhost:5006/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### npgsqlrest-routine-jit-v4.1.0 - perf_table_insert
+POST http://localhost:5006/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
+### ============================================
+### npgsqlrest-file-aot-v4.1.0 (port 5011)
+### ============================================
+
+// npgsqlrest-file-aot-v4.1.0 - perf-test
+GET http://localhost:5011/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
+
+###
+
+// npgsqlrest-file-aot-v4.1.0 - perf-minimal
+GET http://localhost:5011/api/perf-minimal
+
+###
+
+// npgsqlrest-file-aot-v4.1.0 - perf-nested
+GET http://localhost:5011/api/perf-nested?_records=3&_depth=3
+
+###
+
+// npgsqlrest-file-aot-v4.1.0 - perf-large-payload
+GET http://localhost:5011/api/perf-large-payload?_size_kb=10
+
+###
+
+// npgsqlrest-file-aot-v4.1.0 - perf-many-params
+GET http://localhost:5011/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
+
+###
+
+// npgsqlrest-file-aot-v4.1.0 - perf-post
+POST http://localhost:5011/api/perf-post
+Content-Type: application/json
+
+{"_records": 3, "_payload": {"test": "value"}}
+
+###
+
+### npgsqlrest-file-aot-v4.1.0 - perf_table_get
+GET http://localhost:5011/api/perf-table-get?_id=123456
+
+### npgsqlrest-file-aot-v4.1.0 - perf_table_list
+GET http://localhost:5011/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### npgsqlrest-file-aot-v4.1.0 - perf_table_insert
+POST http://localhost:5011/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
+### ============================================
+### npgsqlrest-file-jit-v4.1.0 (port 5012)
+### ============================================
+
+// npgsqlrest-file-jit-v4.1.0 - perf-test
+GET http://localhost:5012/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
+
+###
+
+// npgsqlrest-file-jit-v4.1.0 - perf-minimal
+GET http://localhost:5012/api/perf-minimal
+
+###
+
+// npgsqlrest-file-jit-v4.1.0 - perf-nested
+GET http://localhost:5012/api/perf-nested?_records=3&_depth=3
+
+###
+
+// npgsqlrest-file-jit-v4.1.0 - perf-large-payload
+GET http://localhost:5012/api/perf-large-payload?_size_kb=10
+
+###
+
+// npgsqlrest-file-jit-v4.1.0 - perf-many-params
+GET http://localhost:5012/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
+
+###
+
+// npgsqlrest-file-jit-v4.1.0 - perf-post
+POST http://localhost:5012/api/perf-post
+Content-Type: application/json
+
+{"_records": 3, "_payload": {"test": "value"}}
+
+###
+
+### npgsqlrest-file-jit-v4.1.0 - perf_table_get
+GET http://localhost:5012/api/perf-table-get?_id=123456
+
+### npgsqlrest-file-jit-v4.1.0 - perf_table_list
+GET http://localhost:5012/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### npgsqlrest-file-jit-v4.1.0 - perf_table_insert
+POST http://localhost:5012/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
+### ============================================
+### gin-app-v1.12.0 (port 5201)
+### ============================================
+
+// gin-app-v1.12.0 - perf-test
+GET http://localhost:5201/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
+
+###
+
+// gin-app-v1.12.0 - perf-minimal
+GET http://localhost:5201/api/perf-minimal
+
+###
+
+// gin-app-v1.12.0 - perf-nested
+GET http://localhost:5201/api/perf-nested?_records=3&_depth=3
+
+###
+
+// gin-app-v1.12.0 - perf-large-payload
+GET http://localhost:5201/api/perf-large-payload?_size_kb=10
+
+###
+
+// gin-app-v1.12.0 - perf-many-params
+GET http://localhost:5201/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
+
+###
+
+// gin-app-v1.12.0 - perf-post
+POST http://localhost:5201/api/perf-post
+Content-Type: application/json
+
+{"_records": 3, "_payload": {"test": "value"}}
+
+### gin-app-v1.12.0 - perf_table_get
+GET http://localhost:5201/api/perf-table-get?_id=123456
+
+### gin-app-v1.12.0 - perf_table_list
+GET http://localhost:5201/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### gin-app-v1.12.0 - perf_table_insert
+POST http://localhost:5201/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
+### ============================================
+### nestjs-app-v12.6.0 (port 3106)
+### ============================================
+
+// nestjs-app-v12.6.0 - perf-test
+GET http://localhost:3106/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
+
+###
+
+// nestjs-app-v12.6.0 - perf-minimal
+GET http://localhost:3106/api/perf-minimal
+
+###
+
+// nestjs-app-v12.6.0 - perf-nested
+GET http://localhost:3106/api/perf-nested?_records=3&_depth=3
+
+###
+
+// nestjs-app-v12.6.0 - perf-large-payload
+GET http://localhost:3106/api/perf-large-payload?_size_kb=10
+
+###
+
+// nestjs-app-v12.6.0 - perf-many-params
+GET http://localhost:3106/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
+
+###
+
+// nestjs-app-v12.6.0 - perf-post
+POST http://localhost:3106/api/perf-post
+Content-Type: application/json
+
+{"_records": 3, "_payload": {"test": "value"}}
+
+### nestjs-app-v12.6.0 - perf_table_get
+GET http://localhost:3106/api/perf-table-get?_id=123456
+
+### nestjs-app-v12.6.0 - perf_table_list
+GET http://localhost:3106/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### nestjs-app-v12.6.0 - perf_table_insert
+POST http://localhost:3106/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
+### ============================================
+### laravel-v13.43.0-octane-app (port 3107)
+### ============================================
+
+// laravel-v13.43.0-octane-app - perf-test
+GET http://localhost:3107/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array={1,2,3}&_text_array={a,b,c}
+
+###
+
+// laravel-v13.43.0-octane-app - perf-minimal
+GET http://localhost:3107/api/perf-minimal
+
+###
+
+// laravel-v13.43.0-octane-app - perf-nested
+GET http://localhost:3107/api/perf-nested?_records=3&_depth=3
+
+###
+
+// laravel-v13.43.0-octane-app - perf-large-payload
+GET http://localhost:3107/api/perf-large-payload?_size_kb=10
+
+###
+
+// laravel-v13.43.0-octane-app - perf-many-params
+GET http://localhost:3107/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
+
+###
+
+// laravel-v13.43.0-octane-app - perf-post
+POST http://localhost:3107/api/perf-post
+Content-Type: application/json
+
+{"_records": 3, "_payload": {"test": "value"}}
+
+### laravel-v13.43.0-octane-app - perf_table_get
+GET http://localhost:3107/api/perf-table-get?_id=123456
+
+### laravel-v13.43.0-octane-app - perf_table_list
+GET http://localhost:3107/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### laravel-v13.43.0-octane-app - perf_table_insert
+POST http://localhost:3107/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
+### ============================================
+### net11-minapi-npgsql-jit (port 5015)
+### ============================================
+
+// net11-minapi-npgsql-jit - perf-test
+GET http://localhost:5015/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
+
+###
+
+// net11-minapi-npgsql-jit - perf-minimal
+GET http://localhost:5015/api/perf-minimal
+
+###
+
+// net11-minapi-npgsql-jit - perf-nested
+GET http://localhost:5015/api/perf-nested?_records=3&_depth=3
+
+###
+
+// net11-minapi-npgsql-jit - perf-large-payload
+GET http://localhost:5015/api/perf-large-payload?_size_kb=10
+
+###
+
+// net11-minapi-npgsql-jit - perf-many-params
+GET http://localhost:5015/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
+
+###
+
+// net11-minapi-npgsql-jit - perf-post
+POST http://localhost:5015/api/perf-post
+Content-Type: application/json
+
+{"_records": 3, "_payload": {"test": "value"}}
+
+### net11-minapi-npgsql-jit - perf_table_get
+GET http://localhost:5015/api/perf-table-get?_id=123456
+
+### net11-minapi-npgsql-jit - perf_table_list
+GET http://localhost:5015/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### net11-minapi-npgsql-jit - perf_table_insert
+POST http://localhost:5015/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
+### ============================================
+### postgraphile-v5.2.1 (port 3108) - GraphQL
+### ============================================
+
+### postgraphile-v5.2.1 - perf_test
+POST http://localhost:3108/graphql
+Content-Type: application/json
+
+{
+  "query": "query($records: Int, $text: String, $int: Int, $bigint: BigInt, $numeric: BigFloat, $real: Float, $double: Float, $bool: Boolean, $date: Date, $timestamp: Datetime, $timestamptz: Datetime, $uuid: UUID, $json: JSON, $jsonb: JSON, $int_array: [Int], $text_array: [String]) { perfTest(_records: $records, _text: $text, _int: $int, _bigint: $bigint, _numeric: $numeric, _real: $real, _double: $double, _bool: $bool, _date: $date, _timestamp: $timestamp, _timestamptz: $timestamptz, _uuid: $uuid, _json: $json, _jsonb: $jsonb, _intArray: $int_array, _textArray: $text_array) { nodes { rowNum textVal varcharVal charVal smallintVal intVal bigintVal numericVal realVal doubleVal boolVal dateVal timeVal timestampVal timestamptzVal intervalVal { years months days hours minutes seconds } uuidVal jsonVal jsonbVal intArrayVal textArrayVal nullableText nullableInt } } }",
+  "variables": {
+    "records": 1,
+    "text": "test",
+    "int": 42,
+    "bigint": "9223372036854770000",
+    "numeric": "123.456",
+    "real": 1.23,
+    "double": 1.23456789,
+    "bool": true,
+    "date": "2024-01-15",
+    "timestamp": "2024-01-15T10:30:00",
+    "timestamptz": "2024-01-15T10:30:00Z",
+    "uuid": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+    "json": {
+      "key": "value"
+    },
+    "jsonb": {
+      "key": "value"
+    },
+    "int_array": [
+      1,
+      2,
+      3
+    ],
+    "text_array": [
+      "a",
+      "b",
+      "c"
+    ]
+  }
+}
+
+### postgraphile-v5.2.1 - perf_minimal
+POST http://localhost:3108/graphql
+Content-Type: application/json
+
+{
+  "query": "query { perfMinimal { nodes { status ts } } }",
+  "variables": {}
+}
+
+### postgraphile-v5.2.1 - perf_post
+POST http://localhost:3108/graphql
+Content-Type: application/json
+
+{
+  "query": "query($records: Int, $payload: JSON) { perfPost(_records: $records, _payload: $payload) { nodes { rowNum echo computed } } }",
+  "variables": {
+    "records": 3,
+    "payload": {
+      "test": "value"
+    }
+  }
+}
+
+### postgraphile-v5.2.1 - perf_nested
+POST http://localhost:3108/graphql
+Content-Type: application/json
+
+{
+  "query": "query($records: Int, $depth: Int) { perfNested(_records: $records, _depth: $depth) { nodes { rowNum nested } } }",
+  "variables": {
+    "records": 3,
+    "depth": 3
+  }
+}
+
+### postgraphile-v5.2.1 - perf_large_payload
+POST http://localhost:3108/graphql
+Content-Type: application/json
+
+{
+  "query": "query($size_kb: Int) { perfLargePayload(_sizeKb: $size_kb) { nodes } }",
+  "variables": {
+    "size_kb": 10
+  }
+}
+
+### postgraphile-v5.2.1 - perf_many_params
+POST http://localhost:3108/graphql
+Content-Type: application/json
+
+{
+  "query": "query($p1: String, $p2: Int, $p3: Boolean, $p4: BigFloat, $p5: String, $p6: String, $p7: Int, $p8: Boolean, $p9: BigFloat, $p10: String, $p11: String, $p12: Int, $p13: Boolean, $p14: BigFloat, $p15: String, $p16: String, $p17: Int, $p18: Boolean, $p19: BigFloat, $p20: String) { perfManyParams(_p1: $p1, _p2: $p2, _p3: $p3, _p4: $p4, _p5: $p5, _p6: $p6, _p7: $p7, _p8: $p8, _p9: $p9, _p10: $p10, _p11: $p11, _p12: $p12, _p13: $p13, _p14: $p14, _p15: $p15, _p16: $p16, _p17: $p17, _p18: $p18, _p19: $p19, _p20: $p20) { nodes { paramCount checksum } } }",
+  "variables": {
+    "p1": "a",
+    "p2": 1,
+    "p3": true,
+    "p4": "1.1",
+    "p5": "e",
+    "p6": "f",
+    "p7": 2,
+    "p8": false,
+    "p9": "2.2",
+    "p10": "j",
+    "p11": "k",
+    "p12": 3,
+    "p13": true,
+    "p14": "3.3",
+    "p15": "o",
+    "p16": "p",
+    "p17": 4,
+    "p18": false,
+    "p19": "4.4",
+    "p20": "t"
+  }
+}
+
+### postgraphile-v5.2.1 - perf_table_get
+POST http://localhost:3108/graphql
+Content-Type: application/json
+
+{
+  "query": "query($id: Int) { perfTableGet(_id: $id) { nodes { id name category price active createdAt } } }",
+  "variables": {
+    "id": 123456
+  }
+}
+
+### postgraphile-v5.2.1 - perf_table_list
+POST http://localhost:3108/graphql
+Content-Type: application/json
+
+{
+  "query": "query($category: Int, $after_id: Int, $limit: Int) { perfTableList(_category: $category, _afterId: $after_id, _limit: $limit) { nodes { id name category price active createdAt } } }",
+  "variables": {
+    "category": 7,
+    "after_id": 250000,
+    "limit": 20
+  }
+}
+
+### postgraphile-v5.2.1 - perf_table_insert
+POST http://localhost:3108/graphql
+Content-Type: application/json
+
+{
+  "query": "mutation($item_id: Int, $quantity: Int, $note: String) { perfTableInsert(input: { _itemId: $item_id, _quantity: $quantity, _note: $note }) { result { id itemId quantity note createdAt } } }",
+  "variables": {
+    "item_id": 5,
+    "quantity": 2,
+    "note": "smoke test"
+  }
+}
+
+### ============================================
+### hasura-v2.50.10 (port 3109) - GraphQL
+### ============================================
+
+### hasura-v2.50.10 - perf_test
+POST http://localhost:3109/v1/graphql
+Content-Type: application/json
+
+{
+  "query": "query($args: hasura_perf_test_args!) { hasura_perf_test(args: $args) { row_num text_val varchar_val char_val smallint_val int_val bigint_val numeric_val real_val double_val bool_val date_val time_val timestamp_val timestamptz_val interval_val uuid_val json_val jsonb_val int_array_val text_array_val nullable_text nullable_int } }",
+  "variables": {
+    "args": {
+      "_records": 1,
+      "_text": "test",
+      "_int": 42,
+      "_bigint": "9223372036854770000",
+      "_numeric": "123.456",
+      "_real": 1.23,
+      "_double": 1.23456789,
+      "_bool": true,
+      "_date": "2024-01-15",
+      "_timestamp": "2024-01-15T10:30:00",
+      "_timestamptz": "2024-01-15T10:30:00Z",
+      "_uuid": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+      "_json": {
+        "key": "value"
+      },
+      "_jsonb": {
+        "key": "value"
+      },
+      "_int_array": "{1,2,3}",
+      "_text_array": "{a,b,c}"
+    }
+  }
+}
+
+### hasura-v2.50.10 - perf_minimal
+POST http://localhost:3109/v1/graphql
+Content-Type: application/json
+
+{
+  "query": "query { hasura_perf_minimal { status ts } }",
+  "variables": {}
+}
+
+### hasura-v2.50.10 - perf_post
+POST http://localhost:3109/v1/graphql
+Content-Type: application/json
+
+{
+  "query": "query($args: hasura_perf_post_args!) { hasura_perf_post(args: $args) { row_num echo computed } }",
+  "variables": {
+    "args": {
+      "_records": 3,
+      "_payload": {
+        "test": "value"
+      }
+    }
+  }
+}
+
+### hasura-v2.50.10 - perf_nested
+POST http://localhost:3109/v1/graphql
+Content-Type: application/json
+
+{
+  "query": "query($args: hasura_perf_nested_args!) { hasura_perf_nested(args: $args) { row_num nested } }",
+  "variables": {
+    "args": {
+      "_records": 3,
+      "_depth": 3
+    }
+  }
+}
+
+### hasura-v2.50.10 - perf_large_payload
+POST http://localhost:3109/v1/graphql
+Content-Type: application/json
+
+{
+  "query": "query($args: hasura_perf_large_payload_args!) { hasura_perf_large_payload(args: $args) { data } }",
+  "variables": {
+    "args": {
+      "_size_kb": 10
+    }
+  }
+}
+
+### hasura-v2.50.10 - perf_many_params
+POST http://localhost:3109/v1/graphql
+Content-Type: application/json
+
+{
+  "query": "query($args: hasura_perf_many_params_args!) { hasura_perf_many_params(args: $args) { param_count checksum } }",
+  "variables": {
+    "args": {
+      "_p1": "a",
+      "_p2": 1,
+      "_p3": true,
+      "_p4": "1.1",
+      "_p5": "e",
+      "_p6": "f",
+      "_p7": 2,
+      "_p8": false,
+      "_p9": "2.2",
+      "_p10": "j",
+      "_p11": "k",
+      "_p12": 3,
+      "_p13": true,
+      "_p14": "3.3",
+      "_p15": "o",
+      "_p16": "p",
+      "_p17": 4,
+      "_p18": false,
+      "_p19": "4.4",
+      "_p20": "t"
+    }
+  }
+}
+
+### hasura-v2.50.10 - perf_table_get
+POST http://localhost:3109/v1/graphql
+Content-Type: application/json
+
+{
+  "query": "query($args: hasura_perf_table_get_args!) { hasura_perf_table_get(args: $args) { id name category price active created_at } }",
+  "variables": {
+    "args": {
+      "_id": 123456
+    }
+  }
+}
+
+### hasura-v2.50.10 - perf_table_list
+POST http://localhost:3109/v1/graphql
+Content-Type: application/json
+
+{
+  "query": "query($args: hasura_perf_table_list_args!) { hasura_perf_table_list(args: $args) { id name category price active created_at } }",
+  "variables": {
+    "args": {
+      "_category": 7,
+      "_after_id": 250000,
+      "_limit": 20
+    }
+  }
+}
+
+### hasura-v2.50.10 - perf_table_insert
+POST http://localhost:3109/v1/graphql
+Content-Type: application/json
+
+{
+  "query": "mutation($args: hasura_perf_table_insert_args!) { hasura_perf_table_insert(args: $args) { id item_id quantity note created_at } }",
+  "variables": {
+    "args": {
+      "_item_id": 5,
+      "_quantity": 2,
+      "_note": "smoke test"
+    }
+  }
+}

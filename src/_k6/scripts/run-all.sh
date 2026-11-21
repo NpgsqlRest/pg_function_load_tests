@@ -19,6 +19,7 @@ PROFILE=${PROFILE:-"local"}
 # - nested: Nested JSON serialization test
 # - large: Large payload streaming test
 # - params: Many query parameters test
+# - table: The three table scenarios (one row by key, one page of a list, an insert)
 SCENARIO=${SCENARIO:-"all"}
 
 # =============================================================================
@@ -62,6 +63,11 @@ SERVER_LARGE_DURATION="60s"
 # many params scenario - tests query string parsing overhead
 SERVER_PARAMS_VUS="50 100 200"
 SERVER_PARAMS_DURATION="60s"
+
+# table scenarios - one row by primary key, one page of a list, one insert (tables.sql)
+SERVER_TABLE_VUS="50 200"
+SERVER_TABLE_DURATION="60s"
+SERVER_TABLE_LIMIT="20"
 
 # Sleep between tests (in seconds)
 # 30s allows TCP TIME_WAIT to clear and services to stabilize
@@ -108,6 +114,11 @@ LOCAL_LARGE_DURATION="15s"
 LOCAL_PARAMS_VUS="25 50"
 LOCAL_PARAMS_DURATION="15s"
 
+# table scenarios - one row by primary key, one page of a list, one insert (tables.sql)
+LOCAL_TABLE_VUS="25 50"
+LOCAL_TABLE_DURATION="15s"
+LOCAL_TABLE_LIMIT="20"
+
 # common settings
 LOCAL_SLEEP="2"
 LOCAL_RAMP="3s"
@@ -148,6 +159,11 @@ MINIMAL_LARGE_DURATION="3s"
 MINIMAL_PARAMS_VUS="5"
 MINIMAL_PARAMS_DURATION="3s"
 
+# table scenarios - one row by primary key, one page of a list, one insert (tables.sql)
+MINIMAL_TABLE_VUS="5"
+MINIMAL_TABLE_DURATION="3s"
+MINIMAL_TABLE_LIMIT="20"
+
 # common settings - no sleep needed for minimal
 MINIMAL_SLEEP="1"
 MINIMAL_RAMP="1s"
@@ -174,6 +190,9 @@ if [ "$PROFILE" = "server" ]; then
     LARGE_DURATION="$SERVER_LARGE_DURATION"
     PARAMS_VUS="$SERVER_PARAMS_VUS"
     PARAMS_DURATION="$SERVER_PARAMS_DURATION"
+    TABLE_VUS="$SERVER_TABLE_VUS"
+    TABLE_DURATION="$SERVER_TABLE_DURATION"
+    TABLE_LIMIT="$SERVER_TABLE_LIMIT"
     SLEEP_BETWEEN="$SERVER_SLEEP"
     RAMP="$SERVER_RAMP"
     WARMUP="$SERVER_WARMUP"
@@ -196,6 +215,9 @@ elif [ "$PROFILE" = "minimal" ]; then
     LARGE_DURATION="$MINIMAL_LARGE_DURATION"
     PARAMS_VUS="$MINIMAL_PARAMS_VUS"
     PARAMS_DURATION="$MINIMAL_PARAMS_DURATION"
+    TABLE_VUS="$MINIMAL_TABLE_VUS"
+    TABLE_DURATION="$MINIMAL_TABLE_DURATION"
+    TABLE_LIMIT="$MINIMAL_TABLE_LIMIT"
     SLEEP_BETWEEN="$MINIMAL_SLEEP"
     RAMP="$MINIMAL_RAMP"
     WARMUP="$MINIMAL_WARMUP"
@@ -218,6 +240,9 @@ else
     LARGE_DURATION="$LOCAL_LARGE_DURATION"
     PARAMS_VUS="$LOCAL_PARAMS_VUS"
     PARAMS_DURATION="$LOCAL_PARAMS_DURATION"
+    TABLE_VUS="$LOCAL_TABLE_VUS"
+    TABLE_DURATION="$LOCAL_TABLE_DURATION"
+    TABLE_LIMIT="$LOCAL_TABLE_LIMIT"
     SLEEP_BETWEEN="$LOCAL_SLEEP"
     RAMP="$LOCAL_RAMP"
     WARMUP="$LOCAL_WARMUP"
@@ -233,7 +258,8 @@ STAMP=${STAMP:-$(date +"%Y%m%d%H%M")}
 
 mkdir -p /results
 mkdir -p /results/$STAMP
-echo "start_epoch,end_epoch,tag,script,exit_code" > /results/$STAMP/test_log.csv
+mkdir -p /results/$STAMP/k6
+echo "start_epoch,end_epoch,tag,script,exit_code,params,pg_calls,pg_exec_ms,pg_rows,pg_connections" > /results/$STAMP/test_log.csv
 
 echo "*** Starting unified benchmark suite"
 echo "*** Output will be saved in /results/$STAMP"
@@ -242,27 +268,51 @@ echo "*** Scenario: $SCENARIO"
 
 # Service definitions: tag port
 read -r -d '' SERVICES << 'EOF'
-django-app-v6.0.7 8000
-fastapi-app-v0.139.0 8001
-fastify-app-v5.10.0 3101
-bun-app-v1.3.14 3104
-go-app-v1.26 5200
-java25-spring-boot-v4.1.0 5400
-rust-app-v1.97.0 5300
-swoole-php-app-v6.2.1 3103
-express-app-v5.2.1 3102
-deno-app-v2.9.2 3105
+django-app-v6.1.3 8000
+fastapi-app-v0.165.0 8001
+fastify-app-v5.12.8 3101
+bun-app-v1.4.5 3104
+go-app-v1.27 5200
+java25-spring-boot-v4.2.0 5400
+rust-app-v1.100.0 5300
+swoole-php-app-v6.2.6 3103
+express-app-v5.3.0 3102
+deno-app-v2.9.8 3105
 axum-app-v0.8.9 5301
-postgrest-v14.14 3000
+postgrest-v16.6 3000
 net10-minapi-ef-jit 5003
 net10-minapi-dapper-jit 5004
-npgsqlrest-routine-aot-v3.4.7 5005
-npgsqlrest-routine-jit-v3.4.7 5006
+net11-minapi-ef-jit 5013
+net11-minapi-dapper-jit 5014
 npgsqlrest-routine-aot-v3.21.0 5007
 npgsqlrest-routine-jit-v3.21.0 5008
 npgsqlrest-file-aot-v3.21.0 5009
 npgsqlrest-file-jit-v3.21.0 5010
+npgsqlrest-routine-aot-v4.1.0 5005
+npgsqlrest-routine-jit-v4.1.0 5006
+npgsqlrest-file-aot-v4.1.0 5011
+npgsqlrest-file-jit-v4.1.0 5012
+gin-app-v1.12.0 5201
+nestjs-app-v12.6.0 3106
+laravel-v13.43.0-octane-app 3107
+net11-minapi-npgsql-jit 5015
+postgraphile-v5.2.1 3108
+hasura-v2.50.10 3109
 EOF
+
+# ONLY: an extended regular expression; only the services whose name matches are tested
+# (ONLY='^go-app|^rust-app|^npgsqlrest-routine-aot-v4'; without ^, go-app also matches django-app). Every service is still paused while another one is
+# tested, matched or not. For pilots and for repeating part of a round; empty = all services.
+ALL_SERVICES="$SERVICES"
+ONLY=${ONLY:-""}
+if [ -n "$ONLY" ]; then
+    SERVICES=$(echo "$SERVICES" | grep -E -- "$ONLY")
+    echo "*** ONLY=$ONLY: $(echo "$SERVICES" | grep -c .) of $(echo "$ALL_SERVICES" | grep -c .) services"
+    if [ -z "$SERVICES" ]; then
+        echo "!!! ONLY matches no service"
+        exit 1
+    fi
+fi
 
 # =============================================================================
 # Helper functions
@@ -276,6 +326,7 @@ TARGET_HOST=${TARGET_HOST:-""}
 # while preserving JIT-warmed state). Requires the docker CLI and the docker socket
 # mounted into this container; silently disabled otherwise.
 PAUSE_IDLE=${PAUSE_IDLE:-"true"}
+SHUFFLE=${SHUFFLE:-"false"}
 DOCKER_OK="false"
 if [ "$PAUSE_IDLE" = "true" ] && command -v docker > /dev/null 2>&1 && docker ps > /dev/null 2>&1; then
     DOCKER_OK="true"
@@ -293,7 +344,7 @@ service_container() {
 ensure_only_active() {
     [ "$DOCKER_OK" = "true" ] || return 0
     local active=$1
-    echo "$SERVICES" | while read -r tag port; do
+    echo "$ALL_SERVICES" | while read -r tag port; do
         [ -z "$tag" ] && continue
         local cid=$(service_container "$tag")
         [ -z "$cid" ] && continue
@@ -307,7 +358,7 @@ ensure_only_active() {
 
 unpause_all() {
     [ "$DOCKER_OK" = "true" ] || return 0
-    echo "$SERVICES" | while read -r tag port; do
+    echo "$ALL_SERVICES" | while read -r tag port; do
         [ -z "$tag" ] && continue
         local cid=$(service_container "$tag")
         [ -z "$cid" ] && continue
@@ -323,14 +374,53 @@ TEST_LOG="/results/$STAMP/test_log.csv"
 # Warmup + measured run. The warmup run uses the SAME script and parameters
 # (so JIT compiles the exact code path and PG caches the exact plan) but no
 # STAMP -> the script writes no output files.
+# PostgreSQL from the k6 container: through the docker socket (as PAUSE_IDLE uses it), when PostgreSQL runs
+# on this host. Without it the three things below are skipped and the run says so once.
+PG_CONTAINER=""
+command -v docker > /dev/null 2>&1 && PG_CONTAINER=$(docker ps -q --filter "label=com.docker.compose.service=postgres" 2>/dev/null | head -n 1)
+if [ -z "$PG_CONTAINER" ]; then
+    echo "!!! no docker access to postgres: no PostgreSQL statistics per test, and the insert table is not emptied between tests"
+fi
+
+pg_sql() {
+    [ -n "$PG_CONTAINER" ] && docker exec "$PG_CONTAINER" psql -U testuser -d testdb -Atqc "$1" 2>/dev/null
+}
+
+# Empty the table the insert scenario writes to, so that every service inserts into a table of the same size.
+reset_orders() {
+    pg_sql 'truncate public.perf_orders restart identity' > /dev/null
+}
+
+# PostgreSQL's own numbers for one test: statements executed, milliseconds spent executing them, rows
+# returned (pg_stat_statements, reset right before the measured run), and the connections the service
+# holds open at the end of the test. Printed as "calls,exec_ms,rows,connections"; empty fields when unknown.
+pg_stats_reset() {
+    pg_sql 'select pg_stat_statements_reset()' > /dev/null
+}
+
+pg_stats_read() {
+    local tag=$1
+    local ip=$(getent hosts "$tag" 2>/dev/null | awk '{print $1; exit}')
+    local line=$(pg_sql "select coalesce(sum(calls), 0) || ',' || round(coalesce(sum(total_exec_time), 0)::numeric, 1) || ',' || coalesce(sum(rows), 0) || ',' || (select count(*) from pg_stat_activity where client_addr = nullif('$ip', '')::inet) from pg_stat_statements where dbid = (select oid from pg_database where datname = current_database()) and query not ilike '%pg_stat_statements%' and query not ilike 'truncate%'")
+    echo "${line:-,,,}"
+}
+
 run_k6() {
     local script_path=$1
     local script_name=$2
     local tag=$3
     local port=$4
     shift 4
+    # The k6 parameters of this test ("RECORDS=10;DURATION=60s;TARGET=50"): with them a test_log row can be
+    # joined to its row in results.csv, which is what per-test resource usage needs.
+    local params=$(echo "$*" | sed -e 's/-e //g' -e 's/ /;/g')
 
     ensure_only_active "$tag"
+
+    # The insert scenario starts from an empty table for every service (before the warmup, which inserts too).
+    case "$script_name" in
+        *table-insert*) reset_orders ;;
+    esac
 
     local host_args=""
     [ -n "$TARGET_HOST" ] && host_args="-e TARGET_HOST=$TARGET_HOST"
@@ -343,12 +433,13 @@ run_k6() {
     fi
 
     echo "*** Running $script_name for $tag:$port"
+    pg_stats_reset
     local start=$(date +%s)
     k6 run "$script_path" -e STAMP=$STAMP -e TAG=$tag -e PORT=$port $host_args \
         -e RAMP=$RAMP "$@"
     local code=$?
     local end=$(date +%s)
-    echo "$start,$end,$tag,$script_name,$code" >> "$TEST_LOG"
+    echo "$start,$end,$tag,$script_name,$code,$params,$(pg_stats_read "$tag")" >> "$TEST_LOG"
     if [ $code -ne 0 ]; then
         echo "!!! $tag $script_name exited with code $code (threshold abort or error)"
     fi
@@ -380,7 +471,13 @@ run_for_all_services() {
     echo "Running: $script"
     echo "=========================================="
 
-    echo "$SERVICES" | while read -r tag port; do
+    # SHUFFLE=true: a new random order of the services for every combination, so that no service always runs
+    # at the same position (after the same neighbour, at the same time into the run). Default: the fixed order.
+    local order="$SERVICES"
+    if [ "$SHUFFLE" = "true" ] && command -v shuf > /dev/null 2>&1; then
+        order=$(echo "$SERVICES" | shuf)
+    fi
+    echo "$order" | while read -r tag port; do
         [ -z "$tag" ] && continue
         if [ "$script_type" = "main" ]; then
             run_test "$script" "$tag" "$port" "$@"
@@ -511,6 +608,22 @@ fi
 # =============================================================================
 # Generate unified summary report
 # =============================================================================
+if [ "$SCENARIO" = "all" ] || [ "$SCENARIO" = "table" ]; then
+    echo ""
+    echo "############################################################"
+    echo "# TABLE: one row by primary key, one page of a list, one insert"
+    echo "############################################################"
+
+    for op in get list insert; do
+        for target in $TABLE_VUS; do
+            run_for_all_services "scenario" "table-$op.js" \
+                -e DURATION=$TABLE_DURATION \
+                -e LIMIT=$TABLE_LIMIT \
+                -e TARGET=$target
+        done
+    done
+fi
+
 echo ""
 echo "=========================================="
 echo "Generating Unified Summary Report"
@@ -668,6 +781,9 @@ generate_table "post" "vus_records" "POST Body Parsing"
 generate_table "nested" "vus_depth" "Nested JSON Serialization"
 generate_table "large" "vus_size" "Large Payload"
 generate_table "params" "vus" "Many Parameters (20 params)"
+generate_table "table-get" "vus" "Table: One Row by Primary Key"
+generate_table "table-list" "vus" "Table: One Page of a List (20 rows)"
+generate_table "table-insert" "vus" "Table: Insert Returning the Row"
 
 # =============================================================================
 # Merge per-test JSON results into one machine-readable dataset.
@@ -681,7 +797,8 @@ jq -s "{
         scenario: \"$SCENARIO\",
         ramp: \"$RAMP\",
         warmup: \"$WARMUP\",
-        sleepBetween: \"$SLEEP_BETWEEN\"
+        sleepBetween: \"$SLEEP_BETWEEN\",
+        shuffle: \"$SHUFFLE\"
     },
     results: .
 }" /results/$STAMP/*.json > /tmp/results.json 2>/dev/null
@@ -689,12 +806,12 @@ jq -s "{
 jq -rs '
     ["scenario","tag","vus","records","depth","sizeKb","duration","requests","rps",
      "latencyAvg","latencyMed","latencyP90","latencyP95","latencyP99","latencyMax",
-     "dataReceivedBytes","dataSentBytes","failed"],
+     "dataReceivedBytes","dataSentBytes","failed","rpsHold"],
     (.[] | [.scenario, .tag, .vus, (.records // ""), (.depth // ""), (.sizeKb // ""),
             .duration, .requests, .rps,
             (.latency.avg // .avgLatency // ""), (.latency.med // ""), (.latency.p90 // ""),
             (.latency.p95 // ""), (.latency.p99 // ""), (.latency.max // ""),
-            (.dataReceivedBytes // ""), (.dataSentBytes // ""), .failed])
+            (.dataReceivedBytes // ""), (.dataSentBytes // ""), .failed, (.rpsHold // "")])
     | @csv' /results/$STAMP/*.json > /tmp/results.csv 2>/dev/null
 
 # Replace per-test JSON files with the merged dataset

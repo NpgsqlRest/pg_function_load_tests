@@ -1,0 +1,1 @@
+{"query":"query($args: hasura_perf_table_get_args!) { hasura_perf_table_get(args: $args) { id name category price active created_at } }","variables":{"args":{"_id":123456}}}

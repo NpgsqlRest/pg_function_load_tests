@@ -1,0 +1,1 @@
+{"query":"query($records: Int, $payload: JSON) { perfPost(_records: $records, _payload: $payload) { nodes { rowNum echo computed } } }","variables":{"records":3,"payload":{"test":"value"}}}

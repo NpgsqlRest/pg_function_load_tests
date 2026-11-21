@@ -1,0 +1,7 @@
+{
+  "name": "postgraphile-test-app",
+  "type": "module",
+  "dependencies": {
+    "postgraphile": "5.2.1"
+  }
+}

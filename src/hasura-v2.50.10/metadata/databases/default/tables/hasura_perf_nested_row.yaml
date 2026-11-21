@@ -1,0 +1,3 @@
+table:
+  name: perf_nested_row
+  schema: hasura

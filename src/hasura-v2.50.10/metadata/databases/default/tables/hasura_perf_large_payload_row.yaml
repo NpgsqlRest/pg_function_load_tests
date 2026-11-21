@@ -1,0 +1,3 @@
+table:
+  name: perf_large_payload_row
+  schema: hasura

@@ -90,6 +90,31 @@ app.MapGet("/api/perf-many-params", async (NpgsqlDataSource dataSource,
         new { _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8, _p9, _p10, _p11, _p12, _p13, _p14, _p15, _p16, _p17, _p18, _p19, _p20 });
 });
 
+// Table scenarios
+app.MapGet("/api/perf-table-get", async (NpgsqlDataSource dataSource, [FromQuery] int _id) =>
+{
+    await using var connection = await dataSource.OpenConnectionAsync();
+    return await connection.QueryAsync<TableItemResult>(
+        "SELECT id, name, category, price, active, created_at FROM public.perf_table_get(@_id)",
+        new { _id });
+});
+
+app.MapGet("/api/perf-table-list", async (NpgsqlDataSource dataSource, [FromQuery] int _category, [FromQuery] int _after_id, [FromQuery] int _limit) =>
+{
+    await using var connection = await dataSource.OpenConnectionAsync();
+    return await connection.QueryAsync<TableItemResult>(
+        "SELECT id, name, category, price, active, created_at FROM public.perf_table_list(@_category, @_after_id, @_limit)",
+        new { _category, _after_id, _limit });
+});
+
+app.MapPost("/api/perf-table-insert", async (NpgsqlDataSource dataSource, TableInsertBody body) =>
+{
+    await using var connection = await dataSource.OpenConnectionAsync();
+    return await connection.QueryAsync<TableInsertResult>(
+        "SELECT id, item_id, quantity, note, created_at FROM public.perf_table_insert(@_item_id, @_quantity, @_note)",
+        new { body._item_id, body._quantity, body._note });
+});
+
 app.Run();
 
 public class Result
@@ -138,3 +163,8 @@ public class PostResult { public int row_num { get; set; } [System.Text.Json.Ser
 public class NestedResult { public int row_num { get; set; } [System.Text.Json.Serialization.JsonConverter(typeof(RawJsonConverter))] public string? nested { get; set; } }
 public class LargePayloadResult { public string? data { get; set; } }
 public class ManyParamsResult { public int param_count { get; set; } public string? checksum { get; set; } }
+
+// Table scenario types
+public class TableItemResult { public int id { get; set; } public string? name { get; set; } public int category { get; set; } public decimal price { get; set; } public bool active { get; set; } public DateTimeOffset created_at { get; set; } }
+public class TableInsertBody { public int _item_id { get; set; } public int _quantity { get; set; } public string? _note { get; set; } }
+public class TableInsertResult { public long id { get; set; } public int item_id { get; set; } public int quantity { get; set; } public string? note { get; set; } public DateTimeOffset created_at { get; set; } }

@@ -1,0 +1,1 @@
+{"query":"query($args: hasura_perf_many_params_args!) { hasura_perf_many_params(args: $args) { param_count checksum } }","variables":{"args":{"_p1":"a","_p2":1,"_p3":true,"_p4":"1.1","_p5":"e","_p6":"f","_p7":2,"_p8":false,"_p9":"2.2","_p10":"j","_p11":"k","_p12":3,"_p13":true,"_p14":"3.3","_p15":"o","_p16":"p","_p17":4,"_p18":false,"_p19":"4.4","_p20":"t"}}}

@@ -1,0 +1,1 @@
+{"query":"query { hasura_perf_minimal { status ts } }","variables":{}}

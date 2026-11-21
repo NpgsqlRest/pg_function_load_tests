@@ -1,0 +1,1 @@
+{"query":"query($category: Int, $after_id: Int, $limit: Int) { perfTableList(_category: $category, _afterId: $after_id, _limit: $limit) { nodes { id name category price active createdAt } } }","variables":{"category":7,"after_id":250000,"limit":20}}

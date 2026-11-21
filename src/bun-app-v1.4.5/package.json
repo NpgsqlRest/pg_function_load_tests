@@ -1,0 +1,7 @@
+{
+  "name": "bun-test-app",
+  "type": "module",
+  "dependencies": {
+    "postgres": "4.1.1"
+  }
+}

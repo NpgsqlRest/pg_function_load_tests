@@ -1,0 +1,3 @@
+table:
+  name: perf_minimal_row
+  schema: hasura

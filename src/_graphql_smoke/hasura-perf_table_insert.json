@@ -1,0 +1,1 @@
+{"query":"mutation($args: hasura_perf_table_insert_args!) { hasura_perf_table_insert(args: $args) { id item_id quantity note created_at } }","variables":{"args":{"_item_id":5,"_quantity":2,"_note":"smoke test"}}}

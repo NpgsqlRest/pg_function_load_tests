@@ -1,5 +1,7 @@
 import { check } from "k6";
 import http from "k6/http";
+import { seconds, countHold, holdRps, rawSummary } from '../lib/measure.js';
+import { graphqlKind, graphqlRequest, graphqlRows } from '../lib/graphql.js';
 import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.2/index.js';
 
 const stamp = (__ENV.STAMP || '').trim();
@@ -11,6 +13,7 @@ const records = Number(__ENV.RECORDS ? __ENV.RECORDS.trim() : "100");
 const depth = Number(__ENV.DEPTH ? __ENV.DEPTH.trim() : "3");
 const duration = __ENV.DURATION ? __ENV.DURATION.trim() : "60s";
 const ramp = (__ENV.RAMP || '10s').trim();
+const rampSeconds = seconds(ramp);
 const target = Number(__ENV.TARGET ? __ENV.TARGET.trim() : "50");
 
 // Determine the path based on the service type
@@ -23,6 +26,12 @@ function getPath(tag) {
 
 const path = getPath(tag);
 const url = 'http://' + targetHost + ':' + port + path + '?_records=' + records + '&_depth=' + depth;
+
+// GraphQL services get the same operation as a query with variables (lib/graphql.js); rows() gives the checks
+// below the same rows whichever way they came.
+const gql = graphqlKind(tag);
+const gqlRequest = gql ? graphqlRequest(gql, 'http://' + targetHost + ':' + port, 'perf_nested', { _records: records, _depth: depth }) : null;
+const rows = (r) => (gql ? graphqlRows(gql, 'perf_nested', r) : JSON.parse(r.body));
 
 export const options = {
     summaryTrendStats: ['avg', 'min', 'med', 'max', 'p(90)', 'p(95)', 'p(99)'],
@@ -42,16 +51,17 @@ export const options = {
 };
 
 export default function () {
-    const res = http.get(url);
+    const res = gql ? http.post(gqlRequest.url, gqlRequest.body, gqlRequest.params) : http.get(url);
+    countHold(rampSeconds);
     check(res, {
         [`${tag} status is 200`]: (r) => r.status === 200,
         [`${tag} response is JSON`]: (r) => r.headers['Content-Type'] && r.headers['Content-Type'].includes('application/json'),
         [`${tag} response has all records`]: (r) => {
-            const body = JSON.parse(r.body);
+            const body = rows(r);
             return Array.isArray(body) && body.length === records;
         },
         [`${tag} response has nested structure`]: (r) => {
-            const body = JSON.parse(r.body);
+            const body = rows(r);
             return body[0] && body[0].nested && body[0].nested.a !== undefined;
         }
     });
@@ -76,6 +86,7 @@ export function handleSummary(data) {
         duration: duration,
         requests: reqs,
         rps: rps,
+        rpsHold: holdRps(data, seconds(duration)),
         avgLatency: avgDuration,
         failed: failedReqs,
         latency: {
@@ -91,8 +102,8 @@ export function handleSummary(data) {
         summaryFile: `${fileTag}_summary.txt`
     });
 
-    return {
+    return Object.assign({
         [`/results/${stamp}/${fileTag}_summary.txt`]: textSummary(data, { indent: ' ', enableColors: false }),
         [`/results/${stamp}/${fileTag}.json`]: jsonData,
-    }
+    }, rawSummary(stamp, fileTag, data));
 }

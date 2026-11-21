@@ -18,16 +18,30 @@ This document details the differences between services when calling the same Pos
 | Rust (Axum) | 5301 | `/api/perf-*` | Rust |
 | Swoole | 3103 | `/api/perf-*` | PHP |
 | PostgREST | 3000 | `/rpc/perf_*` | Haskell |
+| PostGraphile | 3108 | `POST /graphql` | Node.js |
+| Hasura | 3109 | `POST /v1/graphql` | Haskell |
 | .NET 10 (EF) | 5003 | `/api/perf-*` | C# |
 | .NET 10 (Dapper) | 5004 | `/api/perf-*` | C# |
-| NpgsqlRest 3.4.7 Routine (AOT) | 5005 | `/api/perf-*` | C# |
-| NpgsqlRest 3.4.7 Routine (JIT) | 5006 | `/api/perf-*` | C# |
+| .NET 11 (EF) | 5013 | `/api/perf-*` | C# |
+| .NET 11 (Dapper) | 5014 | `/api/perf-*` | C# |
+| .NET 11 (plain Npgsql) | 5015 | `/api/perf-*` | C# |
+| Gin | 5201 | `/api/perf-*` | Go |
+| NestJS | 3106 | `/api/perf-*` | Node.js |
+| Laravel Octane | 3107 | `/api/perf-*` | PHP |
 | NpgsqlRest 3.21 Routine (AOT) | 5007 | `/api/perf-*` | C# |
 | NpgsqlRest 3.21 Routine (JIT) | 5008 | `/api/perf-*` | C# |
 | NpgsqlRest 3.21 SQL Files (AOT) | 5009 | `/api/perf-*` | C# |
 | NpgsqlRest 3.21 SQL Files (JIT) | 5010 | `/api/perf-*` | C# |
+| NpgsqlRest 4.1 Routine (AOT) | 5005 | `/api/perf-*` | C# |
+| NpgsqlRest 4.1 Routine (JIT) | 5006 | `/api/perf-*` | C# |
+| NpgsqlRest 4.1 SQL Files (AOT) | 5011 | `/api/perf-*` | C# |
+| NpgsqlRest 4.1 SQL Files (JIT) | 5012 | `/api/perf-*` | C# |
 
 **NpgsqlRest endpoint sources**: Routine services call the PostgreSQL functions from `_postgres/init.sql`. SQL Files services execute raw queries from `_sql_files/*.sql` directly (no function call) — the query bodies are kept identical to the function bodies.
+
+**GraphQL services** (added 2026-11): PostGraphile and Hasura are not in the serialization tables below. Their requests are GraphQL documents (`_graphql_smoke/*.json` has one per operation), PostGraphile's field names are camelCase (`rowNum`) and its rows are under `data.<operation>.nodes`, Hasura's are the function's own names under `data.hasura_<operation>`. Both return json and jsonb as native objects, and int8 and numeric as strings (PostGraphile) or numbers (Hasura).
+
+**Added 2026-11**: **Gin** behaves identically to **Go** (the same handlers and the same `pgx` code behind the Gin router), **NestJS** identically to **Express** and **Fastify** (the same `pg` driver), **Laravel Octane** identically to **Swoole** (PDO: json and arrays as text), and **.NET 11 (plain Npgsql)** identically to the Dapper services (the same result types).
 
 **Sibling implementations** (added 2026-07): in the serialization tables below, **Express** behaves identically to **Fastify** (same `pg` driver: bigint/numeric as strings, interval as object), **Deno** behaves identically to **Bun** (same `postgres.js` driver: bigint/numeric as strings, interval as PostgreSQL string), and **Axum** behaves identically to **Rust (Actix)** (same `tokio-postgres` stack: numbers as numbers, interval as PostgreSQL string).
 

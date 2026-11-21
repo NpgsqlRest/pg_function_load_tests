@@ -29,6 +29,9 @@ PARAMS_NESTED="_records=3&_depth=3"
 PARAMS_LARGE_PAYLOAD="_size_kb=10"
 PARAMS_MANY_PARAMS="_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t"
 POST_BODY='{"_records":3,"_payload":{"test":"value"}}'
+PARAMS_TABLE_GET="_id=123456"
+PARAMS_TABLE_LIST="_category=7&_after_id=250000&_limit=20"
+TABLE_INSERT_BODY='{"_item_id":5,"_quantity":2,"_note":"smoke test"}'
 
 # Counters
 TOTAL_TESTS=0
@@ -127,7 +130,7 @@ test_service_all_endpoints() {
     fi
 
     # Determine endpoint names (kebab-case vs underscore)
-    local ep_perf_test ep_minimal ep_nested ep_large ep_many ep_post
+    local ep_perf_test ep_minimal ep_nested ep_large ep_many ep_post ep_table_get ep_table_list ep_table_insert
     if [ "$use_underscore" = "true" ]; then
         ep_perf_test="${endpoint_prefix}/perf_test"
         ep_minimal="${endpoint_prefix}/perf_minimal"
@@ -135,6 +138,9 @@ test_service_all_endpoints() {
         ep_large="${endpoint_prefix}/perf_large_payload"
         ep_many="${endpoint_prefix}/perf_many_params"
         ep_post="${endpoint_prefix}/perf_post"
+        ep_table_get="${endpoint_prefix}/perf_table_get"
+        ep_table_list="${endpoint_prefix}/perf_table_list"
+        ep_table_insert="${endpoint_prefix}/perf_table_insert"
     else
         ep_perf_test="${endpoint_prefix}/perf-test"
         ep_minimal="${endpoint_prefix}/perf-minimal"
@@ -142,6 +148,9 @@ test_service_all_endpoints() {
         ep_large="${endpoint_prefix}/perf-large-payload"
         ep_many="${endpoint_prefix}/perf-many-params"
         ep_post="${endpoint_prefix}/perf-post"
+        ep_table_get="${endpoint_prefix}/perf-table-get"
+        ep_table_list="${endpoint_prefix}/perf-table-list"
+        ep_table_insert="${endpoint_prefix}/perf-table-insert"
     fi
 
     # Test all endpoints
@@ -151,41 +160,84 @@ test_service_all_endpoints() {
     test_get "$name" "$port" "$ep_large" "$PARAMS_LARGE_PAYLOAD" "true"
     test_get "$name" "$port" "$ep_many" "$PARAMS_MANY_PARAMS" "true"
     test_post "$name" "$port" "$ep_post" "$POST_BODY"
+    test_get "$name" "$port" "$ep_table_get" "$PARAMS_TABLE_GET" "true"
+    test_get "$name" "$port" "$ep_table_list" "$PARAMS_TABLE_LIST" "true"
+    test_post "$name" "$port" "$ep_table_insert" "$TABLE_INSERT_BODY"
 
     echo ""
 }
 
 echo "=== NpgsqlRest Implementations ==="
-test_service_all_endpoints "npgsqlrest-routine-aot-v3.4.7" "5005" "repeated" "/api" "false"
-test_service_all_endpoints "npgsqlrest-routine-jit-v3.4.7" "5006" "repeated" "/api" "false"
+test_service_all_endpoints "npgsqlrest-routine-aot-v4.1.0" "5005" "repeated" "/api" "false"
+test_service_all_endpoints "npgsqlrest-routine-jit-v4.1.0" "5006" "repeated" "/api" "false"
+test_service_all_endpoints "npgsqlrest-file-aot-v4.1.0" "5011" "repeated" "/api" "false"
+test_service_all_endpoints "npgsqlrest-file-jit-v4.1.0" "5012" "repeated" "/api" "false"
 test_service_all_endpoints "npgsqlrest-routine-aot-v3.21.0" "5007" "repeated" "/api" "false"
 test_service_all_endpoints "npgsqlrest-routine-jit-v3.21.0" "5008" "repeated" "/api" "false"
 test_service_all_endpoints "npgsqlrest-file-aot-v3.21.0" "5009" "repeated" "/api" "false"
 test_service_all_endpoints "npgsqlrest-file-jit-v3.21.0" "5010" "repeated" "/api" "false"
 
 echo "=== PostgREST ==="
-test_service_all_endpoints "postgrest-v14.14" "3000" "pg" "/rpc" "true"
+test_service_all_endpoints "postgrest-v16.6" "3000" "pg" "/rpc" "true"
 
 echo "=== .NET Implementations ==="
 test_service_all_endpoints "net10-minapi-ef-jit" "5003" "repeated" "/api" "false"
 test_service_all_endpoints "net10-minapi-dapper-jit" "5004" "repeated" "/api" "false"
+test_service_all_endpoints "net11-minapi-ef-jit" "5013" "repeated" "/api" "false"
+test_service_all_endpoints "net11-minapi-dapper-jit" "5014" "repeated" "/api" "false"
+test_service_all_endpoints "net11-minapi-npgsql-jit" "5015" "repeated" "/api" "false"
 
 echo "=== Python Implementations ==="
-test_service_all_endpoints "django-app-v6.0.7" "8000" "pg" "/api" "false"
-test_service_all_endpoints "fastapi-app-v0.139.0" "8001" "pg" "/api" "false"
+test_service_all_endpoints "django-app-v6.1.3" "8000" "pg" "/api" "false"
+test_service_all_endpoints "fastapi-app-v0.165.0" "8001" "pg" "/api" "false"
 
 echo "=== Node.js/Bun Implementations ==="
-test_service_all_endpoints "fastify-app-v5.10.0" "3101" "pg" "/api" "false"
-test_service_all_endpoints "bun-app-v1.3.14" "3104" "pg" "/api" "false"
-test_service_all_endpoints "express-app-v5.2.1" "3102" "pg" "/api" "false"
-test_service_all_endpoints "deno-app-v2.9.2" "3105" "pg" "/api" "false"
+test_service_all_endpoints "fastify-app-v5.12.8" "3101" "pg" "/api" "false"
+test_service_all_endpoints "bun-app-v1.4.5" "3104" "pg" "/api" "false"
+test_service_all_endpoints "express-app-v5.3.0" "3102" "pg" "/api" "false"
+test_service_all_endpoints "deno-app-v2.9.8" "3105" "pg" "/api" "false"
 
 echo "=== Other Implementations ==="
-test_service_all_endpoints "go-app-v1.26" "5200" "pg" "/api" "false"
-test_service_all_endpoints "java25-spring-boot-v4.1.0" "5400" "pg" "/api" "false"
-test_service_all_endpoints "rust-app-v1.97.0" "5300" "pg" "/api" "false"
+test_service_all_endpoints "go-app-v1.27" "5200" "pg" "/api" "false"
+test_service_all_endpoints "java25-spring-boot-v4.2.0" "5400" "pg" "/api" "false"
+test_service_all_endpoints "rust-app-v1.100.0" "5300" "pg" "/api" "false"
 test_service_all_endpoints "axum-app-v0.8.9" "5301" "pg" "/api" "false"
-test_service_all_endpoints "swoole-php-app-v6.2.1" "3103" "pg" "/api" "false"
+test_service_all_endpoints "swoole-php-app-v6.2.6" "3103" "pg" "/api" "false"
+test_service_all_endpoints "gin-app-v1.12.0" "5201" "pg" "/api" "false"
+test_service_all_endpoints "nestjs-app-v12.6.0" "3106" "pg" "/api" "false"
+test_service_all_endpoints "laravel-v13.43.0-octane-app" "3107" "pg" "/api" "false"
+
+# GraphQL services: the same six operations, as POSTs of the request bodies in _graphql_smoke/
+# (written by _graphql_smoke/generate.mjs from the builder the k6 scripts use).
+test_graphql() {
+    local name="$1"      # service name
+    local port="$2"
+    local path="$3"      # /graphql or /v1/graphql
+    local kind="$4"      # postgraphile or hasura
+    local smoke_dir="$(dirname "$0")/_graphql_smoke"
+
+    echo "Testing: $name (port $port)"
+    for op in perf_test perf_minimal perf_nested perf_large_payload perf_many_params perf_post perf_table_get perf_table_list perf_table_insert; do
+        TOTAL_TESTS=$((TOTAL_TESTS + 1))
+        local response=$(curl -s -w "\n%{http_code}" --max-time 10 -X POST -H "Content-Type: application/json" \
+            --data-binary "@${smoke_dir}/${kind}-${op}.json" "http://${HOST}:${port}${path}" 2>/dev/null)
+        local http_code=$(echo "$response" | tail -n1)
+        local body=$(echo "$response" | sed '$d')
+        # a GraphQL error is a 200 with an "errors" member: the data must be there and hold at least one row
+        if [ "$http_code" = "200" ] && echo "$body" | jq -e '(.errors | not) and (.data | to_entries[0].value | if type == "array" then .[0] else (.nodes // .result)[0] end) != null' > /dev/null 2>&1; then
+            echo -e "  ${GREEN}✓${NC} $op"
+            PASSED_TESTS=$((PASSED_TESTS + 1))
+        else
+            echo -e "  ${RED}✗${NC} $op - HTTP $http_code $(echo "$body" | head -c 200)"
+            FAILED_TESTS=$((FAILED_TESTS + 1))
+        fi
+    done
+    echo ""
+}
+
+echo "=== GraphQL Implementations ==="
+test_graphql "postgraphile-v5.2.1" "3108" "/graphql" "postgraphile"
+test_graphql "hasura-v2.50.10" "3109" "/v1/graphql" "hasura"
 
 echo "=============================================="
 echo "Test Summary"

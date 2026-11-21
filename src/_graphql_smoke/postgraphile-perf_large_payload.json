@@ -1,0 +1,1 @@
+{"query":"query($size_kb: Int) { perfLargePayload(_sizeKb: $size_kb) { nodes } }","variables":{"size_kb":10}}

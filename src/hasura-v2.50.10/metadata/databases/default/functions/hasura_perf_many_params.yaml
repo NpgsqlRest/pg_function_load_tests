@@ -1,0 +1,3 @@
+function:
+  name: perf_many_params
+  schema: hasura
