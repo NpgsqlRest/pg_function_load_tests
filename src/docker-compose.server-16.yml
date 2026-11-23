@@ -76,6 +76,8 @@ services:
     cpuset: "10-13"
   net11-minapi-npgsql-jit:
     cpuset: "10-13"
+  net10-minapi-npgsql-jit:
+    cpuset: "10-13"
   postgraphile-v5.2.1:
     cpuset: "10-13"
   hasura-v2.50.10:

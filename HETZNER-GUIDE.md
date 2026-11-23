@@ -1,6 +1,6 @@
 # Running a Benchmark Round on Hetzner, Step by Step
 
-For the round after July 2026: 30 services, 44 combinations each (38 as in July and 6 for the new table scenarios), **1,320 tests, about 41 to 43 hours** unattended.
+For the round after July 2026: 31 services, 44 combinations each (38 as in July and 6 for the new table scenarios), **1,364 tests, about 43 to 45 hours** unattended.
 Each test is a 10 s warm-up, a 10 s ramp, a 60 s hold (30 s for the minimal scenario) and a 30 s pause.
 
 Tick the boxes as you go. Problems go into **Issues** at the bottom, for the next round.
@@ -84,7 +84,7 @@ If you want this round to be comparable with July to the last percent, skip this
       docker-compose -f docker-compose.yml -f docker-compose.server.yml up --build --detach
       ```
       If a pull fails with `429 Too Many Requests`: Docker Hub allows 100 anonymous pulls per hour per address. Run `docker login` with a Docker Hub account (free) and repeat the command; it continues where it stopped.
-- [ ] All 32 containers are up (30 services, postgres, test):
+- [ ] All 33 containers are up (31 services, postgres, test):
       ```bash
       docker-compose ps --format '{{.Name}} {{.State}}' | sort
       docker-compose ps --format '{{.State}}' | sort | uniq -c      # expect: 26 running
@@ -99,7 +99,7 @@ If you want this round to be comparable with July to the last percent, skip this
 - [ ] ```bash
       ./test-services.sh
       ```
-      Must end with **Total: 270, Passed: 270, Failed: 0**.
+      Must end with **Total: 279, Passed: 279, Failed: 0**.
       If anything fails: stop and fix it. Everything after this runs unattended.
 
 ## 6. Dry run and pilot (about two and a half hours, and it decides the server size)
@@ -109,12 +109,12 @@ If you want this round to be comparable with July to the last percent, skip this
 - [ ] ```bash
       PROFILE=minimal ./run-benchmark.sh
       ```
-- [ ] The line `Monitoring 32 containers through their cgroup files` appeared near the start.
+- [ ] The line `Monitoring 33 containers through their cgroup files` appeared near the start.
       If it says `using docker stats` instead, the cgroup files were not found: the run still works, with the old, coarser collector. Log it under Issues with the output of `cat _k6/results/*/stats/collector.log`.
 - [ ] ```bash
       D=$(ls -d _k6/results/2*/ | tail -1); ls $D
       head -3 $D/results_extended.csv
-      grep -c . $D/test_log.csv                          # 271: a header and 270 tests
+      grep -c . $D/test_log.csv                          # 280: a header and 279 tests
       awk -F',' 'NR>1 && $5!=0' $D/test_log.csv          # prints nothing
       ```
       `results_extended.csv` must have numbers in the columns `svcCpuAvg`, `pgCpuAvg` and `k6CpuAvg`.
@@ -139,7 +139,7 @@ If you want this round to be comparable with July to the last percent, skip this
   - **PostgreSQL or the load generator is at its limit in most tests**: the round would measure them, not the services. Delete this server (step 11), create a **CCX43** (16 vCPU) in step 0, repeat steps 1 to 5 with `docker-compose.server-16.yml` in place of `docker-compose.server.yml` (step 4 then shows `0-5`, `6-9` and `10-13`), and run the pilot again there.
 - [ ] Keep the pilot's two directories (they go into the results branch as evidence for the decision), or delete them as in the dry run. Write the decision under Issues.
 
-## 7. Start the round (2 minutes, then about 41 to 43 hours)
+## 7. Start the round (2 minutes, then about 43 to 45 hours)
 
 - [ ] Restart the stack, so that every service starts the round from the same state:
       ```bash
@@ -153,7 +153,7 @@ If you want this round to be comparable with July to the last percent, skip this
       PROFILE=server ./run-benchmark.sh
       ```
       Add `SHUFFLE=true` in front to run the services in a random order per combination (ANALYSIS.md, section 2).
-- [ ] The first lines show: the results directory (its name is the `<STAMP>`), then `Measuring service footprint` with one line per service (about ten minutes: each service is restarted once and timed), `Monitoring 32 containers through their cgroup files`, `PAUSE_IDLE enabled`, then per test `warmup (10s)...`. A line starting with `!!! no docker access to postgres` must NOT appear: without it there are no PostgreSQL statistics per test and the insert table is not emptied.
+- [ ] The first lines show: the results directory (its name is the `<STAMP>`), then `Measuring service footprint` with one line per service (about ten minutes: each service is restarted once and timed), `Monitoring 33 containers through their cgroup files`, `PAUSE_IDLE enabled`, then per test `warmup (10s)...`. A line starting with `!!! no docker access to postgres` must NOT appear: without it there are no PostgreSQL statistics per test and the insert table is not emptied.
 - [ ] Detach: `Ctrl+B`, then `D`. You can log out and switch your computer off.
 
 ## 8. Looking in (any time)
@@ -179,7 +179,7 @@ Exit code 99 in the log is not a failure: k6 returns it when the latency objecti
       ls $D | grep -v _summary.txt
       # expect: report.md  resource_usage.json  resource_usage.md  results.csv  results.json
       #         results_extended.csv  stats  test_log.csv
-      ls $D/*_summary.txt | wc -l                       # 1320
+      ls $D/*_summary.txt | wc -l                       # 1364
       less $D/report.md
       ```
 - [ ] If `report.md` or `results_extended.csv` is missing: `python3 generate-report.py $D`

@@ -1331,6 +1331,53 @@ Content-Type: application/json
 {"_item_id": 5, "_quantity": 2, "_note": "hello"}
 
 ### ============================================
+### net10-minapi-npgsql-jit (port 5016)
+### ============================================
+
+// net10-minapi-npgsql-jit - perf-test
+GET http://localhost:5016/api/perf-test?_records=3&_text=ABCDEFGHIJKLMNOPRSTUVWXYZ&_int=1234567890&_bigint=9223372036854770000&_numeric=12345.6789&_real=123.45&_double=123456.789012&_bool=true&_date=2024-01-15&_timestamp=2024-01-15T10:30:00&_timestamptz=2024-01-15T10:30:00Z&_uuid=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&_json={"key":"value"}&_jsonb={"key":"value"}&_int_array=1&_int_array=2&_int_array=3&_text_array=a&_text_array=b&_text_array=c
+
+###
+
+// net10-minapi-npgsql-jit - perf-minimal
+GET http://localhost:5016/api/perf-minimal
+
+###
+
+// net10-minapi-npgsql-jit - perf-nested
+GET http://localhost:5016/api/perf-nested?_records=3&_depth=3
+
+###
+
+// net10-minapi-npgsql-jit - perf-large-payload
+GET http://localhost:5016/api/perf-large-payload?_size_kb=10
+
+###
+
+// net10-minapi-npgsql-jit - perf-many-params
+GET http://localhost:5016/api/perf-many-params?_p1=a&_p2=1&_p3=true&_p4=1.1&_p5=e&_p6=f&_p7=2&_p8=false&_p9=2.2&_p10=j&_p11=k&_p12=3&_p13=true&_p14=3.3&_p15=o&_p16=p&_p17=4&_p18=false&_p19=4.4&_p20=t
+
+###
+
+// net10-minapi-npgsql-jit - perf-post
+POST http://localhost:5016/api/perf-post
+Content-Type: application/json
+
+{"_records": 3, "_payload": {"test": "value"}}
+
+### net10-minapi-npgsql-jit - perf_table_get
+GET http://localhost:5016/api/perf-table-get?_id=123456
+
+### net10-minapi-npgsql-jit - perf_table_list
+GET http://localhost:5016/api/perf-table-list?_category=7&_after_id=250000&_limit=20
+
+### net10-minapi-npgsql-jit - perf_table_insert
+POST http://localhost:5016/api/perf-table-insert
+Content-Type: application/json
+
+{"_item_id": 5, "_quantity": 2, "_note": "hello"}
+
+### ============================================
 ### postgraphile-v5.2.1 (port 3108) - GraphQL
 ### ============================================
 

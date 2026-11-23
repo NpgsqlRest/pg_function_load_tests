@@ -296,6 +296,7 @@ gin-app-v1.12.0 5201
 nestjs-app-v12.6.0 3106
 laravel-v13.43.0-octane-app 3107
 net11-minapi-npgsql-jit 5015
+net10-minapi-npgsql-jit 5016
 postgraphile-v5.2.1 3108
 hasura-v2.50.10 3109
 EOF

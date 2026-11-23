@@ -459,6 +459,20 @@ services:
     networks:
       - test_network
 
+
+  net10-minapi-npgsql-jit:
+    restart: unless-stopped
+    build:
+      context: ./net10-minapi-npgsql-jit
+      dockerfile: Dockerfile
+    ports:
+      - "5016:5016"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - test_network
+
   postgraphile-v5.2.1:
     restart: unless-stopped
     build:
@@ -539,6 +553,7 @@ services:
       - nestjs-app-v12.6.0
       - laravel-v13.43.0-octane-app
       - net11-minapi-npgsql-jit
+      - net10-minapi-npgsql-jit
       - postgraphile-v5.2.1
       - hasura-v2.50.10
     entrypoint: ["/bin/sh"]

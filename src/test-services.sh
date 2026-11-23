@@ -186,6 +186,7 @@ test_service_all_endpoints "net10-minapi-dapper-jit" "5004" "repeated" "/api" "f
 test_service_all_endpoints "net11-minapi-ef-jit" "5013" "repeated" "/api" "false"
 test_service_all_endpoints "net11-minapi-dapper-jit" "5014" "repeated" "/api" "false"
 test_service_all_endpoints "net11-minapi-npgsql-jit" "5015" "repeated" "/api" "false"
+test_service_all_endpoints "net10-minapi-npgsql-jit" "5016" "repeated" "/api" "false"
 
 echo "=== Python Implementations ==="
 test_service_all_endpoints "django-app-v6.1.3" "8000" "pg" "/api" "false"

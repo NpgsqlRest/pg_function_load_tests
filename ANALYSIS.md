@@ -90,7 +90,7 @@ This is the one that matters most, and the data to decide it does not exist yet.
 
 ### 3.2 Repetition
 
-One run per combination gives no measure of noise; July's article used "under 3% is a tie" as a rule of thumb. Proposal: run the round twice (same server, `SHUFFLE=true` on the second), and report the median and the spread. It doubles the time (about 42 hours each, with 30 services and the table scenarios). A cheaper version: repeat only the reference combinations three times.
+One run per combination gives no measure of noise; July's article used "under 3% is a tie" as a rule of thumb. Proposal: run the round twice (same server, `SHUFFLE=true` on the second), and report the median and the spread. It doubles the time (about 44 hours each, with 31 services and the table scenarios). A cheaper version: repeat only the reference combinations three times.
 
 ### 3.3 The load generator's own work
 
@@ -140,7 +140,7 @@ A rule that would have prevented the inconsistencies found in the July pages: **
 
 - **NpgsqlRest**: 3.4.7 removed; 3.21.0 kept unchanged (the controls); 4.1.0 added, routine and SQL file sources, AOT and JIT.
 - **.NET**: .NET 11 services added next to the .NET 10 ones. The two Dapper services use the same libraries (Npgsql 11.0.0, Dapper 2.1.100), so they differ in the runtime only. The two EF services use the EF Core of their platform.
-- **Six new services**, chosen for what readers ask about: **Gin** (the most used Go framework, next to plain `net/http`), **NestJS** (on its default Express platform, next to Express and Fastify), **Laravel Octane** on Swoole (next to plain Swoole), **.NET 11 with plain Npgsql** (no Dapper, no EF: the floor for the .NET services), and two GraphQL servers that generate their API from the database, as NpgsqlRest and PostgREST do: **PostGraphile** and **Hasura**.
+- **Seven new services**, chosen for what readers ask about: **Gin** (the most used Go framework, next to plain `net/http`), **NestJS** (on its default Express platform, next to Express and Fastify), **Laravel Octane** on Swoole (next to plain Swoole), **.NET 10 and .NET 11 with plain Npgsql** (no Dapper, no EF: the floor for the .NET services, and the third .NET 10 against 11 pair, with the same Npgsql 11.0.0 in both), and two GraphQL servers that generate their API from the database, as NpgsqlRest and PostgREST do: **PostGraphile** and **Hasura**.
 - **The GraphQL two are a different protocol, and that is said where their numbers are shown.** Each request is a `POST` with a query document and variables, and the server parses and plans GraphQL before it reaches PostgreSQL. Hasura cannot expose a function that returns `TABLE(...)`, so it calls `select * from` wrapper functions in its own schema (`src/_postgres/hasura.sql`) that PostgreSQL inlines. Their rows in the POST-body scenario are not "a POST against a GET" as for the others: every one of their requests is a POST.
 - **Laravel Octane has one database connection per worker**, and four workers per core (16 on the 4 cores it is given), where the other services have a pool of about 100. That is how Octane works, not a setting left low: a worker handles one request at a time. `WORKERS` overrides the count.
 - **Everything else** is on its current release (see the table in `README.md`), PostgreSQL is 19.0, and two driver upgrades are major versions worth a look in the results: `postgres` (the JavaScript driver used by Bun and Deno) 3.4 to 4.1, and PostgREST 14 to 16.

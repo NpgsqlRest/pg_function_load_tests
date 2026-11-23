@@ -27,6 +27,7 @@ This project performs load performance testing for Web APIs on different tech st
 | .NET 10 Minimal API (Dapper) | 10.0, Npgsql 11 | 5004 | C# |
 | .NET 11 Minimal API (EF) | 11.0, EF Core 11 | 5013 | C# |
 | .NET 11 Minimal API (Dapper) | 11.0, Npgsql 11 | 5014 | C# |
+| .NET 10 Minimal API (plain Npgsql) | 10.0, Npgsql 11 | 5016 | C# |
 | .NET 11 Minimal API (plain Npgsql) | 11.0, Npgsql 11 | 5015 | C# |
 | NpgsqlRest Routine (AOT) | 3.21.0 (.NET 10) | 5007 | C# |
 | NpgsqlRest Routine (JIT) | 3.21.0 (.NET 10) | 5008 | C# |
@@ -93,7 +94,7 @@ Wait for health checks to pass (all services depend on PostgreSQL being ready).
 
 ### Verify Services
 
-Test all 30 services and 270 endpoints:
+Test all 31 services and 279 endpoints:
 
 ```bash
 ./test-services.sh
@@ -231,7 +232,7 @@ postgres:
 **Connection calculation:**
 - Tests are serialized (one service at a time)
 - Active service: 100 connections (pool max)
-- 29 idle services: ~300 connections
+- 30 idle services: ~310 connections
 - Total during test: ~300 connections
 - Setting 2000 provides 6x headroom
 

@@ -80,6 +80,8 @@ services:
     cpuset: "4-7"
   net11-minapi-npgsql-jit:
     cpuset: "4-7"
+  net10-minapi-npgsql-jit:
+    cpuset: "4-7"
   postgraphile-v5.2.1:
     cpuset: "4-7"
   hasura-v2.50.10:

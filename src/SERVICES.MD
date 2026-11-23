@@ -24,6 +24,7 @@ This document details the differences between services when calling the same Pos
 | .NET 10 (Dapper) | 5004 | `/api/perf-*` | C# |
 | .NET 11 (EF) | 5013 | `/api/perf-*` | C# |
 | .NET 11 (Dapper) | 5014 | `/api/perf-*` | C# |
+| .NET 10 (plain Npgsql) | 5016 | `/api/perf-*` | C# |
 | .NET 11 (plain Npgsql) | 5015 | `/api/perf-*` | C# |
 | Gin | 5201 | `/api/perf-*` | Go |
 | NestJS | 3106 | `/api/perf-*` | Node.js |

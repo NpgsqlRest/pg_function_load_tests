@@ -71,6 +71,7 @@ def display_name(tag):
         'net10-minapi-dapper-jit': '.NET 10 Dapper',
         'net11-minapi-ef-jit': '.NET 11 EF',
         'net11-minapi-dapper-jit': '.NET 11 Dapper',
+        'net10-minapi-npgsql-jit': '.NET 10 Npgsql',
         'net11-minapi-npgsql-jit': '.NET 11 Npgsql',
         'gin-app': 'Gin',
         'nestjs-app': 'NestJS',
