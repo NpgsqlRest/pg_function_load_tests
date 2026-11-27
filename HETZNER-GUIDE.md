@@ -1,6 +1,6 @@
 # Running a Benchmark Round on Hetzner, Step by Step
 
-For the round after July 2026: 31 services, 44 combinations each (38 as in July and 6 for the new table scenarios), **1,364 tests, about 43 to 45 hours** unattended.
+For the round after July 2026: 31 services, 44 combinations each (38 as in July and 6 for the new table scenarios), **1,364 tests, about 61 hours** unattended (about 160 seconds per test).
 Each test is a 10 s warm-up, a 10 s ramp, a 60 s hold (30 s for the minimal scenario) and a 30 s pause.
 
 Tick the boxes as you go. Problems go into **Issues** at the bottom, for the next round.
@@ -14,7 +14,7 @@ Read [ANALYSIS.md](ANALYSIS.md) first if you have not: step 6 (the pilot) decide
 - [ ] Log in at <https://console.hetzner.cloud>, open your project (or create one).
 - [ ] **Security → SSH keys → Add SSH key**: paste your public key (`cat ~/.ssh/id_ed25519.pub`) if it is not there yet.
 - [ ] **Firewalls → Create firewall**, name `ssh-only`: one inbound rule, **TCP port 22** from any IPv4 and IPv6; no other inbound rule. Outbound: leave everything allowed.
-      Do not skip this. The stack publishes PostgreSQL (5432, with a test password) and 24 HTTP ports on all interfaces.
+      Do not skip this. The stack publishes PostgreSQL (5432, with a test password) and 31 HTTP ports on all interfaces.
 - [ ] **Servers → Add server**:
   - Location: any (Falkenstein, Nuremberg or Helsinki); the same one as last time keeps the hardware the same.
   - Image: **Ubuntu 26.04**.
@@ -25,6 +25,7 @@ Read [ANALYSIS.md](ANALYSIS.md) first if you have not: step 6 (the pilot) decide
   - SSH keys: yours. Firewalls: `ssh-only`.
   - Name: `bench`.
 - [ ] Create. Copy the IPv4 address. Below it is `<SERVER_IP>`.
+- [ ] Open the firewall's page and check that it says **Applied to 1 Resource**. A firewall that was created but not applied protects nothing; in November 2026 PostgreSQL was reachable from the internet for three days because of that.
 
 The server is billed by the hour until you **delete** it (step 11). Powering it off does not stop the billing.
 
@@ -35,7 +36,7 @@ The server is billed by the hour until you **delete** it (step 11). Powering it 
       ```
 - [ ] ```bash
       apt update && apt -y upgrade
-      apt install -y docker.io docker-compose-v2 git tmux jq python3
+      apt install -y docker.io docker-compose-v2 git tmux jq python3 curl
       systemctl enable --now docker
       ```
 - [ ] Ubuntu 26.04 has compose only as the `docker compose` plugin; the scripts call `docker-compose`:
@@ -48,7 +49,7 @@ The server is billed by the hour until you **delete** it (step 11). Powering it 
       ```bash
       docker --version && docker-compose version && python3 --version && nproc && free -g | head -2
       ```
-      Expect 8 processors and about 31 GB.
+      Expect 8 processors and about 31 GB (CCX63: 48 and about 188 GB).
 
 ## 2. Kernel limits (1 minute)
 
@@ -87,9 +88,9 @@ If you want this round to be comparable with July to the last percent, skip this
 - [ ] All 33 containers are up (31 services, postgres, test):
       ```bash
       docker-compose ps --format '{{.Name}} {{.State}}' | sort
-      docker-compose ps --format '{{.State}}' | sort | uniq -c      # expect: 26 running
+      docker-compose ps --format '{{.State}}' | sort | uniq -c      # expect: 33 running
       ```
-- [ ] The CPU sets are in place (postgres `0,1`, test `2,3`, every service `4-7`):
+- [ ] The CPU sets are in place (postgres `0,1`, test `2,3`, every service `4-7`; with `docker-compose.server-48.yml`: `0-15`, `16-27`, `28-31`):
       ```bash
       for c in $(docker-compose ps -q); do docker inspect --format '{{.HostConfig.CpusetCpus}} {{.Name}}' $c; done | sort
       ```
@@ -104,7 +105,7 @@ If you want this round to be comparable with July to the last percent, skip this
 
 ## 6. Dry run and pilot (about two and a half hours, and it decides the server size)
 
-**Dry run** (5 minutes): every script against every service for three seconds. It proves that the whole chain works on this machine: the collector, the test log, the report.
+**Dry run** (about 50 minutes; run it in `tmux`): the footprint measurement, then every script against every service for three seconds. It proves that the whole chain works on this machine: the collector, the test log, the report.
 
 - [ ] ```bash
       PROFILE=minimal ./run-benchmark.sh
@@ -116,6 +117,7 @@ If you want this round to be comparable with July to the last percent, skip this
       head -3 $D/results_extended.csv
       grep -c . $D/test_log.csv                          # 280: a header and 279 tests
       awk -F',' 'NR>1 && $5!=0' $D/test_log.csv          # prints nothing
+      grep -c '!!!' /root/dryrun.log                     # 0 (if you ran it with: | tee /root/dryrun.log)
       ```
       `results_extended.csv` must have numbers in the columns `svcCpuAvg`, `pgCpuAvg` and `k6CpuAvg`.
 - [ ] Delete the dry run: `rm -rf $D ${D%/}_all.md`
@@ -139,7 +141,7 @@ If you want this round to be comparable with July to the last percent, skip this
   - **PostgreSQL or the load generator is at its limit in most tests**: the round would measure them, not the services. Delete this server (step 11), create a **CCX43** (16 vCPU) in step 0, repeat steps 1 to 5 with `docker-compose.server-16.yml` in place of `docker-compose.server.yml` (step 4 then shows `0-5`, `6-9` and `10-13`), and run the pilot again there.
 - [ ] Keep the pilot's two directories (they go into the results branch as evidence for the decision), or delete them as in the dry run. Write the decision under Issues.
 
-## 7. Start the round (2 minutes, then about 43 to 45 hours)
+## 7. Start the round (2 minutes, then about 61 hours)
 
 - [ ] Restart the stack, so that every service starts the round from the same state:
       ```bash
@@ -233,3 +235,11 @@ The generated links in the report point at a branch with that name, so it has to
 - **[resolved, July 2026]** Ubuntu 26.04: `docker-compose` command not found. Compose v2 is plugin-only (`docker compose`). Fixed with the shim in step 1.
 - **[resolved, July 2026]** `run-benchmark.sh` started monitors for only 19 of 20 services: the `grep -v '(postgres|test)'` filter also matched **postgrest**. The January 2026 article's resource table is missing PostgREST for that reason. Fixed in `7f7b22a`.
 - **[November 2026]** The July round did not measure PostgreSQL or the load generator, and its service samples came every 3 seconds. Both changed for this round (see ANALYSIS.md); step 6 is new because of it.
+- **[November 2026]** A new server got the IP address of a deleted one: `ssh` refused with "REMOTE HOST IDENTIFICATION HAS CHANGED". Fix: `ssh-keygen -R <SERVER_IP>` on your own computer, then connect again as `root`.
+- **[November 2026]** A CCX63 needs an account limit of 48 dedicated vCPUs; the default was 8. The increase is requested in the order dialog and was approved after three days. Ask for it before the round is ready.
+- **[open, November 2026]** Eight services return `jsonb` columns as a JSON string, not as nested JSON, in the `post` and `nested` scenarios (Go, Gin, Django, FastAPI, Swoole, Laravel in both; Bun and Deno in `post`). The k6 checks "response echoes payload" and "response has nested structure" fail for them at 0%, as they did in July (nothing recorded the check rate then; `checksPassed` in `results_extended.csv` does now). Requests do not fail and throughput is measured correctly, but these services do a little less work there. Left as it was for this round, to stay comparable with July; say so in the article, and make every service return nested JSON for the next round.
+- **[November 2026]** At 5 virtual users (the dry run) the rates on the CCX63 were about a third of those on a laptop: with three separate groups of mostly idle cores, a request's round trip is what is measured. Not a problem; do not read dry-run numbers.
+- **[resolved, November 2026]** PostgreSQL ran out of connection slots: `max_connections` was 2,000, enough for July's 20 services, and 26 of the 31 services keep a pool of up to 100 connections open once they have been under load, also while paused. PostgreSQL refused 4.36 million connections over 367 minutes of the 60 hours; 193 of 1,364 tests ran during those minutes (56 with failed requests, 122 without PostgreSQL statistics). Fixed: `max_connections=5000`, and the runner prints `!!! PostgreSQL has ... free connection slots` before a test when fewer than 300 are free. The 193 tests were repeated on the same server (`RERUN_LIST`, `src/merge-rerun.py`); the originals are in `superseded/` of the results.
+- **[November 2026]** The firewall was created but not applied to the server: PostgreSQL (with the test password from this repository) and all service ports were open to the internet during the round. The PostgreSQL log showed 115 failed logins, all with user names that do not exist; no sign of a successful one. Step 0 now has a check.
+- **[November 2026]** The round took 60.7 hours, not the 43 to 45 estimated: about 160 seconds per test.
+- **[November 2026]** The server has no GitHub credentials, and none are needed: copy the results to your own computer with `rsync -az root@<SERVER_IP>:/root/pg_function_load_tests/src/_k6/results/<STAMP> ...` and commit from there (instead of step 10's push from the server).

@@ -264,7 +264,7 @@ echo ""
 # Run the actual benchmarks
 docker-compose exec -e PROFILE="$PROFILE" -e SCENARIO="$SCENARIO" -e STAMP="$STAMP" \
     -e SHUFFLE="${SHUFFLE:-false}" -e PAUSE_IDLE="${PAUSE_IDLE:-true}" -e TARGET_HOST="${TARGET_HOST:-}" \
-    -e ONLY="${ONLY:-}" test /bin/sh -c '
+    -e ONLY="${ONLY:-}" -e RERUN_LIST="${RERUN_LIST:-}" test /bin/sh -c '
     # Override STAMP from environment
     export STAMP=${STAMP}
     /scripts/run-all.sh

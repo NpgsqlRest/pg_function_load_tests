@@ -435,6 +435,12 @@ run_k6() {
 
     echo "*** Running $script_name for $tag:$port"
     pg_stats_reset
+    # A test must never start when PostgreSQL is short of connection slots: the service would be refused
+    # connections and the result would be about that, not about the service.
+    local free_slots=$(pg_sql "select current_setting('max_connections')::int - (select count(*) from pg_stat_activity where backend_type = 'client backend')")
+    if [ -n "$PG_CONTAINER" ] && { [ -z "$free_slots" ] || [ "$free_slots" -lt 300 ]; }; then
+        echo "!!! PostgreSQL has ${free_slots:-no} free connection slots before $tag $script_name: raise max_connections"
+    fi
     local start=$(date +%s)
     k6 run "$script_path" -e STAMP=$STAMP -e TAG=$tag -e PORT=$port $host_args \
         -e RAMP=$RAMP "$@"
@@ -500,6 +506,29 @@ run_for_all_services() {
 # =============================================================================
 # SCENARIO 1: perf_test (Original comprehensive data type serialization)
 # =============================================================================
+# RERUN_LIST: a file in /results with one test per line, as "tag,script,params" (the columns of
+# test_log.csv: laravel-v13.43.0-octane-app,scenarios/table-get.js,DURATION=60s;LIMIT=20;TARGET=200).
+# Only those tests are run, in that order, with the profile's warmup, ramp and pause. Used to repeat tests
+# of a round that were disturbed; merge-rerun.py puts the results into the round.
+RERUN_LIST=${RERUN_LIST:-""}
+if [ -n "$RERUN_LIST" ]; then
+    SCENARIO="rerun"
+    echo ""
+    echo "############################################################"
+    echo "# RERUN: $(grep -c . "/results/$RERUN_LIST") tests from $RERUN_LIST"
+    echo "############################################################"
+    while IFS=, read -r tag script params <&3; do
+        [ -z "$tag" ] && continue
+        port=$(echo "$ALL_SERVICES" | awk -v t="$tag" '$1 == t {print $2}')
+        if [ -z "$port" ]; then
+            echo "!!! rerun: unknown service $tag"
+            continue
+        fi
+        # "A=1;B=2" -> -e A=1 -e B=2
+        run_k6 "/scripts/$script" "$script" "$tag" "$port" $(echo "$params" | sed -e 's/^/-e /' -e 's/;/ -e /g')
+    done 3< "/results/$RERUN_LIST"
+fi
+
 if [ "$SCENARIO" = "all" ] || [ "$SCENARIO" = "perf-test" ]; then
     echo ""
     echo "############################################################"

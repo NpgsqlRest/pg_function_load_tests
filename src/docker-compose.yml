@@ -9,7 +9,10 @@ services:
     # - Total during test: ~300 connections
     # - Setting 2000 provides 6x headroom, avoids memory issues (5000 was excessive)
     # pg_stat_statements: PostgreSQL's own per-test statement count and execution time (see _postgres/stats.sql)
-    command: postgres -c 'max_connections=2000' -c 'shared_preload_libraries=pg_stat_statements'
+    # max_connections: most services keep a pool of up to 100 connections open once they have been under
+    # load, also while paused. 31 services x 100 is 3,100; with 2,000 (enough for the 20 services of July
+    # 2026) PostgreSQL refused connections during the November 2026 round. Keep it well above services x 100.
+    command: postgres -c 'max_connections=5000' -c 'shared_preload_libraries=pg_stat_statements'
     environment:
       POSTGRES_USER: testuser
       POSTGRES_PASSWORD: testpass

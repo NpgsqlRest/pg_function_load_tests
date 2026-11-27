@@ -610,6 +610,32 @@ def footprint_table(run_dir):
     return '\n'.join(out)
 
 
+def reruns_section(meta):
+    """Tests that were repeated after the round and put into it by merge-rerun.py."""
+    reruns = meta.get('reruns') or []
+    if not reruns:
+        return None
+    out = []
+    for rr in reruns:
+        replaced = rr.get('replaced', [])
+        per_service = defaultdict(int)
+        for r in replaced:
+            per_service[r['tag']] += 1
+        failed_before = sum(1 for r in replaced if r.get('failedBefore'))
+        out.append(f"**{rr.get('tests', len(replaced))} tests were repeated** (run {rr.get('stamp')}) on the same machine and replace "
+                   f"the original ones in every table of this report. {rr.get('reason', '')}".strip())
+        out.append('')
+        out.append(f"{failed_before} of the replaced tests had failed requests the first time. The original results, "
+                   'summaries and log rows of all of them are in `superseded/`.')
+        out.append('')
+        out.append('| Service | Tests repeated |')
+        out.append('|---------|---------------:|')
+        for tag, n in sorted(per_service.items(), key=lambda kv: (-kv[1], kv[0])):
+            out.append(f'| {display_name(tag)} | {n} |')
+        out.append('')
+    return '\n'.join(out)
+
+
 def environment_section(env):
     if not env:
         return None
@@ -751,6 +777,10 @@ def main():
         sections.append('## Throughput per CPU Core\n')
         sections.append(efficiency + '\n')
 
+    reruns = reruns_section(data.get('meta', {}) if isinstance(data, dict) else {})
+    if reruns:
+        sections.append('## Repeated Tests\n')
+        sections.append(reruns + '\n')
     aborts = aborts_table(os.path.join(run_dir, 'test_log.csv'), extended)
     if aborts:
         sections.append('## Test Completion\n')
