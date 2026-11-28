@@ -1,0 +1,25 @@
+     ✓ postgraphile-v5.2.1 status is 200
+     ✓ postgraphile-v5.2.1 response is JSON
+     ✗ postgraphile-v5.2.1 response has all data records
+      ↳  99% — ✓ 178067 / ✗ 623
+     ✗ postgraphile-v5.2.1 response first item has expected fields
+      ↳  99% — ✓ 178067 / ✗ 623
+
+     checks.........................: 99.82% ✓ 713514      ✗ 1246  
+     data_received..................: 1.4 GB 20 MB/s
+     data_sent......................: 260 MB 3.7 MB/s
+     hold_reqs......................: 154925 2211.370578/s
+     http_req_blocked...............: avg=19.56µs  min=1.34µs  med=3.4µs   max=317.1ms  p(90)=5.4µs    p(95)=8.09µs   p(99)=18.8µs  
+     http_req_connecting............: avg=2.54µs   min=0s      med=0s      max=40.39ms  p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=28.93ms  min=1.44ms  med=9.39ms  max=821.65ms p(90)=88.08ms  p(95)=157.92ms p(99)=270.69ms
+       { expected_response:true }...: avg=28.93ms  min=1.44ms  med=9.39ms  max=821.65ms p(90)=88.08ms  p(95)=157.92ms p(99)=270.69ms
+   ✓ http_req_failed................: 0.00%  ✓ 0           ✗ 178690
+     http_req_receiving.............: avg=17.03ms  min=11.31µs med=73.07µs max=803.81ms p(90)=67.15ms  p(95)=138.38ms p(99)=248.67ms
+     http_req_sending...............: avg=456.17µs min=5.62µs  med=11.85µs max=518.87ms p(90)=79.58µs  p(95)=109.31µs p(99)=919.48µs
+     http_req_tls_handshaking.......: avg=0s       min=0s      med=0s      max=0s       p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=11.44ms  min=1.39ms  med=8.38ms  max=119.59ms p(90)=22.75ms  p(95)=26.95ms  p(99)=40.85ms 
+     http_reqs......................: 178690 2550.587759/s
+     iteration_duration.............: avg=72.42ms  min=4.15ms  med=22.09ms max=1.13s    p(90)=206.29ms p(95)=294.05ms p(99)=475.73ms
+     iterations.....................: 178690 2550.587759/s
+     vus............................: 200    min=19        max=200 
+     vus_max........................: 200    min=200       max=200 

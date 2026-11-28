@@ -1,0 +1,25 @@
+     ✓ postgraphile-v5.2.1 status is 200
+     ✓ postgraphile-v5.2.1 response is JSON
+     ✗ postgraphile-v5.2.1 response has all records
+      ↳  67% — ✓ 309498 / ✗ 146416
+     ✗ postgraphile-v5.2.1 response echoes payload
+      ↳  67% — ✓ 309498 / ✗ 146416
+
+     checks.........................: 83.94% ✓ 1530824     ✗ 292832
+     data_received..................: 426 MB 6.1 MB/s
+     data_sent......................: 182 MB 2.6 MB/s
+     hold_reqs......................: 386092 5512.895288/s
+     http_req_blocked...............: avg=3.5µs   min=800ns    med=2.4µs   max=19.43ms  p(90)=4.47µs  p(95)=5.75µs   p(99)=13.56µs 
+     http_req_connecting............: avg=181ns   min=0s       med=0s      max=19.36ms  p(90)=0s      p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=28ms    min=561.71µs med=23.21ms max=133.43ms p(90)=44.88ms p(95)=49.46ms  p(99)=76.93ms 
+       { expected_response:true }...: avg=28ms    min=561.71µs med=23.21ms max=133.43ms p(90)=44.88ms p(95)=49.46ms  p(99)=76.93ms 
+   ✓ http_req_failed................: 0.00%  ✓ 0           ✗ 455914
+     http_req_receiving.............: avg=47.77µs min=9.79µs   med=25.92µs max=18.42ms  p(90)=81.41µs p(95)=162.79µs p(99)=338.3µs 
+     http_req_sending...............: avg=20.2µs  min=4.72µs   med=9.74µs  max=12.88ms  p(90)=27.72µs p(95)=80.93µs  p(99)=174.63µs
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s       p(90)=0s      p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=27.93ms min=530.48µs med=23.14ms max=133.38ms p(90)=44.82ms p(95)=49.39ms  p(99)=76.85ms 
+     http_reqs......................: 455914 6509.863303/s
+     iteration_duration.............: avg=28.5ms  min=850.71µs med=23.9ms  max=133.66ms p(90)=45.1ms  p(95)=49.69ms  p(99)=77.35ms 
+     iterations.....................: 455914 6509.863303/s
+     vus............................: 200    min=19        max=200 
+     vus_max........................: 200    min=200       max=200 

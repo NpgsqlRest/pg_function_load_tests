@@ -1,0 +1,23 @@
+     ✓ npgsqlrest-routine-jit-v4.1.0 status is 200
+     ✓ npgsqlrest-routine-jit-v4.1.0 response is JSON
+     ✓ npgsqlrest-routine-jit-v4.1.0 response has all data records
+     ✓ npgsqlrest-routine-jit-v4.1.0 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 4463760      ✗ 0      
+     data_received..................: 8.0 GB  114 MB/s
+     data_sent......................: 607 MB  8.7 MB/s
+     hold_reqs......................: 997258  14245.112743/s
+     http_req_blocked...............: avg=3.69µs  min=860ns    med=2.23µs  max=16.13ms p(90)=3.69µs   p(95)=4.47µs   p(99)=8.94µs  
+     http_req_connecting............: avg=92ns    min=0s       med=0s      max=9.96ms  p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=5.03ms  min=883.42µs med=4.05ms  max=43.87ms p(90)=9.5ms    p(95)=11.84ms  p(99)=16.76ms 
+       { expected_response:true }...: avg=5.03ms  min=883.42µs med=4.05ms  max=43.87ms p(90)=9.5ms    p(95)=11.84ms  p(99)=16.76ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0            ✗ 1115940
+     http_req_receiving.............: avg=155.1µs min=10.19µs  med=24.42µs max=34.49ms p(90)=134.56µs p(95)=237.71µs p(99)=4.64ms  
+     http_req_sending...............: avg=28.25µs min=3.17µs   med=7.69µs  max=21.51ms p(90)=20.38µs  p(95)=75.69µs  p(99)=165.12µs
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s      p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=4.85ms  min=828.14µs med=3.96ms  max=29.96ms p(90)=9.16ms   p(95)=11.11ms  p(99)=15.13ms 
+     http_reqs......................: 1115940 15940.39969/s
+     iteration_duration.............: avg=5.81ms  min=1.16ms   med=4.71ms  max=46.22ms p(90)=10.84ms  p(95)=13.22ms  p(99)=18.16ms 
+     iterations.....................: 1115940 15940.39969/s
+     vus............................: 100     min=10         max=100  
+     vus_max........................: 100     min=100        max=100  

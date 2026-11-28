@@ -1,0 +1,22 @@
+     ✓ deno-app-v2.9.8 status is 200
+     ✓ deno-app-v2.9.8 response is JSON
+     ✓ deno-app-v2.9.8 response has expected size
+
+     checks.........................: 100.00% ✓ 455874      ✗ 0     
+     data_received..................: 78 GB   1.1 GB/s
+     data_sent......................: 17 MB   241 kB/s
+     hold_reqs......................: 134518  1921.100817/s
+     http_req_blocked...............: avg=4.44µs   min=1.34µs  med=3.54µs   max=2.81ms  p(90)=5.5µs    p(95)=6.4µs   p(99)=14.98µs 
+     http_req_connecting............: avg=78ns     min=0s      med=0s       max=1.09ms  p(90)=0s       p(95)=0s      p(99)=0s      
+   ✓ http_req_duration..............: avg=19.69ms  min=4.05ms  med=18.33ms  max=78.81ms p(90)=31.32ms  p(95)=36.49ms p(99)=47.51ms 
+       { expected_response:true }...: avg=19.69ms  min=4.05ms  med=18.33ms  max=78.81ms p(90)=31.32ms  p(95)=36.49ms p(99)=47.51ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0           ✗ 151958
+     http_req_receiving.............: avg=468.32µs min=73.21µs med=315.48µs max=11.07ms p(90)=949.88µs p(95)=1.46ms  p(99)=2.8ms   
+     http_req_sending...............: avg=28.92µs  min=4.85µs  med=9.96µs   max=3.21ms  p(90)=31.9µs   p(95)=98.17µs p(99)=446.63µs
+     http_req_tls_handshaking.......: avg=0s       min=0s      med=0s       max=0s      p(90)=0s       p(95)=0s      p(99)=0s      
+     http_req_waiting...............: avg=19.2ms   min=3.84ms  med=17.84ms  max=78.41ms p(90)=30.76ms  p(95)=35.85ms p(99)=46.79ms 
+     http_reqs......................: 151958  2170.167844/s
+     iteration_duration.............: avg=21.37ms  min=5.06ms  med=19.98ms  max=80.45ms p(90)=33.22ms  p(95)=38.45ms p(99)=49.48ms 
+     iterations.....................: 151958  2170.167844/s
+     vus............................: 50      min=5         max=50  
+     vus_max........................: 50      min=50        max=50  

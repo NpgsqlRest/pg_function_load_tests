@@ -1,0 +1,23 @@
+     ✓ npgsqlrest-routine-aot-v3.21.0 status is 200
+     ✓ npgsqlrest-routine-aot-v3.21.0 response is JSON
+     ✓ npgsqlrest-routine-aot-v3.21.0 response has all data records
+     ✓ npgsqlrest-routine-aot-v3.21.0 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 6071636      ✗ 0      
+     data_received..................: 1.3 GB  19 MB/s
+     data_sent......................: 826 MB  12 MB/s
+     hold_reqs......................: 1319107 18841.836751/s
+     http_req_blocked...............: avg=2.38µs  min=690ns    med=1.84µs  max=15ms     p(90)=2.73µs  p(95)=3.17µs   p(99)=6.52µs  
+     http_req_connecting............: avg=48ns    min=0s       med=0s      max=14.95ms  p(90)=0s      p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=8.4ms   min=820.82µs med=8.48ms  max=124.05ms p(90)=11.67ms p(95)=13.3ms   p(99)=16.17ms 
+       { expected_response:true }...: avg=8.4ms   min=820.82µs med=8.48ms  max=124.05ms p(90)=11.67ms p(95)=13.3ms   p(99)=16.17ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0            ✗ 1517909
+     http_req_receiving.............: avg=33.66µs min=8.26µs   med=20.66µs max=30.77ms  p(90)=37.5µs  p(95)=115.74µs p(99)=227.42µs
+     http_req_sending...............: avg=13.1µs  min=2.84µs   med=6.93µs  max=25.29ms  p(90)=11.76µs p(95)=46.91µs  p(99)=121.1µs 
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s       p(90)=0s      p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=8.35ms  min=767.76µs med=8.44ms  max=124.02ms p(90)=11.62ms p(95)=13.24ms  p(99)=16.09ms 
+     http_reqs......................: 1517909 21681.481169/s
+     iteration_duration.............: avg=8.55ms  min=930.1µs  med=8.61ms  max=124.17ms p(90)=11.84ms p(95)=13.51ms  p(99)=16.51ms 
+     iterations.....................: 1517909 21681.481169/s
+     vus............................: 200     min=19         max=200  
+     vus_max........................: 200     min=200        max=200  

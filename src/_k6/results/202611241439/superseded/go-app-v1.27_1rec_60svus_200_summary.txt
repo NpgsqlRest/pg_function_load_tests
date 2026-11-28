@@ -1,0 +1,26 @@
+     ✗ go-app-v1.27 status is 200
+      ↳  99% — ✓ 1265188 / ✗ 11144
+     ✗ go-app-v1.27 response is JSON
+      ↳  99% — ✓ 1265188 / ✗ 11144
+     ✗ go-app-v1.27 response has all data records
+      ↳  99% — ✓ 1265188 / ✗ 11144
+     ✓ go-app-v1.27 response first item has expected fields
+
+     checks.........................: 99.34%  ✓ 5060752      ✗ 33432  
+     data_received..................: 1.1 GB  15 MB/s
+     data_sent......................: 638 MB  9.1 MB/s
+     hold_reqs......................: 1088972 15554.041756/s
+     http_req_blocked...............: avg=2.54µs  min=690ns    med=1.85µs  max=17.03ms p(90)=3.1µs   p(95)=3.68µs   p(99)=6.53µs  
+     http_req_connecting............: avg=53ns    min=0s       med=0s      max=16.99ms p(90)=0s      p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=10.02ms min=663.17µs med=9.5ms   max=99.64ms p(90)=15.64ms p(95)=18.73ms  p(99)=27.35ms 
+       { expected_response:true }...: avg=9.87ms  min=663.17µs med=9.46ms  max=74.21ms p(90)=15.35ms p(95)=18.12ms  p(99)=25.51ms 
+   ✓ http_req_failed................: 0.87%   ✓ 11144        ✗ 1265188
+     http_req_receiving.............: avg=32.39µs min=7.6µs    med=19.82µs max=17.36ms p(90)=39.3µs  p(95)=108.31µs p(99)=243.51µs
+     http_req_sending...............: avg=13.01µs min=2.69µs   med=6.97µs  max=16.73ms p(90)=12.59µs p(95)=40.38µs  p(99)=129.67µs
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s      p(90)=0s      p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=9.97ms  min=629.56µs med=9.46ms  max=99.54ms p(90)=15.58ms p(95)=18.67ms  p(99)=27.28ms 
+     http_reqs......................: 1276332 18230.148454/s
+     iteration_duration.............: avg=10.17ms min=776.32µs med=9.64ms  max=99.81ms p(90)=15.83ms p(95)=18.95ms  p(99)=27.56ms 
+     iterations.....................: 1276332 18230.148454/s
+     vus............................: 200     min=19         max=200  
+     vus_max........................: 200     min=200        max=200  

@@ -1,0 +1,25 @@
+     ✗ npgsqlrest-file-aot-v4.1.0 status is 200
+      ↳  99% — ✓ 1053098 / ✗ 200
+     ✗ npgsqlrest-file-aot-v4.1.0 response is JSON
+      ↳  99% — ✓ 1053098 / ✗ 200
+     ✗ npgsqlrest-file-aot-v4.1.0 response is the row asked for
+      ↳  99% — ✓ 1053098 / ✗ 200
+
+     checks.........................: 99.98%  ✓ 3159294      ✗ 600    
+     data_received..................: 274 MB  3.7 MB/s
+     data_sent......................: 122 MB  1.7 MB/s
+     hold_reqs......................: 855416  11592.714409/s
+     http_req_blocked...............: avg=3.01µs  min=770ns    med=1.96µs  max=19.18ms p(90)=3.84µs  p(95)=4.54µs  p(99)=9.37µs  
+     http_req_connecting............: avg=83ns    min=0s       med=0s      max=19.09ms p(90)=0s      p(95)=0s      p(99)=0s      
+   ✓ http_req_duration..............: avg=12.75ms min=247.41µs med=3.11ms  max=22.63s  p(90)=7.74ms  p(95)=10.97ms p(99)=82.81ms 
+       { expected_response:true }...: avg=8.53ms  min=247.41µs med=3.11ms  max=10.13s  p(90)=7.74ms  p(95)=10.95ms p(99)=81.58ms 
+   ✓ http_req_failed................: 0.01%   ✓ 200          ✗ 1053098
+     http_req_receiving.............: avg=32.45µs min=6.32µs   med=19.29µs max=16.56ms p(90)=38.77µs p(95)=59.48µs p(99)=229.41µs
+     http_req_sending...............: avg=11.98µs min=2.42µs   med=6.38µs  max=22.96ms p(90)=12.79µs p(95)=19.02µs p(99)=115.4µs 
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s      p(90)=0s      p(95)=0s      p(99)=0s      
+     http_req_waiting...............: avg=12.71ms min=226.97µs med=3.08ms  max=22.63s  p(90)=7.67ms  p(95)=10.88ms p(99)=82.73ms 
+     http_reqs......................: 1053298 14274.438287/s
+     iteration_duration.............: avg=12.93ms min=331.46µs med=3.25ms  max=22.63s  p(90)=8.03ms  p(95)=11.4ms  p(99)=83.09ms 
+     iterations.....................: 1053298 14274.438287/s
+     vus............................: 101     min=19         max=200  
+     vus_max........................: 200     min=200        max=200  

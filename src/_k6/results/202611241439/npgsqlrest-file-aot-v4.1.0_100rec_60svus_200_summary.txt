@@ -1,0 +1,23 @@
+     ✓ npgsqlrest-file-aot-v4.1.0 status is 200
+     ✓ npgsqlrest-file-aot-v4.1.0 response is JSON
+     ✓ npgsqlrest-file-aot-v4.1.0 response has all data records
+     ✓ npgsqlrest-file-aot-v4.1.0 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 609248      ✗ 0     
+     data_received..................: 11 GB   154 MB/s
+     data_sent......................: 83 MB   1.2 MB/s
+     hold_reqs......................: 132339  1888.546108/s
+     http_req_blocked...............: avg=28.46µs  min=1.59µs   med=3.55µs  max=244.82ms p(90)=5.47µs   p(95)=8.21µs   p(99)=21.69µs 
+     http_req_connecting............: avg=4.89µs   min=0s       med=0s      max=161.14ms p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=39.56ms  min=1.66ms   med=15.09ms max=1.08s    p(90)=125.76ms p(95)=168.25ms p(99)=288.53ms
+       { expected_response:true }...: avg=39.56ms  min=1.66ms   med=15.09ms max=1.08s    p(90)=125.76ms p(95)=168.25ms p(99)=288.53ms
+   ✓ http_req_failed................: 0.00%   ✓ 0           ✗ 152312
+     http_req_receiving.............: avg=28.01ms  min=52.4µs   med=2.55ms  max=1.06s    p(90)=108.37ms p(95)=151.65ms p(99)=270.57ms
+     http_req_sending...............: avg=555.14µs min=4.78µs   med=10.97µs max=438.84ms p(90)=78.82µs  p(95)=106.06µs p(99)=3.7ms   
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s       p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=10.99ms  min=973.13µs med=8.42ms  max=78.62ms  p(90)=21.36ms  p(95)=24.7ms   p(99)=33.51ms 
+     http_reqs......................: 152312  2173.571168/s
+     iteration_duration.............: avg=85.04ms  min=4.65ms   med=30.45ms max=1.34s    p(90)=229.29ms p(95)=316.77ms p(99)=509.74ms
+     iterations.....................: 152312  2173.571168/s
+     vus............................: 200     min=19        max=200 
+     vus_max........................: 200     min=200       max=200 

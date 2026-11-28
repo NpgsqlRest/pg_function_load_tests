@@ -1,0 +1,23 @@
+     ✓ hasura-v2.50.10 status is 200
+     ✓ hasura-v2.50.10 response is JSON
+     ✓ hasura-v2.50.10 response has param_count
+     ✓ hasura-v2.50.10 response has checksum
+
+     checks.........................: 100.00% ✓ 804664      ✗ 0     
+     data_received..................: 56 MB   802 kB/s
+     data_sent......................: 129 MB  1.8 MB/s
+     hold_reqs......................: 169005  2413.992647/s
+     http_req_blocked...............: avg=4.25µs  min=799ns    med=3.5µs   max=1.18ms   p(90)=5.02µs  p(95)=5.92µs  p(99)=20.29µs 
+     http_req_connecting............: avg=67ns    min=0s       med=0s      max=373.43µs p(90)=0s      p(95)=0s      p(99)=0s      
+   ✓ http_req_duration..............: avg=15.92ms min=736.93µs med=16.91ms max=46.58ms  p(90)=18.41ms p(95)=22.1ms  p(99)=23.65ms 
+       { expected_response:true }...: avg=15.92ms min=736.93µs med=16.91ms max=46.58ms  p(90)=18.41ms p(95)=22.1ms  p(99)=23.65ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0           ✗ 201166
+     http_req_receiving.............: avg=48.35µs min=8.66µs   med=43µs    max=7.85ms   p(90)=64.42µs p(95)=74.86µs p(99)=116.36µs
+     http_req_sending...............: avg=19.31µs min=4.06µs   med=15.67µs max=1.92ms   p(90)=29.54µs p(95)=35.9µs  p(99)=65.98µs 
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s       p(90)=0s      p(95)=0s      p(99)=0s      
+     http_req_waiting...............: avg=15.85ms min=701.33µs med=16.84ms max=46.52ms  p(90)=18.34ms p(95)=22.03ms p(99)=23.58ms 
+     http_reqs......................: 201166  2873.366142/s
+     iteration_duration.............: avg=16.14ms min=906.69µs med=17.12ms max=46.81ms  p(90)=18.64ms p(95)=22.32ms p(99)=23.88ms 
+     iterations.....................: 201166  2873.366142/s
+     vus............................: 50      min=5         max=50  
+     vus_max........................: 50      min=50        max=50  

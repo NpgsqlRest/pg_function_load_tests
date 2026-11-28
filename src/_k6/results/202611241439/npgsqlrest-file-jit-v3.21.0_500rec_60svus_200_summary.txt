@@ -1,0 +1,23 @@
+     ✓ npgsqlrest-file-jit-v3.21.0 status is 200
+     ✓ npgsqlrest-file-jit-v3.21.0 response is JSON
+     ✓ npgsqlrest-file-jit-v3.21.0 response has all data records
+     ✓ npgsqlrest-file-jit-v3.21.0 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 133716     ✗ 0    
+     data_received..................: 12 GB   170 MB/s
+     data_sent......................: 18 MB   258 kB/s
+     hold_reqs......................: 28858   410.563986/s
+     http_req_blocked...............: avg=186.37µs min=1.97µs   med=4.38µs   max=348.6ms  p(90)=6.75µs   p(95)=9.8µs    p(99)=36.18µs 
+     http_req_connecting............: avg=103.47µs min=0s       med=0s       max=340ms    p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=112.72ms min=5.21ms   med=43.98ms  max=2.01s    p(90)=335.12ms p(95)=469.38ms p(99)=783.43ms
+       { expected_response:true }...: avg=112.72ms min=5.21ms   med=43.98ms  max=2.01s    p(90)=335.12ms p(95)=469.38ms p(99)=783.43ms
+   ✓ http_req_failed................: 0.00%   ✓ 0          ✗ 33429
+     http_req_receiving.............: avg=86.11ms  min=147.07µs med=21.44ms  max=1.99s    p(90)=289.69ms p(95)=425.66ms p(99)=737.27ms
+     http_req_sending...............: avg=3.03ms   min=5.32µs   med=13.05µs  max=1.08s    p(90)=57.32µs  p(95)=102.03µs p(99)=63.24ms 
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s       max=0s       p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=23.56ms  min=1.06ms   med=14.12ms  max=372.31ms p(90)=57.39ms  p(95)=70.57ms  p(99)=97.17ms 
+     http_reqs......................: 33429   475.595797/s
+     iteration_duration.............: avg=387.73ms min=19.7ms   med=252.34ms max=3.84s    p(90)=920.27ms p(95)=1.18s    p(99)=1.75s   
+     iterations.....................: 33429   475.595797/s
+     vus............................: 200     min=19       max=200
+     vus_max........................: 200     min=200      max=200

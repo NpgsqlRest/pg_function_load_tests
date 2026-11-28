@@ -1,0 +1,23 @@
+     ✓ postgrest-v16.6 status is 200
+     ✓ postgrest-v16.6 response is JSON
+     ✓ postgrest-v16.6 response has all records
+     ✓ postgrest-v16.6 response has nested structure
+
+     checks.........................: 100.00% ✓ 630552      ✗ 0     
+     data_received..................: 723 MB  10 MB/s
+     data_sent......................: 18 MB   254 kB/s
+     hold_reqs......................: 131737  1881.096667/s
+     http_req_blocked...............: avg=6.79µs   min=960ns    med=4.89µs  max=28.29ms  p(90)=7.56µs   p(95)=8.77µs   p(99)=36.29µs 
+     http_req_connecting............: avg=438ns    min=0s       med=0s      max=28.23ms  p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=39.68ms  min=987.26µs med=24.92ms max=588.42ms p(90)=94.66ms  p(95)=125.28ms p(99)=196.75ms
+       { expected_response:true }...: avg=39.68ms  min=987.26µs med=24.92ms max=588.42ms p(90)=94.66ms  p(95)=125.28ms p(99)=196.75ms
+   ✓ http_req_failed................: 0.00%   ✓ 0           ✗ 157638
+     http_req_receiving.............: avg=135.13µs min=12.73µs  med=60.44µs max=18.31ms  p(90)=272.05µs p(95)=417.9µs  p(99)=1.45ms  
+     http_req_sending...............: avg=38.28µs  min=3.55µs   med=15.47µs max=12.47ms  p(90)=67.75µs  p(95)=170.17µs p(99)=300.98µs
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s       p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=39.5ms   min=921.96µs med=24.74ms max=588.36ms p(90)=94.47ms  p(95)=125.15ms p(99)=196.58ms
+     http_reqs......................: 157638  2250.941773/s
+     iteration_duration.............: avg=41.22ms  min=1.41ms   med=26.56ms max=589.29ms p(90)=96.37ms  p(95)=126.89ms p(99)=198.41ms
+     iterations.....................: 157638  2250.941773/s
+     vus............................: 100     min=10        max=100 
+     vus_max........................: 100     min=100       max=100 

@@ -258,7 +258,7 @@ def resource_table(path):
 
 
 K6_EXIT = {
-    '99': 'a threshold was crossed (p99 >= 1 s, or 1% failed requests)',
+    '99': 'a threshold was crossed (the p99 objective of the scenario, or 1% failed requests)',
     '105': 'interrupted',
     '107': 'script error',
     '108': 'aborted',
@@ -283,7 +283,7 @@ def aborts_table(path, extended=None):
         counts[row['exit_code']] += 1
     out = [', '.join(f"{n} test(s) with exit code {c}: {K6_EXIT.get(c, 'see the k6 documentation')}" for c, n in sorted(counts.items())) + '.',
            '',
-           'Exit code 99 with zero failed requests means the latency objective (p99 < 1 s) was missed; the test ran to its end and its numbers are valid.',
+           'Exit code 99 with zero failed requests means the latency objective was missed; the test ran to its end and its numbers are valid. The objective for p99 is 100 ms in the minimal scenario, 500 ms in params, 5 s in large and 1 s in the others.',
            '',
            '| Service | Test | Exit code | Failed requests | p99 (ms) |',
            '|---------|------|----------:|----------------:|---------:|']

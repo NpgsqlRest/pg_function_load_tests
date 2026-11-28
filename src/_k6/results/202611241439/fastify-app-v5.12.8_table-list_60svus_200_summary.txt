@@ -1,0 +1,22 @@
+     ✓ fastify-app-v5.12.8 status is 200
+     ✓ fastify-app-v5.12.8 response is JSON
+     ✓ fastify-app-v5.12.8 response is a full page of the category
+
+     checks.........................: 100.00% ✓ 3938217      ✗ 0      
+     data_received..................: 3.4 GB  48 MB/s
+     data_sent......................: 183 MB  2.6 MB/s
+     hold_reqs......................: 1137694 16250.477922/s
+     http_req_blocked...............: avg=2.61µs  min=750ns    med=1.95µs  max=12.47ms p(90)=3.02µs  p(95)=3.52µs   p(99)=7.3µs   
+     http_req_connecting............: avg=44ns    min=0s       med=0s      max=10.82ms p(90)=0s      p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=9.7ms   min=429.38µs med=9.71ms  max=48.83ms p(90)=13.1ms  p(95)=13.55ms  p(99)=14.89ms 
+       { expected_response:true }...: avg=9.7ms   min=429.38µs med=9.71ms  max=48.83ms p(90)=13.1ms  p(95)=13.55ms  p(99)=14.89ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0            ✗ 1312739
+     http_req_receiving.............: avg=37.55µs min=8.44µs   med=20.79µs max=15.35ms p(90)=64.28µs p(95)=140.59µs p(99)=247.35µs
+     http_req_sending...............: avg=14.5µs  min=2.67µs   med=6.5µs   max=16.73ms p(90)=14.93µs p(95)=71.55µs  p(99)=131.59µs
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s      p(90)=0s      p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=9.65ms  min=398.25µs med=9.67ms  max=41.98ms p(90)=13.06ms p(95)=13.48ms  p(99)=14.77ms 
+     http_reqs......................: 1312739 18750.767901/s
+     iteration_duration.............: avg=9.89ms  min=577.81µs med=9.87ms  max=49.04ms p(90)=13.27ms p(95)=13.75ms  p(99)=15.26ms 
+     iterations.....................: 1312739 18750.767901/s
+     vus............................: 200     min=19         max=200  
+     vus_max........................: 200     min=200        max=200  

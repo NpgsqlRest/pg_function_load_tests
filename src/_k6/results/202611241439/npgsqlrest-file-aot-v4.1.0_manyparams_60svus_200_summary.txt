@@ -1,0 +1,23 @@
+     ✓ npgsqlrest-file-aot-v4.1.0 status is 200
+     ✓ npgsqlrest-file-aot-v4.1.0 response is JSON
+     ✓ npgsqlrest-file-aot-v4.1.0 response has param_count
+     ✓ npgsqlrest-file-aot-v4.1.0 response has checksum
+
+     checks.........................: 100.00% ✓ 11075368     ✗ 0      
+     data_received..................: 582 MB  8.3 MB/s
+     data_sent......................: 1.0 GB  15 MB/s
+     hold_reqs......................: 2426475 34662.329214/s
+     http_req_blocked...............: avg=2.26µs  min=690ns    med=1.66µs  max=41.28ms p(90)=2.46µs  p(95)=2.9µs   p(99)=5.74µs  
+     http_req_connecting............: avg=31ns    min=0s       med=0s      max=16.38ms p(90)=0s      p(95)=0s      p(99)=0s      
+   ✓ http_req_duration..............: avg=4.45ms  min=256.1µs  med=4.43ms  max=50.14ms p(90)=6.2ms   p(95)=7.14ms  p(99)=10.3ms  
+       { expected_response:true }...: avg=4.45ms  min=256.1µs  med=4.43ms  max=50.14ms p(90)=6.2ms   p(95)=7.14ms  p(99)=10.3ms  
+   ✓ http_req_failed................: 0.00%   ✓ 0            ✗ 2768842
+     http_req_receiving.............: avg=26.12µs min=6.9µs    med=16.63µs max=38.64ms p(90)=25.88µs p(95)=36.72µs p(99)=184.04µs
+     http_req_sending...............: avg=11.08µs min=2.55µs   med=6.11µs  max=44.74ms p(90)=8.37µs  p(95)=11.95µs p(99)=91.79µs 
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s      p(90)=0s      p(95)=0s      p(99)=0s      
+     http_req_waiting...............: avg=4.41ms  min=218µs    med=4.41ms  max=26.78ms p(90)=6.16ms  p(95)=7.08ms  p(99)=10.15ms 
+     http_reqs......................: 2768842 39553.060694/s
+     iteration_duration.............: avg=4.68ms  min=367.32µs med=4.55ms  max=65.69ms p(90)=6.46ms  p(95)=7.54ms  p(99)=12.69ms 
+     iterations.....................: 2768842 39553.060694/s
+     vus............................: 200     min=19         max=200  
+     vus_max........................: 200     min=200        max=200  

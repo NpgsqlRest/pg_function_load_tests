@@ -1,0 +1,23 @@
+     ✓ bun-app-v1.4.5 status is 200
+     ✓ bun-app-v1.4.5 response is JSON
+     ✓ bun-app-v1.4.5 response has param_count
+     ✓ bun-app-v1.4.5 response has checksum
+
+     checks.........................: 100.00% ✓ 12727708     ✗ 0      
+     data_received..................: 554 MB  7.9 MB/s
+     data_sent......................: 1.2 GB  17 MB/s
+     hold_reqs......................: 2847363 40676.024809/s
+     http_req_blocked...............: avg=2µs      min=630ns    med=1.68µs   max=12.06ms  p(90)=2.35µs  p(95)=2.8µs   p(99)=5.5µs  
+     http_req_connecting............: avg=2ns      min=0s       med=0s       max=331.94µs p(90)=0s      p(95)=0s      p(99)=0s     
+   ✓ http_req_duration..............: avg=922.07µs min=156.57µs med=870.61µs max=55.35ms  p(90)=1.24ms  p(95)=1.39ms  p(99)=2.86ms 
+       { expected_response:true }...: avg=922.07µs min=156.57µs med=870.61µs max=55.35ms  p(90)=1.24ms  p(95)=1.39ms  p(99)=2.86ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0            ✗ 3181927
+     http_req_receiving.............: avg=21.14µs  min=5.27µs   med=16µs     max=52.94ms  p(90)=22.45µs p(95)=27.84µs p(99)=96.41µs
+     http_req_sending...............: avg=7.89µs   min=2.17µs   med=5.95µs   max=47.54ms  p(90)=7.89µs  p(95)=9.97µs  p(99)=33.2µs 
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s       max=0s       p(90)=0s      p(95)=0s      p(99)=0s     
+     http_req_waiting...............: avg=893.02µs min=126.33µs med=845.74µs max=11.21ms  p(90)=1.21ms  p(95)=1.35ms  p(99)=2.8ms  
+     http_reqs......................: 3181927 45455.44126/s
+     iteration_duration.............: avg=1.01ms   min=216.53µs med=953.29µs max=55.51ms  p(90)=1.33ms  p(95)=1.5ms   p(99)=3.06ms 
+     iterations.....................: 3181927 45455.44126/s
+     vus............................: 50      min=5          max=50   
+     vus_max........................: 50      min=50         max=50   

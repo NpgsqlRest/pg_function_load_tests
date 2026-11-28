@@ -1,0 +1,23 @@
+     ✓ gin-app-v1.12.0 status is 200
+     ✓ gin-app-v1.12.0 response is JSON
+     ✓ gin-app-v1.12.0 response has all data records
+     ✓ gin-app-v1.12.0 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 640032      ✗ 0     
+     data_received..................: 12 GB   168 MB/s
+     data_sent......................: 81 MB   1.2 MB/s
+     hold_reqs......................: 143111  2043.962408/s
+     http_req_blocked...............: avg=7.41µs   min=1.34µs  med=3.63µs   max=23.23ms  p(90)=5.35µs  p(95)=7.98µs   p(99)=21.02µs
+     http_req_connecting............: avg=150ns    min=0s      med=0s       max=4.37ms   p(90)=0s      p(95)=0s       p(99)=0s     
+   ✓ http_req_duration..............: avg=9.57ms   min=1.69ms  med=7.56ms   max=77.94ms  p(90)=19.08ms p(95)=23.51ms  p(99)=33.45ms
+       { expected_response:true }...: avg=9.57ms   min=1.69ms  med=7.56ms   max=77.94ms  p(90)=19.08ms p(95)=23.51ms  p(99)=33.45ms
+   ✓ http_req_failed................: 0.00%   ✓ 0           ✗ 160008
+     http_req_receiving.............: avg=3.01ms   min=26.97µs med=311.49µs max=71.16ms  p(90)=11.7ms  p(95)=15.89ms  p(99)=25.64ms
+     http_req_sending...............: avg=113.89µs min=4.37µs  med=11.18µs  max=33.91ms  p(90)=59.75µs p(95)=104.54µs p(99)=1.69ms 
+     http_req_tls_handshaking.......: avg=0s       min=0s      med=0s       max=0s       p(90)=0s      p(95)=0s       p(99)=0s     
+     http_req_waiting...............: avg=6.44ms   min=1.58ms  med=6.22ms   max=28.21ms  p(90)=9.56ms  p(95)=11ms     p(99)=14.54ms
+     http_reqs......................: 160008  2285.291396/s
+     iteration_duration.............: avg=20.29ms  min=3.63ms  med=16.26ms  max=141.08ms p(90)=37.15ms p(95)=45.14ms  p(99)=62.34ms
+     iterations.....................: 160008  2285.291396/s
+     vus............................: 50      min=5         max=50  
+     vus_max........................: 50      min=50        max=50  

@@ -1,0 +1,23 @@
+     ✓ laravel-v13.43.0-octane-app status is 200
+     ✓ laravel-v13.43.0-octane-app response is JSON
+     ✓ laravel-v13.43.0-octane-app response has all data records
+     ✓ laravel-v13.43.0-octane-app response first item has expected fields
+
+     checks.........................: 100.00% ✓ 459972      ✗ 0     
+     data_received..................: 109 MB  1.6 MB/s
+     data_sent......................: 59 MB   845 kB/s
+     hold_reqs......................: 98832   1410.437297/s
+     http_req_blocked...............: avg=4.5µs   min=990ns   med=3.45µs  max=10.61ms  p(90)=5.02µs  p(95)=5.83µs  p(99)=19.37µs 
+     http_req_connecting............: avg=322ns   min=0s      med=0s      max=10.53ms  p(90)=0s      p(95)=0s      p(99)=0s      
+   ✓ http_req_duration..............: avg=56.29ms min=2.15ms  med=54.28ms max=665.27ms p(90)=73.67ms p(95)=81.37ms p(99)=113.23ms
+       { expected_response:true }...: avg=56.29ms min=2.15ms  med=54.28ms max=665.27ms p(90)=73.67ms p(95)=81.37ms p(99)=113.23ms
+   ✓ http_req_failed................: 0.00%   ✓ 0           ✗ 114993
+     http_req_receiving.............: avg=53.26µs min=10.46µs med=50.54µs max=3.93ms   p(90)=70.59µs p(95)=80.34µs p(99)=110.75µs
+     http_req_sending...............: avg=15.88µs min=4.13µs  med=12.67µs max=2.5ms    p(90)=26.65µs p(95)=31.58µs p(99)=53.28µs 
+     http_req_tls_handshaking.......: avg=0s      min=0s      med=0s      max=0s       p(90)=0s      p(95)=0s      p(99)=0s      
+     http_req_waiting...............: avg=56.22ms min=2.11ms  med=54.22ms max=665.19ms p(90)=73.6ms  p(95)=81.3ms  p(99)=113.15ms
+     http_reqs......................: 114993  1641.071881/s
+     iteration_duration.............: avg=56.53ms min=2.51ms  med=54.53ms max=665.48ms p(90)=73.91ms p(95)=81.61ms p(99)=113.45ms
+     iterations.....................: 114993  1641.071881/s
+     vus............................: 100     min=10        max=100 
+     vus_max........................: 100     min=100       max=100 

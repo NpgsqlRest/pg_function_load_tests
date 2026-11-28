@@ -1,0 +1,23 @@
+     ✓ nestjs-app-v12.6.0 status is 200
+     ✓ nestjs-app-v12.6.0 response is JSON
+     ✓ nestjs-app-v12.6.0 response has all records
+     ✓ nestjs-app-v12.6.0 response echoes payload
+
+     checks.........................: 100.00% ✓ 1674632     ✗ 0     
+     data_received..................: 4.3 GB  62 MB/s
+     data_sent......................: 97 MB   1.4 MB/s
+     hold_reqs......................: 377379  5390.711946/s
+     http_req_blocked...............: avg=5.41µs   min=1.11µs   med=2.92µs  max=24.28ms  p(90)=4.36µs   p(95)=6.41µs  p(99)=16.56µs
+     http_req_connecting............: avg=33ns     min=0s       med=0s      max=1.4ms    p(90)=0s       p(95)=0s      p(99)=0s     
+   ✓ http_req_duration..............: avg=3.88ms   min=595.07µs med=2.65ms  max=62.35ms  p(90)=7.77ms   p(95)=11.45ms p(99)=19.01ms
+       { expected_response:true }...: avg=3.88ms   min=595.07µs med=2.65ms  max=62.35ms  p(90)=7.77ms   p(95)=11.45ms p(99)=19.01ms
+   ✓ http_req_failed................: 0.00%   ✓ 0           ✗ 418658
+     http_req_receiving.............: avg=766.84µs min=13.29µs  med=36.31µs max=53.9ms   p(90)=889.64µs p(95)=5.42ms  p(99)=13.74ms
+     http_req_sending...............: avg=87.44µs  min=4.51µs   med=10.19µs max=32.3ms   p(90)=57.43µs  p(95)=104.2µs p(99)=1.1ms  
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s       p(90)=0s       p(95)=0s      p(99)=0s     
+     http_req_waiting...............: avg=3.03ms   min=522.67µs med=2.4ms   max=54.24ms  p(90)=5.84ms   p(95)=6.94ms  p(99)=9.7ms  
+     http_reqs......................: 418658  5980.366374/s
+     iteration_duration.............: avg=7.74ms   min=1.3ms    med=5.51ms  max=100.77ms p(90)=16.33ms  p(95)=20.82ms p(99)=31.54ms
+     iterations.....................: 418658  5980.366374/s
+     vus............................: 50      min=5         max=50  
+     vus_max........................: 50      min=50        max=50  

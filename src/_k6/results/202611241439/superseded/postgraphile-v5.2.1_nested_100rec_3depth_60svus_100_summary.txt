@@ -1,0 +1,25 @@
+     ✓ postgraphile-v5.2.1 status is 200
+     ✓ postgraphile-v5.2.1 response is JSON
+     ✗ postgraphile-v5.2.1 response has all records
+      ↳  79% — ✓ 168237 / ✗ 43288
+     ✗ postgraphile-v5.2.1 response has nested structure
+      ↳  79% — ✓ 168237 / ✗ 43288
+
+     checks.........................: 89.76% ✓ 759524      ✗ 86576 
+     data_received..................: 790 MB 11 MB/s
+     data_sent......................: 70 MB  994 kB/s
+     hold_reqs......................: 188396 2689.50724/s
+     http_req_blocked...............: avg=11.92µs  min=990ns    med=3.44µs  max=96.18ms  p(90)=5.32µs  p(95)=7.56µs   p(99)=21.19µs 
+     http_req_connecting............: avg=566ns    min=0s       med=0s      max=37.44ms  p(90)=0s      p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=14.56ms  min=908.76µs med=7.65ms  max=260.78ms p(90)=36.38ms p(95)=52.21ms  p(99)=87.4ms  
+       { expected_response:true }...: avg=14.56ms  min=908.76µs med=7.65ms  max=260.78ms p(90)=36.38ms p(95)=52.21ms  p(99)=87.4ms  
+   ✓ http_req_failed................: 0.00%  ✓ 0           ✗ 211525
+     http_req_receiving.............: avg=4.07ms   min=12.39µs  med=45.34µs max=244.92ms p(90)=6.37ms  p(95)=33.46ms  p(99)=71.45ms 
+     http_req_sending...............: avg=180.84µs min=5.19µs   med=11.82µs max=154.56ms p(90)=68.48µs p(95)=101.78µs p(99)=550.12µs
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s       p(90)=0s      p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=10.3ms   min=865.08µs med=6.8ms   max=94.02ms  p(90)=23.34ms p(95)=31.32ms  p(99)=45.6ms  
+     http_reqs......................: 211525 3019.692663/s
+     iteration_duration.............: avg=30.7ms   min=2.58ms   med=17.93ms max=615.16ms p(90)=70.73ms p(95)=98.84ms  p(99)=159.03ms
+     iterations.....................: 211525 3019.692663/s
+     vus............................: 100    min=10        max=100 
+     vus_max........................: 100    min=100       max=100 

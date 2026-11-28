@@ -1,0 +1,26 @@
+     ✗ net11-minapi-npgsql-jit status is 200
+      ↳  98% — ✓ 306977 / ✗ 4027
+     ✗ net11-minapi-npgsql-jit response is JSON
+      ↳  98% — ✓ 306977 / ✗ 4027
+     ✗ net11-minapi-npgsql-jit response has all records
+      ↳  98% — ✓ 306977 / ✗ 4027
+     ✓ net11-minapi-npgsql-jit response echoes payload
+
+     checks.........................: 99.02% ✓ 1227908     ✗ 12081 
+     data_received..................: 3.5 GB 57 MB/s
+     data_sent......................: 73 MB  1.2 MB/s
+     hold_reqs......................: 258094 4155.364495/s
+     http_req_blocked...............: avg=11.13µs  min=1.13µs   med=3.03µs  max=344.92ms p(90)=4.53µs   p(95)=6.22µs   p(99)=16.97µs 
+     http_req_connecting............: avg=1.3µs    min=0s       med=0s      max=23.37ms  p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=23.16ms  min=426.45µs med=6.43ms  max=761.56ms p(90)=63.56ms  p(95)=109.28ms p(99)=223.05ms
+       { expected_response:true }...: avg=20.7ms   min=426.45µs med=6.28ms  max=571.95ms p(90)=56.77ms  p(95)=97.84ms  p(99)=210.67ms
+   ✗ http_req_failed................: 1.29%  ✓ 4027        ✗ 306977
+     http_req_receiving.............: avg=6.2ms    min=12.39µs  med=43.88µs max=567.74ms p(90)=11.99ms  p(95)=40.77ms  p(99)=114.39ms
+     http_req_sending...............: avg=179.32µs min=4.76µs   med=10.38µs max=319.57ms p(90)=76.77µs  p(95)=106.8µs  p(99)=254.84µs
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s       p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=16.77ms  min=378.46µs med=5.58ms  max=761.47ms p(90)=37.72ms  p(95)=65.92ms  p(99)=220.83ms
+     http_reqs......................: 311004 5007.22597/s
+     iteration_duration.............: avg=36.48ms  min=1.08ms   med=12.65ms max=800.21ms p(90)=107.31ms p(95)=144.18ms p(99)=243.15ms
+     iterations.....................: 311004 5007.22597/s
+     vus............................: 200    min=19        max=200 
+     vus_max........................: 200    min=200       max=200 

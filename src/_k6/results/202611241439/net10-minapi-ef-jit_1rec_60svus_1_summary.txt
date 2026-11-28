@@ -1,0 +1,23 @@
+     ✓ net10-minapi-ef-jit status is 200
+     ✓ net10-minapi-ef-jit response is JSON
+     ✓ net10-minapi-ef-jit response has all data records
+     ✓ net10-minapi-ef-jit response first item has expected fields
+
+     checks.........................: 100.00% ✓ 118652     ✗ 0    
+     data_received..................: 26 MB   372 kB/s
+     data_sent......................: 16 MB   226 kB/s
+     hold_reqs......................: 25093   358.45755/s
+     http_req_blocked...............: avg=4.1µs   min=1.02µs   med=3.43µs  max=1.16ms   p(90)=5.02µs  p(95)=5.59µs  p(99)=19.41µs 
+     http_req_connecting............: avg=10ns    min=0s       med=0s      max=297.24µs p(90)=0s      p(95)=0s      p(99)=0s      
+   ✓ http_req_duration..............: avg=2.09ms  min=971.61µs med=2.12ms  max=8.35ms   p(90)=2.64ms  p(95)=2.7ms   p(99)=3.57ms  
+       { expected_response:true }...: avg=2.09ms  min=971.61µs med=2.12ms  max=8.35ms   p(90)=2.64ms  p(95)=2.7ms   p(99)=3.57ms  
+   ✓ http_req_failed................: 0.00%   ✓ 0          ✗ 29663
+     http_req_receiving.............: avg=59.22µs min=14.13µs  med=54.69µs max=1.02ms   p(90)=76.98µs p(95)=90.39µs p(99)=117.58µs
+     http_req_sending...............: avg=15.19µs min=3.65µs   med=12.2µs  max=424.5µs  p(90)=22.72µs p(95)=30.68µs p(99)=54.91µs 
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s       p(90)=0s      p(95)=0s      p(99)=0s      
+     http_req_waiting...............: avg=2.01ms  min=949.44µs med=2.05ms  max=8.31ms   p(90)=2.56ms  p(95)=2.62ms  p(99)=3.5ms   
+     http_reqs......................: 29663   423.740736/s
+     iteration_duration.............: avg=2.34ms  min=1.05ms   med=2.36ms  max=8.48ms   p(90)=2.91ms  p(95)=2.99ms  p(99)=3.83ms  
+     iterations.....................: 29663   423.740736/s
+     vus............................: 1       min=1        max=1  
+     vus_max........................: 1       min=1        max=1  
