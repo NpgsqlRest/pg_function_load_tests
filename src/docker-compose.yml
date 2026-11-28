@@ -229,6 +229,11 @@ services:
       PGRST_DB_URI: postgres://testuser:testpass@postgres:5432/testdb
       PGRST_DB_SCHEMA: public
       PGRST_DB_ANON_ROLE: testuser
+      # The pool every other service has (the default is 10). It has to be set HERE: the image takes its
+      # settings from these variables and never reads the postgrest.conf mounted below, so "db-pool = 100" in
+      # that file had no effect. The July and November 2026 rounds ran PostgREST with 10 connections.
+      PGRST_DB_POOL: "100"
+      PGRST_LOG_LEVEL: crit
       PGRST_SERVER_PROXY_URI: "http://postgrest-v16.6:3000"
     volumes:
       - ./postgrest-v16.6/postgrest.conf:/etc/postgrest.conf

@@ -10,6 +10,10 @@ $server->set([
     'worker_num' => swoole_cpu_num(),
     'max_request' => 0,
     'enable_coroutine' => true,
+    // Make blocking calls (PDO among them) yield to other coroutines. Without this a worker waits for
+    // PostgreSQL and serves one request at a time: 4 workers, 4 requests in flight, 4 connections, which is
+    // how this service ran in the July and November 2026 rounds.
+    'hook_flags' => SWOOLE_HOOK_ALL,
     'tcp_fastopen' => true,
     'open_tcp_nodelay' => true,
 ]);
@@ -18,20 +22,29 @@ $server->on('start', function ($server) {
     echo "Swoole HTTP server started at http://0.0.0.0:3103\n";
 });
 
-$pool = new \Swoole\Database\PDOPool(
-    (new \Swoole\Database\PDOConfig())
-        ->withHost(getenv('DB_HOST') ?: 'postgres')
-        ->withPort(5432)
-        ->withDbName(getenv('DB_NAME') ?: 'testdb')
-        ->withUsername(getenv('DB_USER') ?: 'testuser')
-        ->withPassword(getenv('DB_PASSWORD') ?: 'testpass')
-        ->withDriver('pgsql'),
-    // Pool is per worker process (forked): workers x size ~= 100 aggregate
-    // to match the single-pool services (was 100 per worker).
-    max(2, intdiv(100, swoole_cpu_num()))
-);
+// The pool is made in each worker after it starts, not before the server forks: a pool (and the channel
+// inside it) made in the parent process is shared state that coroutines of a worker cannot wait on
+// correctly, and two requests end up on one connection ("another command is already in progress").
+// In every handler the statement is released ($stmt = null) BEFORE its connection goes back to the pool.
+// A statement that is still alive when the handler ends is closed on its connection at that moment, and by
+// then another request may be using that connection.
+$pool = null;
+$server->on('workerStart', function () use (&$pool) {
+    $pool = new \Swoole\Database\PDOPool(
+        (new \Swoole\Database\PDOConfig())
+            ->withHost(getenv('DB_HOST') ?: 'postgres')
+            ->withPort(5432)
+            ->withDbName(getenv('DB_NAME') ?: 'testdb')
+            ->withUsername(getenv('DB_USER') ?: 'testuser')
+            ->withPassword(getenv('DB_PASSWORD') ?: 'testpass')
+            ->withDriver('pgsql'),
+        // Pool is per worker process (forked): workers x size ~= 100 aggregate
+        // to match the single-pool services (was 100 per worker).
+        max(2, intdiv(100, swoole_cpu_num()))
+    );
+});
 
-$server->on('request', function (Request $request, Response $response) use ($pool) {
+$server->on('request', function (Request $request, Response $response) use (&$pool) {
     $path = parse_url($request->server['request_uri'], PHP_URL_PATH);
     $method = $request->server['request_method'];
 
@@ -41,10 +54,12 @@ $server->on('request', function (Request $request, Response $response) use ($poo
         try {
             $stmt = $pdo->query("SELECT status, ts FROM public.perf_minimal()");
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = null;
             $pool->put($pdo);
             $response->header('Content-Type', 'application/json');
             $response->end(json_encode($results));
         } catch (Throwable $e) {
+            $stmt = null;
             $pool->put($pdo);
             $response->status(500);
             $response->header('Content-Type', 'application/json');
@@ -65,10 +80,12 @@ $server->on('request', function (Request $request, Response $response) use ($poo
             $stmt->bindValue(':payload', $payload, PDO::PARAM_STR);
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = null;
             $pool->put($pdo);
             $response->header('Content-Type', 'application/json');
             $response->end(json_encode($results));
         } catch (Throwable $e) {
+            $stmt = null;
             $pool->put($pdo);
             $response->status(500);
             $response->header('Content-Type', 'application/json');
@@ -88,10 +105,12 @@ $server->on('request', function (Request $request, Response $response) use ($poo
             $stmt->bindValue(':depth', $depth, PDO::PARAM_INT);
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = null;
             $pool->put($pdo);
             $response->header('Content-Type', 'application/json');
             $response->end(json_encode($results));
         } catch (Throwable $e) {
+            $stmt = null;
             $pool->put($pdo);
             $response->status(500);
             $response->header('Content-Type', 'application/json');
@@ -109,10 +128,12 @@ $server->on('request', function (Request $request, Response $response) use ($poo
             $stmt->bindValue(':size_kb', $sizeKb, PDO::PARAM_INT);
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = null;
             $pool->put($pdo);
             $response->header('Content-Type', 'application/json');
             $response->end(json_encode($results));
         } catch (Throwable $e) {
+            $stmt = null;
             $pool->put($pdo);
             $response->status(500);
             $response->header('Content-Type', 'application/json');
@@ -154,10 +175,12 @@ $server->on('request', function (Request $request, Response $response) use ($poo
             $stmt->bindValue(':p20', $request->get['_p20'], PDO::PARAM_STR);
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = null;
             $pool->put($pdo);
             $response->header('Content-Type', 'application/json');
             $response->end(json_encode($results));
         } catch (Throwable $e) {
+            $stmt = null;
             $pool->put($pdo);
             $response->status(500);
             $response->header('Content-Type', 'application/json');
@@ -175,10 +198,12 @@ $server->on('request', function (Request $request, Response $response) use ($poo
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = null;
             $pool->put($pdo);
             $response->header('Content-Type', 'application/json');
             $response->end(json_encode($results));
         } catch (Throwable $e) {
+            $stmt = null;
             $pool->put($pdo);
             $response->status(500);
             $response->header('Content-Type', 'application/json');
@@ -200,10 +225,12 @@ $server->on('request', function (Request $request, Response $response) use ($poo
             $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = null;
             $pool->put($pdo);
             $response->header('Content-Type', 'application/json');
             $response->end(json_encode($results));
         } catch (Throwable $e) {
+            $stmt = null;
             $pool->put($pdo);
             $response->status(500);
             $response->header('Content-Type', 'application/json');
@@ -226,10 +253,12 @@ $server->on('request', function (Request $request, Response $response) use ($poo
             $stmt->bindValue(':note', $note, PDO::PARAM_STR);
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = null;
             $pool->put($pdo);
             $response->header('Content-Type', 'application/json');
             $response->end(json_encode($results));
         } catch (Throwable $e) {
+            $stmt = null;
             $pool->put($pdo);
             $response->status(500);
             $response->header('Content-Type', 'application/json');
@@ -275,12 +304,15 @@ $server->on('request', function (Request $request, Response $response) use ($poo
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $stmt = null;
+
         $pool->put($pdo);
 
         $response->header('Content-Type', 'application/json');
         $response->end(json_encode($results));
 
     } catch (Throwable $e) {
+        $stmt = null;
         $pool->put($pdo);
         $response->status(500);
         $response->header('Content-Type', 'application/json');

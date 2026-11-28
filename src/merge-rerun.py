@@ -2,7 +2,10 @@
 """
 Put repeated tests into a round.
 
-Usage: merge-rerun.py <round dir> <rerun dir> ["reason"]
+Usage: merge-rerun.py <round dir> <rerun dir> ["reason"] [--only tag,tag]
+
+--only: put only these services into the round. A rerun can also contain services that are there as a check
+(unchanged services, to see that the machine gives the same numbers as before); those are not merged.
 
 A rerun is a run made with RERUN_LIST (see run-all.sh): some tests of a round, repeated on the same machine
 because something disturbed them the first time. This script replaces those tests in the round:
@@ -178,10 +181,18 @@ def main():
         print(__doc__)
         sys.exit(2)
     base_dir, rerun_dir = sys.argv[1].rstrip('/'), sys.argv[2].rstrip('/')
-    reason = sys.argv[3] if len(sys.argv) > 3 else ''
+    args = sys.argv[3:]
+    only = None
+    if '--only' in args:
+        i = args.index('--only')
+        only = set(args[i + 1].split(','))
+        del args[i:i + 2]
+    reason = args[0] if args else ''
 
     meta, results = load_results(base_dir)
     rerun_meta, rerun_results = load_results(rerun_dir)
+    if only:
+        rerun_results = [r for r in rerun_results if r['tag'] in only]
     if any(r.get('stamp') == rerun_meta.get('stamp') for r in meta.get('reruns', [])):
         sys.exit(f"rerun {rerun_meta.get('stamp')} is already merged into this round")
 
@@ -217,6 +228,8 @@ def main():
     # test log
     fieldnames, base_log = read_log(base_dir)
     rerun_fields, rerun_log = read_log(rerun_dir)
+    if only:
+        rerun_log = [row for row in rerun_log if row['tag'] in only]
     rerun_keys = {log_key(row) for row in rerun_log}
     kept = [row for row in base_log if log_key(row) not in rerun_keys]
     moved = [row for row in base_log if log_key(row) in rerun_keys]
@@ -234,6 +247,8 @@ def main():
             continue
         for name in os.listdir(src_dir):
             if not name.endswith('_stats.csv'):
+                continue
+            if only and sub == 'stats' and name[:-len('_stats.csv')] not in only:
                 continue
             dst = os.path.join(base_dir, sub, name)
             with open(os.path.join(src_dir, name)) as f:
