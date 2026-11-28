@@ -1,0 +1,64 @@
+{
+  "axum-app-v0.8.9": {"peakMemMb":17.75,"avgMemMb":16.43,"avgCpu":285.96}
+,
+  "bun-app-v1.4.5": {"peakMemMb":181.12,"avgMemMb":155.91,"avgCpu":322.84}
+,
+  "deno-app-v2.9.8": {"peakMemMb":395.44,"avgMemMb":369.61,"avgCpu":352.12}
+,
+  "django-app-v6.1.3": {"peakMemMb":288.16,"avgMemMb":268.61,"avgCpu":349.27}
+,
+  "express-app-v5.3.0": {"peakMemMb":453.57,"avgMemMb":417.74,"avgCpu":380.92}
+,
+  "fastapi-app-v0.165.0": {"peakMemMb":217.61,"avgMemMb":211.20,"avgCpu":380.30}
+,
+  "fastify-app-v5.12.8": {"peakMemMb":639.27,"avgMemMb":440.26,"avgCpu":324.68}
+,
+  "gin-app-v1.12.0": {"peakMemMb":55.29,"avgMemMb":44.01,"avgCpu":313.91}
+,
+  "go-app-v1.27": {"peakMemMb":52.26,"avgMemMb":47.97,"avgCpu":364.67}
+,
+  "hasura-v2.50.10": {"peakMemMb":208.38,"avgMemMb":193.91,"avgCpu":235.42}
+,
+  "java25-spring-boot-v4.2.0": {"peakMemMb":1121.05,"avgMemMb":1113.78,"avgCpu":378.20}
+,
+  "laravel-v13.43.0-octane-app": {"peakMemMb":688.58,"avgMemMb":595.41,"avgCpu":383.88}
+,
+  "nestjs-app-v12.6.0": {"peakMemMb":517.44,"avgMemMb":480.90,"avgCpu":364.92}
+,
+  "net10-minapi-dapper-jit": {"peakMemMb":111.68,"avgMemMb":110.27,"avgCpu":372.53}
+,
+  "net10-minapi-ef-jit": {"peakMemMb":169.85,"avgMemMb":158.70,"avgCpu":380.42}
+,
+  "net10-minapi-npgsql-jit": {"peakMemMb":125.37,"avgMemMb":102.68,"avgCpu":335.93}
+,
+  "net11-minapi-dapper-jit": {"peakMemMb":39.81,"avgMemMb":39.11,"avgCpu":0.00}
+,
+  "net11-minapi-ef-jit": {"peakMemMb":53.50,"avgMemMb":53.27,"avgCpu":0.00}
+,
+  "net11-minapi-npgsql-jit": {"peakMemMb":135.00,"avgMemMb":113.31,"avgCpu":283.31}
+,
+  "npgsqlrest-file-aot-v3.21.0": {"peakMemMb":20.65,"avgMemMb":20.15,"avgCpu":0.00}
+,
+  "npgsqlrest-file-aot-v4.1.0": {"peakMemMb":104.21,"avgMemMb":76.15,"avgCpu":321.67}
+,
+  "npgsqlrest-file-jit-v3.21.0": {"peakMemMb":53.50,"avgMemMb":52.79,"avgCpu":0.00}
+,
+  "npgsqlrest-file-jit-v4.1.0": {"peakMemMb":142.62,"avgMemMb":123.33,"avgCpu":294.24}
+,
+  "npgsqlrest-routine-aot-v3.21.0": {"peakMemMb":20.84,"avgMemMb":19.85,"avgCpu":0.00}
+,
+  "npgsqlrest-routine-aot-v4.1.0": {"peakMemMb":61.71,"avgMemMb":53.36,"avgCpu":347.22}
+,
+  "npgsqlrest-routine-jit-v3.21.0": {"peakMemMb":53.10,"avgMemMb":52.50,"avgCpu":0.00}
+,
+  "npgsqlrest-routine-jit-v4.1.0": {"peakMemMb":122.81,"avgMemMb":104.93,"avgCpu":310.74}
+,
+  "postgraphile-v5.2.1": {"peakMemMb":997.45,"avgMemMb":803.70,"avgCpu":327.58}
+,
+  "postgrest-v16.6": {"peakMemMb":79.74,"avgMemMb":69.58,"avgCpu":259.37}
+,
+  "rust-app-v1.100.0": {"peakMemMb":18.26,"avgMemMb":16.94,"avgCpu":278.55}
+,
+  "swoole-php-app-v6.2.6": {"peakMemMb":25.55,"avgMemMb":20.84,"avgCpu":157.22}
+
+}

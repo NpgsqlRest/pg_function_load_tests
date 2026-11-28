@@ -1,0 +1,23 @@
+     ✓ axum-app-v0.8.9 status is 200
+     ✓ axum-app-v0.8.9 response is JSON
+     ✓ axum-app-v0.8.9 response has all records
+     ✓ axum-app-v0.8.9 response echoes payload
+
+     checks.........................: 100.00% ✓ 1691108     ✗ 0     
+     data_received..................: 4.3 GB  62 MB/s
+     data_sent......................: 96 MB   1.4 MB/s
+     hold_reqs......................: 380893  5440.752507/s
+     http_req_blocked...............: avg=5.4µs    min=1.17µs   med=2.88µs  max=28.43ms  p(90)=4.42µs   p(95)=6.85µs   p(99)=15.55µs
+     http_req_connecting............: avg=30ns     min=0s       med=0s      max=1.8ms    p(90)=0s       p(95)=0s       p(99)=0s     
+   ✓ http_req_duration..............: avg=3.68ms   min=513.69µs med=2.48ms  max=70.33ms  p(90)=7.31ms   p(95)=10.86ms  p(99)=18.64ms
+       { expected_response:true }...: avg=3.68ms   min=513.69µs med=2.48ms  max=70.33ms  p(90)=7.31ms   p(95)=10.86ms  p(99)=18.64ms
+   ✓ http_req_failed................: 0.00%   ✓ 0           ✗ 422777
+     http_req_receiving.............: avg=725.69µs min=11.3µs   med=33.75µs max=65.27ms  p(90)=745.39µs p(95)=4.88ms   p(99)=13.63ms
+     http_req_sending...............: avg=87.85µs  min=3.88µs   med=10.09µs max=38ms     p(90)=56.4µs   p(95)=102.68µs p(99)=1.09ms 
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s       p(90)=0s       p(95)=0s       p(99)=0s     
+     http_req_waiting...............: avg=2.86ms   min=458.32µs med=2.25ms  max=22.68ms  p(90)=5.63ms   p(95)=6.71ms   p(99)=9.35ms 
+     http_reqs......................: 422777  6039.032018/s
+     iteration_duration.............: avg=7.67ms   min=1.31ms   med=5.34ms  max=101.22ms p(90)=16.48ms  p(95)=21.09ms  p(99)=32.14ms
+     iterations.....................: 422777  6039.032018/s
+     vus............................: 50      min=5         max=50  
+     vus_max........................: 50      min=50        max=50  

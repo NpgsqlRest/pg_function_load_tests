@@ -1,0 +1,26 @@
+     ✗ gin-app-v1.12.0 status is 200
+      ↳  99% — ✓ 1187219 / ✗ 45
+     ✗ gin-app-v1.12.0 response is JSON
+      ↳  99% — ✓ 1187219 / ✗ 45
+     ✗ gin-app-v1.12.0 response has all data records
+      ↳  99% — ✓ 1187219 / ✗ 45
+     ✓ gin-app-v1.12.0 response first item has expected fields
+
+     checks.........................: 99.99%  ✓ 4748876      ✗ 135    
+     data_received..................: 8.8 GB  125 MB/s
+     data_sent......................: 598 MB  8.5 MB/s
+     hold_reqs......................: 1059667 15136.400639/s
+     http_req_blocked...............: avg=3.38µs   min=850ns    med=2.17µs  max=30.18ms p(90)=3.49µs   p(95)=4.08µs   p(99)=8.35µs  
+     http_req_connecting............: avg=110ns    min=0s       med=0s      max=30.13ms p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=4.78ms   min=740.82µs med=3.94ms  max=35.83ms p(90)=8.94ms   p(95)=11.17ms  p(99)=15.74ms 
+       { expected_response:true }...: avg=4.78ms   min=740.82µs med=3.94ms  max=35.83ms p(90)=8.94ms   p(95)=11.17ms  p(99)=15.74ms 
+   ✓ http_req_failed................: 0.00%   ✓ 45           ✗ 1187219
+     http_req_receiving.............: avg=114.45µs min=10.31µs  med=24.07µs max=32.37ms p(90)=117.75µs p(95)=204.73µs p(99)=2.64ms  
+     http_req_sending...............: avg=23.45µs  min=3.24µs   med=7.42µs  max=20.11ms p(90)=16.36µs  p(95)=64.77µs  p(99)=145.89µs
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s      p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=4.64ms   min=699.91µs med=3.86ms  max=30.59ms p(90)=8.72ms   p(95)=10.72ms  p(99)=14.74ms 
+     http_reqs......................: 1187264 16959.0103/s
+     iteration_duration.............: avg=5.46ms   min=991.21µs med=4.51ms  max=41.11ms p(90)=10.1ms   p(95)=12.39ms  p(99)=16.92ms 
+     iterations.....................: 1187264 16959.0103/s
+     vus............................: 100     min=10         max=100  
+     vus_max........................: 100     min=100        max=100  

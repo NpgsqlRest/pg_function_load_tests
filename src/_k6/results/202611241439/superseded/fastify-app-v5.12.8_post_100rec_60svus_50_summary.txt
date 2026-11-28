@@ -1,0 +1,26 @@
+     ✗ fastify-app-v5.12.8 status is 200
+      ↳  99% — ✓ 419465 / ✗ 11
+     ✓ fastify-app-v5.12.8 response is JSON
+     ✗ fastify-app-v5.12.8 response has all records
+      ↳  99% — ✓ 419465 / ✗ 11
+     ✗ fastify-app-v5.12.8 response echoes payload
+      ↳  99% — ✓ 419465 / ✗ 11
+
+     checks.........................: 99.99% ✓ 1677871     ✗ 33    
+     data_received..................: 4.3 GB 62 MB/s
+     data_sent......................: 97 MB  1.4 MB/s
+     hold_reqs......................: 377885 5397.859279/s
+     http_req_blocked...............: avg=5.62µs  min=1.14µs   med=2.9µs   max=37.02ms  p(90)=4.34µs   p(95)=6.42µs   p(99)=15.95µs
+     http_req_connecting............: avg=39ns    min=0s       med=0s      max=2.87ms   p(90)=0s       p(95)=0s       p(99)=0s     
+   ✓ http_req_duration..............: avg=3.59ms  min=514.64µs med=2.37ms  max=68.74ms  p(90)=7.12ms   p(95)=10.66ms  p(99)=19.44ms
+       { expected_response:true }...: avg=3.59ms  min=514.64µs med=2.37ms  max=68.74ms  p(90)=7.12ms   p(95)=10.66ms  p(99)=19.44ms
+   ✓ http_req_failed................: 0.00%  ✓ 11          ✗ 419465
+     http_req_receiving.............: avg=720.2µs min=13.38µs  med=34.45µs max=65.31ms  p(90)=593.42µs p(95)=4.38ms   p(99)=14.42ms
+     http_req_sending...............: avg=93.51µs min=4.61µs   med=10.2µs  max=38.79ms  p(90)=55.69µs  p(95)=102.81µs p(99)=1.07ms 
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s       p(90)=0s       p(95)=0s       p(99)=0s     
+     http_req_waiting...............: avg=2.78ms  min=475.21µs med=2.12ms  max=23.65ms  p(90)=5.53ms   p(95)=6.67ms   p(99)=9.51ms 
+     http_reqs......................: 419476 5991.961626/s
+     iteration_duration.............: avg=7.73ms  min=1.12ms   med=5.27ms  max=114.31ms p(90)=16.86ms  p(95)=21.83ms  p(99)=33.5ms 
+     iterations.....................: 419476 5991.961626/s
+     vus............................: 50     min=5         max=50  
+     vus_max........................: 50     min=50        max=50  

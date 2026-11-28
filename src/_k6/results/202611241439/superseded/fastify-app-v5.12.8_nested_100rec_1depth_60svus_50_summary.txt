@@ -1,0 +1,26 @@
+     ✗ fastify-app-v5.12.8 status is 200
+      ↳  99% — ✓ 1028838 / ✗ 5518
+     ✓ fastify-app-v5.12.8 response is JSON
+     ✗ fastify-app-v5.12.8 response has all records
+      ↳  99% — ✓ 1028838 / ✗ 5518
+     ✗ fastify-app-v5.12.8 response has nested structure
+      ↳  99% — ✓ 1028838 / ✗ 5518
+
+     checks.........................: 99.59%  ✓ 4120870      ✗ 16554  
+     data_received..................: 3.6 GB  51 MB/s
+     data_sent......................: 121 MB  1.7 MB/s
+     hold_reqs......................: 938682  13408.402427/s
+     http_req_blocked...............: avg=3.23µs  min=850ns    med=2.25µs  max=5.1ms   p(90)=3.57µs   p(95)=4.33µs   p(99)=9.4µs   
+     http_req_connecting............: avg=14ns    min=0s       med=0s      max=2.33ms  p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=2.44ms  min=396.44µs med=2.16ms  max=24.11ms p(90)=4.13ms   p(95)=5.27ms   p(99)=7.69ms  
+       { expected_response:true }...: avg=2.42ms  min=396.44µs med=2.16ms  max=23.05ms p(90)=4.05ms   p(95)=5.14ms   p(99)=7.52ms  
+   ✓ http_req_failed................: 0.53%   ✓ 5518         ✗ 1028838
+     http_req_receiving.............: avg=87.96µs min=8.48µs   med=20.66µs max=20.54ms p(90)=128.09µs p(95)=227.58µs p(99)=2.01ms  
+     http_req_sending...............: avg=24.72µs min=2.85µs   med=7.2µs   max=13.64ms p(90)=22.88µs  p(95)=74.68µs  p(99)=219.47µs
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s      p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=2.33ms  min=361.85µs med=2.1ms   max=23.68ms p(90)=3.93ms   p(95)=4.98ms   p(99)=6.79ms  
+     http_reqs......................: 1034356 14775.037234/s
+     iteration_duration.............: avg=3.13ms  min=717.95µs med=2.7ms   max=29.95ms p(90)=5.35ms   p(95)=6.57ms   p(99)=8.86ms  
+     iterations.....................: 1034356 14775.037234/s
+     vus............................: 50      min=5          max=50   
+     vus_max........................: 50      min=50         max=50   

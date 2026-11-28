@@ -1,0 +1,27 @@
+     ✗ gin-app-v1.12.0 status is 200
+      ↳  99% — ✓ 1412365 / ✗ 6412
+     ✗ gin-app-v1.12.0 response is JSON
+      ↳  99% — ✓ 1412365 / ✗ 6412
+     ✗ gin-app-v1.12.0 response has all records
+      ↳  99% — ✓ 1412365 / ✗ 6412
+     ✗ gin-app-v1.12.0 response has nested structure
+      ↳  0% — ✓ 0 / ✗ 1412365
+
+     checks.........................: 74.74%  ✓ 4237095      ✗ 1431601
+     data_received..................: 5.6 GB  79 MB/s
+     data_sent......................: 160 MB  2.3 MB/s
+     hold_reqs......................: 1268108 18114.222556/s
+     http_req_blocked...............: avg=3.63µs   min=830ns    med=2.09µs  max=22.34ms p(90)=3.33µs   p(95)=3.98µs   p(99)=8.06µs  
+     http_req_connecting............: avg=69ns     min=0s       med=0s      max=18.08ms p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=3.62ms   min=265.15µs med=2.67ms  max=55.57ms p(90)=7.59ms   p(95)=10.05ms  p(99)=15.73ms 
+       { expected_response:true }...: avg=3.55ms   min=265.15µs med=2.65ms  max=51.59ms p(90)=7.46ms   p(95)=9.77ms   p(99)=14.74ms 
+   ✓ http_req_failed................: 0.45%   ✓ 6412         ✗ 1412365
+     http_req_receiving.............: avg=135.98µs min=7.51µs   med=18.59µs max=42.06ms p(90)=102.44µs p(95)=196.41µs p(99)=3.94ms  
+     http_req_sending...............: avg=26.67µs  min=2.79µs   med=6.63µs  max=38.49ms p(90)=13.57µs  p(95)=54.55µs  p(99)=148.12µs
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s      p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=3.46ms   min=243.29µs med=2.59ms  max=52.95ms p(90)=7.3ms    p(95)=9.48ms   p(99)=14.11ms 
+     http_reqs......................: 1418777 20266.446025/s
+     iteration_duration.............: avg=4.56ms   min=497.75µs med=3.35ms  max=70.21ms p(90)=9.55ms   p(95)=12.39ms  p(99)=18.6ms  
+     iterations.....................: 1418777 20266.446025/s
+     vus............................: 100     min=10         max=100  
+     vus_max........................: 100     min=100        max=100  

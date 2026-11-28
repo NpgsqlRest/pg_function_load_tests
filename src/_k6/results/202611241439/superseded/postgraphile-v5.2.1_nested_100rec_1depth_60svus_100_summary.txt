@@ -1,0 +1,25 @@
+     ✓ postgraphile-v5.2.1 status is 200
+     ✓ postgraphile-v5.2.1 response is JSON
+     ✗ postgraphile-v5.2.1 response has all records
+      ↳  90% — ✓ 190123 / ✗ 20610
+     ✗ postgraphile-v5.2.1 response has nested structure
+      ↳  90% — ✓ 190123 / ✗ 20610
+
+     checks.........................: 95.10% ✓ 801712      ✗ 41220 
+     data_received..................: 653 MB 9.3 MB/s
+     data_sent......................: 69 MB  990 kB/s
+     hold_reqs......................: 186194 2658.925909/s
+     http_req_blocked...............: avg=11.24µs min=1.11µs   med=3.48µs  max=79.02ms  p(90)=5.33µs  p(95)=7.59µs   p(99)=20.44µs 
+     http_req_connecting............: avg=476ns   min=0s       med=0s      max=22.45ms  p(90)=0s      p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=11.76ms min=777.31µs med=5.37ms  max=276.7ms  p(90)=31.26ms p(95)=48.37ms  p(99)=83.17ms 
+       { expected_response:true }...: avg=11.76ms min=777.31µs med=5.37ms  max=276.7ms  p(90)=31.26ms p(95)=48.37ms  p(99)=83.17ms 
+   ✓ http_req_failed................: 0.00%  ✓ 0           ✗ 210733
+     http_req_receiving.............: avg=3.99ms  min=10.14µs  med=46.37µs max=241.31ms p(90)=6.37ms  p(95)=35.88ms  p(99)=70.81ms 
+     http_req_sending...............: avg=172.4µs min=5.36µs   med=11.86µs max=272.79ms p(90)=65.97µs p(95)=100.37µs p(99)=569.32µs
+     http_req_tls_handshaking.......: avg=0s      min=0s       med=0s      max=0s       p(90)=0s      p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=7.59ms  min=735.74µs med=4.77ms  max=101.95ms p(90)=15.71ms p(95)=23.2ms   p(99)=39.08ms 
+     http_reqs......................: 210733 3009.352791/s
+     iteration_duration.............: avg=30.81ms min=2.42ms   med=15.87ms max=422.04ms p(90)=75.14ms p(95)=102.71ms p(99)=163.78ms
+     iterations.....................: 210733 3009.352791/s
+     vus............................: 100    min=10        max=100 
+     vus_max........................: 100    min=100       max=100 

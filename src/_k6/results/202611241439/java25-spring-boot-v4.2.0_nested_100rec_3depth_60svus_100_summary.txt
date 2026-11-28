@@ -1,0 +1,23 @@
+     ✓ java25-spring-boot-v4.2.0 status is 200
+     ✓ java25-spring-boot-v4.2.0 response is JSON
+     ✓ java25-spring-boot-v4.2.0 response has all records
+     ✓ java25-spring-boot-v4.2.0 response has nested structure
+
+     checks.........................: 100.00% ✓ 2482880     ✗ 0     
+     data_received..................: 3.0 GB  44 MB/s
+     data_sent......................: 76 MB   1.1 MB/s
+     hold_reqs......................: 552329  7889.184835/s
+     http_req_blocked...............: avg=27.26µs  min=1.05µs   med=2.79µs  max=89.97ms  p(90)=4.15µs  p(95)=6.74µs   p(99)=141.15µs
+     http_req_connecting............: avg=16.58µs  min=0s       med=0s      max=81.68ms  p(90)=0s      p(95)=0s       p(99)=93.75µs 
+   ✓ http_req_duration..............: avg=5.61ms   min=444.38µs med=3.13ms  max=136.22ms p(90)=11.8ms  p(95)=19.89ms  p(99)=39.56ms 
+       { expected_response:true }...: avg=5.61ms   min=444.38µs med=3.13ms  max=136.22ms p(90)=11.8ms  p(95)=19.89ms  p(99)=39.56ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0           ✗ 620720
+     http_req_receiving.............: avg=1.49ms   min=9.27µs   med=31.09µs max=124.67ms p(90)=1.19ms  p(95)=9.82ms   p(99)=31.42ms 
+     http_req_sending...............: avg=141.88µs min=3.38µs   med=8.48µs  max=100.07ms p(90)=70.21µs p(95)=105.65µs p(99)=1.6ms   
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s       p(90)=0s      p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=3.97ms   min=416.11µs med=2.82ms  max=38.7ms   p(90)=8.65ms  p(95)=11.07ms  p(99)=15.62ms 
+     http_reqs......................: 620720  8866.046886/s
+     iteration_duration.............: avg=10.45ms  min=817.2µs  med=5.33ms  max=216.53ms p(90)=27.77ms p(95)=37.9ms   p(99)=62.73ms 
+     iterations.....................: 620720  8866.046886/s
+     vus............................: 100     min=10        max=100 
+     vus_max........................: 100     min=100       max=100 

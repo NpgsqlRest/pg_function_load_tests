@@ -1,0 +1,23 @@
+     ✓ npgsqlrest-file-aot-v3.21.0 status is 200
+     ✓ npgsqlrest-file-aot-v3.21.0 response is JSON
+     ✓ npgsqlrest-file-aot-v3.21.0 response has all data records
+     ✓ npgsqlrest-file-aot-v3.21.0 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 4288860      ✗ 0      
+     data_received..................: 7.7 GB  110 MB/s
+     data_sent......................: 581 MB  8.3 MB/s
+     hold_reqs......................: 956226  13659.451477/s
+     http_req_blocked...............: avg=3.51µs   min=890ns    med=2.18µs  max=11.82ms p(90)=3.55µs   p(95)=4.26µs   p(99)=8.65µs  
+     http_req_connecting............: avg=98ns     min=0s       med=0s      max=8.38ms  p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=5.29ms   min=803.95µs med=4.56ms  max=40.14ms p(90)=9.4ms    p(95)=12.06ms  p(99)=16.35ms 
+       { expected_response:true }...: avg=5.29ms   min=803.95µs med=4.56ms  max=40.14ms p(90)=9.4ms    p(95)=12.06ms  p(99)=16.35ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0            ✗ 1072215
+     http_req_receiving.............: avg=157.51µs min=9.69µs   med=24.61µs max=24.48ms p(90)=132.73µs p(95)=262.59µs p(99)=4.75ms  
+     http_req_sending...............: avg=26.09µs  min=3.45µs   med=7.6µs   max=24.38ms p(90)=17.82µs  p(95)=69.7µs   p(99)=156.12µs
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s      p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=5.1ms    min=754.45µs med=4.48ms  max=40.11ms p(90)=9.03ms   p(95)=11.25ms  p(99)=15.01ms 
+     http_reqs......................: 1072215 15316.325603/s
+     iteration_duration.............: avg=6.05ms   min=1.08ms   med=5.15ms  max=42.25ms p(90)=10.88ms  p(95)=13.36ms  p(99)=17.46ms 
+     iterations.....................: 1072215 15316.325603/s
+     vus............................: 100     min=10         max=100  
+     vus_max........................: 100     min=100        max=100  

@@ -1,0 +1,22 @@
+     ✓ net10-minapi-npgsql-jit status is 200
+     ✓ net10-minapi-npgsql-jit response is JSON
+     ✓ net10-minapi-npgsql-jit response has expected size
+
+     checks.........................: 100.00% ✓ 1689603     ✗ 0     
+     data_received..................: 58 GB   825 MB/s
+     data_sent......................: 67 MB   957 kB/s
+     hold_reqs......................: 509004  7270.782501/s
+     http_req_blocked...............: avg=4.05µs   min=950ns  med=2.87µs   max=4.79ms  p(90)=4.38µs p(95)=5.08µs   p(99)=13.12µs 
+     http_req_connecting............: avg=21ns     min=0s     med=0s       max=1.61ms  p(90)=0s     p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=5.08ms   min=1.22ms med=4.55ms   max=36.49ms p(90)=8.43ms p(95)=10.02ms  p(99)=12.83ms 
+       { expected_response:true }...: avg=5.08ms   min=1.22ms med=4.55ms   max=36.49ms p(90)=8.43ms p(95)=10.02ms  p(99)=12.83ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0           ✗ 563201
+     http_req_receiving.............: avg=671.69µs min=27.4µs med=379.68µs max=14.19ms p(90)=1.62ms p(95)=2.21ms   p(99)=3.86ms  
+     http_req_sending...............: avg=42.27µs  min=3.86µs med=8.44µs   max=6.55ms  p(90)=69.5µs p(95)=114.37µs p(99)=919.36µs
+     http_req_tls_handshaking.......: avg=0s       min=0s     med=0s       max=0s      p(90)=0s     p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=4.37ms   min=1.11ms med=3.87ms   max=34.05ms p(90)=7.32ms p(95)=9.05ms   p(99)=11.75ms 
+     http_reqs......................: 563201  8044.950483/s
+     iteration_duration.............: avg=5.75ms   min=1.51ms med=5.19ms   max=36.86ms p(90)=9.27ms p(95)=10.86ms  p(99)=13.81ms 
+     iterations.....................: 563201  8044.950483/s
+     vus............................: 50      min=5         max=50  
+     vus_max........................: 50      min=50        max=50  

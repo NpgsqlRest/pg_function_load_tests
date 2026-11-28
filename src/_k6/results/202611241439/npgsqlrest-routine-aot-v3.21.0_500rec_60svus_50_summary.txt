@@ -1,0 +1,23 @@
+     ✓ npgsqlrest-routine-aot-v3.21.0 status is 200
+     ✓ npgsqlrest-routine-aot-v3.21.0 response is JSON
+     ✓ npgsqlrest-routine-aot-v3.21.0 response has all data records
+     ✓ npgsqlrest-routine-aot-v3.21.0 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 128528     ✗ 0    
+     data_received..................: 12 GB   164 MB/s
+     data_sent......................: 18 MB   250 kB/s
+     hold_reqs......................: 28357   404.547493/s
+     http_req_blocked...............: avg=15.89µs  min=2.12µs   med=4.74µs  max=58.26ms  p(90)=7.32µs   p(95)=10.31µs  p(99)=27.89µs 
+     http_req_connecting............: avg=1.47µs   min=0s       med=0s      max=11.95ms  p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=29.35ms  min=5.44ms   med=22.92ms max=181.63ms p(90)=53.13ms  p(95)=67.53ms  p(99)=98.58ms 
+       { expected_response:true }...: avg=29.35ms  min=5.44ms   med=22.92ms max=181.63ms p(90)=53.13ms  p(95)=67.53ms  p(99)=98.58ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0          ✗ 32132
+     http_req_receiving.............: avg=22.1ms   min=159.24µs med=16.28ms max=179.47ms p(90)=45.06ms  p(95)=58.99ms  p(99)=89.89ms 
+     http_req_sending...............: avg=205.19µs min=5.02µs   med=14.56µs max=104.61ms p(90)=57.09µs  p(95)=90.89µs  p(99)=2.17ms  
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s       p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=7.04ms   min=1.21ms   med=5.66ms  max=48.17ms  p(90)=12.95ms  p(95)=15.55ms  p(99)=23.99ms 
+     http_reqs......................: 32132   458.402512/s
+     iteration_duration.............: avg=101.18ms min=22.83ms  med=87.68ms max=502.04ms p(90)=176.61ms p(95)=210.77ms p(99)=286.87ms
+     iterations.....................: 32132   458.402512/s
+     vus............................: 50      min=5        max=50 
+     vus_max........................: 50      min=50       max=50 

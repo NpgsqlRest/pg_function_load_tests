@@ -1,0 +1,27 @@
+     ✗ npgsqlrest-file-jit-v4.1.0 status is 200
+      ↳  99% — ✓ 191289 / ✗ 100
+     ✗ npgsqlrest-file-jit-v4.1.0 response is JSON
+      ↳  99% — ✓ 191289 / ✗ 100
+     ✗ npgsqlrest-file-jit-v4.1.0 response has all data records
+      ↳  99% — ✓ 191289 / ✗ 100
+     ✗ npgsqlrest-file-jit-v4.1.0 response first item has expected fields
+      ↳  99% — ✓ 191289 / ✗ 100
+
+     checks.........................: 99.94% ✓ 765156      ✗ 400   
+     data_received..................: 1.4 GB 18 MB/s
+     data_sent......................: 104 MB 1.3 MB/s
+     hold_reqs......................: 110130 1411.366205/s
+     http_req_blocked...............: avg=5.25µs   min=900ns    med=3.07µs  max=11.65ms p(90)=5.86µs   p(95)=7.14µs   p(99)=19.81µs 
+     http_req_connecting............: avg=385ns    min=0s       med=0s      max=11.15ms p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=37.01ms  min=672.6µs  med=3.3ms   max=22.32s  p(90)=12.11ms  p(95)=82.68ms  p(99)=174.28ms
+       { expected_response:true }...: avg=25.43ms  min=672.6µs  med=3.3ms   max=22.09s  p(90)=12.01ms  p(95)=82.26ms  p(99)=173.08ms
+   ✓ http_req_failed................: 0.05%  ✓ 100         ✗ 191289
+     http_req_receiving.............: avg=132.45µs min=12.03µs  med=38.17µs max=24.37ms p(90)=185.66µs p(95)=338.88µs p(99)=2.39ms  
+     http_req_sending...............: avg=31.89µs  min=3.18µs   med=10.55µs max=11.37ms p(90)=49.28µs  p(95)=105.72µs p(99)=268.2µs 
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s      p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=36.84ms  min=630.87µs med=3.16ms  max=22.32s  p(90)=11.51ms  p(95)=82.39ms  p(99)=174.21ms
+     http_reqs......................: 191389 2452.73737/s
+     iteration_duration.............: avg=38.05ms  min=957.43µs med=4.27ms  max=22.32s  p(90)=14.85ms  p(95)=84.21ms  p(99)=174.73ms
+     iterations.....................: 191389 2452.73737/s
+     vus............................: 39     min=10        max=100 
+     vus_max........................: 100    min=100       max=100 

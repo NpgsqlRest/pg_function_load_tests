@@ -1,0 +1,23 @@
+     ✓ npgsqlrest-file-jit-v3.21.0 status is 200
+     ✓ npgsqlrest-file-jit-v3.21.0 response is JSON
+     ✓ npgsqlrest-file-jit-v3.21.0 response has all data records
+     ✓ npgsqlrest-file-jit-v3.21.0 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 133504     ✗ 0    
+     data_received..................: 12 GB   170 MB/s
+     data_sent......................: 18 MB   258 kB/s
+     hold_reqs......................: 29084   414.351804/s
+     http_req_blocked...............: avg=31.91µs  min=1.99µs   med=4.53µs   max=63.86ms  p(90)=7.17µs   p(95)=10.11µs  p(99)=31.77µs 
+     http_req_connecting............: avg=9.71µs   min=0s       med=0s       max=35.33ms  p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=55.54ms  min=5.04ms   med=32.48ms  max=729.15ms p(90)=131.54ms p(95)=176.69ms p(99)=275.62ms
+       { expected_response:true }...: avg=55.54ms  min=5.04ms   med=32.48ms  max=729.15ms p(90)=131.54ms p(95)=176.69ms p(99)=275.62ms
+   ✓ http_req_failed................: 0.00%   ✓ 0          ✗ 33376
+     http_req_receiving.............: avg=43.99ms  min=162.03µs med=22.5ms   max=716.84ms p(90)=117.08ms p(95)=160.98ms p(99)=259.54ms
+     http_req_sending...............: avg=631.51µs min=5.45µs   med=13.77µs  max=222.54ms p(90)=50.25µs  p(95)=90.2µs   p(99)=13.46ms 
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s       max=0s       p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=10.91ms  min=1.02ms   med=7.28ms   max=101.39ms p(90)=25.03ms  p(95)=31.05ms  p(99)=42.17ms 
+     http_reqs......................: 33376   475.498756/s
+     iteration_duration.............: avg=195.04ms min=19.53ms  med=149.15ms max=1.38s    p(90)=412.26ms p(95)=517.58ms p(99)=746.68ms
+     iterations.....................: 33376   475.498756/s
+     vus............................: 100     min=10       max=100
+     vus_max........................: 100     min=100      max=100

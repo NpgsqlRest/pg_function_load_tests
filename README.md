@@ -311,6 +311,13 @@ GET http://localhost:3000/rpc/perf_minimal
 
 ## Latest Results
 
+**November 2026 round** — 31 services, 1,364 tests, 9 scenarios (three on real tables), on a 48-core server with PostgreSQL, the load generator and the service on separate cores:
+
+- [Results branch (202611241439)](https://github.com/NpgsqlRest/pg_function_load_tests/tree/202611241439) — the exact code that ran
+- [Report](https://github.com/NpgsqlRest/pg_function_load_tests/blob/202611241439/src/_k6/results/202611241439/report.md) — every table, what was at its limit in each test, memory, time in PostgreSQL, service footprint
+- [Raw dataset](https://github.com/NpgsqlRest/pg_function_load_tests/tree/202611241439/src/_k6/results/202611241439) — `results_extended.csv` (start here), `results.csv`, 1,364 k6 summaries, per-second resource samples
+- 193 of the tests were repeated on the same server after PostgreSQL had refused connections during them (`max_connections` was too low for 31 services); the report says which, and the originals are in `superseded/`
+
 **July 2026 round** — 20 services, 760 tests, full fairness overhaul:
 
 - 📊 **[Full analysis series](https://npgsqlrest.github.io/blog/benchmarks-2026-07/)** — methodology, per-framework deep dives, overall analysis, raw result tables

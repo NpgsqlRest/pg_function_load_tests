@@ -1,0 +1,27 @@
+     ✗ postgraphile-v5.2.1 status is 200
+      ↳  99% — ✓ 4152 / ✗ 24
+     ✗ postgraphile-v5.2.1 response is JSON
+      ↳  99% — ✓ 4152 / ✗ 24
+     ✗ postgraphile-v5.2.1 response has all data records
+      ↳  99% — ✓ 4152 / ✗ 24
+     ✗ postgraphile-v5.2.1 response first item has expected fields
+      ↳  99% — ✓ 4152 / ✗ 24
+
+     checks.........................: 99.42% ✓ 16608     ✗ 96   
+     data_received..................: 1.6 GB 22 MB/s
+     data_sent......................: 6.1 MB 84 kB/s
+     hold_reqs......................: 3538   49.168952/s
+     http_req_blocked...............: avg=12.62ms  min=2.69µs  med=7.11µs   max=1.84s    p(90)=20.04µs  p(95)=59.7ms   p(99)=310.48ms
+     http_req_connecting............: avg=11.5ms   min=0s      med=0s       max=1.84s    p(90)=0s       p(95)=54.9ms   p(99)=299.74ms
+   ✗ http_req_duration..............: avg=341.19ms min=13.9ms  med=237.78ms max=2.09s    p(90)=767.35ms p(95)=1s       p(99)=1.47s   
+       { expected_response:true }...: avg=341.28ms min=27.61ms med=238.15ms max=2.09s    p(90)=766.64ms p(95)=1s       p(99)=1.46s   
+   ✓ http_req_failed................: 0.57%  ✓ 24        ✗ 4152 
+     http_req_receiving.............: avg=145.69ms min=0s      med=2.74ms   max=1.91s    p(90)=512.67ms p(95)=778.58ms p(99)=1.23s   
+     http_req_sending...............: avg=9.48ms   min=10.45µs med=30.78µs  max=1.24s    p(90)=158.24µs p(95)=33.13ms  p(99)=257.58ms
+     http_req_tls_handshaking.......: avg=0s       min=0s      med=0s       max=0s       p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=186.01ms min=13.86ms med=173.54ms max=958.76ms p(90)=322.84ms p(95)=373.67ms p(99)=509.85ms
+     http_reqs......................: 4176   58.035484/s
+     iteration_duration.............: avg=3.16s    min=14.17ms med=3.05s    max=9.66s    p(90)=5.03s    p(95)=5.66s    p(99)=6.83s   
+     iterations.....................: 4176   58.035484/s
+     vus............................: 8      min=8       max=200
+     vus_max........................: 200    min=200     max=200

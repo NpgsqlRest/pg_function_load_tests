@@ -1,0 +1,23 @@
+     ✓ net10-minapi-dapper-jit status is 200
+     ✓ net10-minapi-dapper-jit response is JSON
+     ✓ net10-minapi-dapper-jit response has all data records
+     ✓ net10-minapi-dapper-jit response first item has expected fields
+
+     checks.........................: 100.00% ✓ 126392     ✗ 0    
+     data_received..................: 11 GB   163 MB/s
+     data_sent......................: 17 MB   243 kB/s
+     hold_reqs......................: 27986   399.31408/s
+     http_req_blocked...............: avg=13.45µs  min=1.98µs   med=4.66µs  max=27.88ms  p(90)=7.32µs   p(95)=10.28µs  p(99)=30.83µs
+     http_req_connecting............: avg=1.39µs   min=0s       med=0s      max=14.08ms  p(90)=0s       p(95)=0s       p(99)=0s     
+   ✓ http_req_duration..............: avg=30.36ms  min=6.45ms   med=23.62ms max=225.65ms p(90)=55.93ms  p(95)=70.18ms  p(99)=102.7ms
+       { expected_response:true }...: avg=30.36ms  min=6.45ms   med=23.62ms max=225.65ms p(90)=55.93ms  p(95)=70.18ms  p(99)=102.7ms
+   ✓ http_req_failed................: 0.00%   ✓ 0          ✗ 31598
+     http_req_receiving.............: avg=11.52ms  min=206.47µs med=2.59ms  max=211.24ms p(90)=34.87ms  p(95)=49.92ms  p(99)=81.77ms
+     http_req_sending...............: avg=188.43µs min=5.47µs   med=14.72µs max=61.49ms  p(90)=59.64µs  p(95)=91.81µs  p(99)=1.45ms 
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s       p(90)=0s       p(95)=0s       p(99)=0s     
+     http_req_waiting...............: avg=18.65ms  min=5.25ms   med=17.83ms max=65.91ms  p(90)=26.1ms   p(95)=30.21ms  p(99)=40.11ms
+     http_reqs......................: 31598   450.851365/s
+     iteration_duration.............: avg=102.9ms  min=18.76ms  med=89.68ms max=580.58ms p(90)=178.84ms p(95)=213.88ms p(99)=287ms  
+     iterations.....................: 31598   450.851365/s
+     vus............................: 50      min=5        max=50 
+     vus_max........................: 50      min=50       max=50 

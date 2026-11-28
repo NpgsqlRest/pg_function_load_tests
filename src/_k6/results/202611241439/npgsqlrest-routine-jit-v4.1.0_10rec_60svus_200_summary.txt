@@ -1,0 +1,23 @@
+     ✓ npgsqlrest-routine-jit-v4.1.0 status is 200
+     ✓ npgsqlrest-routine-jit-v4.1.0 response is JSON
+     ✓ npgsqlrest-routine-jit-v4.1.0 response has all data records
+     ✓ npgsqlrest-routine-jit-v4.1.0 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 4583952      ✗ 0      
+     data_received..................: 8.2 GB  117 MB/s
+     data_sent......................: 623 MB  8.9 MB/s
+     hold_reqs......................: 1013528 14477.331996/s
+     http_req_blocked...............: avg=4.81µs   min=870ns    med=2.42µs  max=31.26ms  p(90)=3.79µs   p(95)=4.61µs   p(99)=9.2µs   
+     http_req_connecting............: avg=371ns    min=0s       med=0s      max=22.75ms  p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=9.13ms   min=867.64µs med=7.09ms  max=107.46ms p(90)=18.68ms  p(95)=22.63ms  p(99)=30.95ms 
+       { expected_response:true }...: avg=9.13ms   min=867.64µs med=7.09ms  max=107.46ms p(90)=18.68ms  p(95)=22.63ms  p(99)=30.95ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0            ✗ 1145988
+     http_req_receiving.............: avg=412.87µs min=10µs     med=23.86µs max=98.69ms  p(90)=168.83µs p(95)=408.38µs p(99)=12.17ms 
+     http_req_sending...............: avg=44.66µs  min=3.67µs   med=7.77µs  max=74.07ms  p(90)=38.89µs  p(95)=90.86µs  p(99)=163.36µs
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s      max=0s       p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=8.68ms   min=816.48µs med=6.94ms  max=54.4ms   p(90)=17.56ms  p(95)=20.79ms  p(99)=26.59ms 
+     http_reqs......................: 1145988 16369.403449/s
+     iteration_duration.............: avg=11.3ms   min=1.2ms    med=8.73ms  max=126.65ms p(90)=22.61ms  p(95)=27.47ms  p(99)=39.62ms 
+     iterations.....................: 1145988 16369.403449/s
+     vus............................: 200     min=19         max=200  
+     vus_max........................: 200     min=200        max=200  

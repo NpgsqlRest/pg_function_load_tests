@@ -1,0 +1,23 @@
+     ✓ express-app-v5.3.0 status is 200
+     ✓ express-app-v5.3.0 response is JSON
+     ✓ express-app-v5.3.0 response has all data records
+     ✓ express-app-v5.3.0 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 488040      ✗ 0     
+     data_received..................: 8.9 GB  127 MB/s
+     data_sent......................: 62 MB   885 kB/s
+     hold_reqs......................: 106562  1521.078596/s
+     http_req_blocked...............: avg=4.6µs    min=1.57µs  med=3.65µs  max=22.8ms   p(90)=4.85µs   p(95)=5.6µs    p(99)=13.71µs 
+     http_req_connecting............: avg=346ns    min=0s      med=0s      max=17.65ms  p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=48.99ms  min=3.34ms  med=52.08ms max=320ms    p(90)=59.7ms   p(95)=62.73ms  p(99)=71.28ms 
+       { expected_response:true }...: avg=48.99ms  min=3.34ms  med=52.08ms max=320ms    p(90)=59.7ms   p(95)=62.73ms  p(99)=71.28ms 
+   ✓ http_req_failed................: 0.00%   ✓ 0           ✗ 122010
+     http_req_receiving.............: avg=214.07µs min=26.47µs med=76.19µs max=18.17ms  p(90)=563.08µs p(95)=867.58µs p(99)=1.8ms   
+     http_req_sending...............: avg=22.41µs  min=5.11µs  med=11.23µs max=9.63ms   p(90)=28.26µs  p(95)=79.35µs  p(99)=161.65µs
+     http_req_tls_handshaking.......: avg=0s       min=0s      med=0s      max=0s       p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=48.75ms  min=3.28ms  med=51.86ms max=319.87ms p(90)=59.45ms  p(95)=62.47ms  p(99)=71.01ms 
+     http_reqs......................: 122010  1741.585176/s
+     iteration_duration.............: avg=53.28ms  min=5.35ms  med=56.22ms max=322.63ms p(90)=64.23ms  p(95)=67.29ms  p(99)=76.18ms 
+     iterations.....................: 122010  1741.585176/s
+     vus............................: 100     min=10        max=100 
+     vus_max........................: 100     min=100       max=100 

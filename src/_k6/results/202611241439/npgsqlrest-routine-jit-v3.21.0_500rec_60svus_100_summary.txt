@@ -1,0 +1,23 @@
+     ✓ npgsqlrest-routine-jit-v3.21.0 status is 200
+     ✓ npgsqlrest-routine-jit-v3.21.0 response is JSON
+     ✓ npgsqlrest-routine-jit-v3.21.0 response has all data records
+     ✓ npgsqlrest-routine-jit-v3.21.0 response first item has expected fields
+
+     checks.........................: 100.00% ✓ 133712     ✗ 0    
+     data_received..................: 12 GB   171 MB/s
+     data_sent......................: 18 MB   260 kB/s
+     hold_reqs......................: 29142   415.440985/s
+     http_req_blocked...............: avg=35.13µs  min=2µs      med=4.55µs   max=177.62ms p(90)=7.25µs   p(95)=10.11µs  p(99)=28.94µs 
+     http_req_connecting............: avg=11.08µs  min=0s       med=0s       max=36.12ms  p(90)=0s       p(95)=0s       p(99)=0s      
+   ✓ http_req_duration..............: avg=55.83ms  min=5.19ms   med=32.72ms  max=567.97ms p(90)=133.55ms p(95)=176.02ms p(99)=271.06ms
+       { expected_response:true }...: avg=55.83ms  min=5.19ms   med=32.72ms  max=567.97ms p(90)=133.55ms p(95)=176.02ms p(99)=271.06ms
+   ✓ http_req_failed................: 0.00%   ✓ 0          ✗ 33428
+     http_req_receiving.............: avg=44.09ms  min=149.06µs med=22.79ms  max=554.39ms p(90)=118.26ms p(95)=160.95ms p(99)=258.14ms
+     http_req_sending...............: avg=633.58µs min=5.17µs   med=13.68µs  max=280.06ms p(90)=48.93µs  p(95)=88.15µs  p(99)=11.42ms 
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s       max=0s       p(90)=0s       p(95)=0s       p(99)=0s      
+     http_req_waiting...............: avg=11.11ms  min=1.16ms   med=7.48ms   max=88.26ms  p(90)=25.07ms  p(95)=30.89ms  p(99)=42.94ms 
+     http_reqs......................: 33428   476.541118/s
+     iteration_duration.............: avg=194.61ms min=18.42ms  med=148.79ms max=1.69s    p(90)=409.77ms p(95)=513.28ms p(99)=743.8ms 
+     iterations.....................: 33428   476.541118/s
+     vus............................: 100     min=10       max=100
+     vus_max........................: 100     min=100      max=100
